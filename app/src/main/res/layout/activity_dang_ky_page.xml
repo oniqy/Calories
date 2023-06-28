@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <!-- Here you put the rest of your current view-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#CFEDD2"
+        tools:context=".DangKy">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="412dp"
+            android:layout_height="286dp"
+            app:srcCompat="@drawable/dt"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="2dp" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:text="Đăng ký"
+            android:textColor="#0B8159"
+            android:textSize="40dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+        <EditText
+            android:id="@+id/edt_userNameViewdk"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_margin="20dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/bg_textviewlogin"
+            android:drawableStart="@drawable/emailicon"
+            android:drawablePadding="15dp"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="text"
+            android:textColor="#085A3E"
+            android:textColorHint="#085A3E"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <EditText
+            android:id="@+id/edt_passViewDk"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_margin="20dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/bg_textviewlogin"
+            android:drawableStart="@drawable/lock_fill"
+            android:drawablePadding="15dp"
+            android:ems="10"
+            android:hint="Mật khẩu"
+            android:inputType="textPassword"
+            android:textColor="#085A3E"
+            android:textColorHint="#085A3E"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edt_userNameViewdk" />
+
+        <EditText
+            android:id="@+id/edt_pass2"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_margin="20dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/bg_textviewlogin"
+            android:drawableStart="@drawable/lock_fill"
+            android:drawablePadding="15dp"
+            android:ems="10"
+            android:hint="Nhập lại mật khẩu"
+            android:inputType="textPassword"
+            android:textColor="#085A3E"
+            android:textColorHint="#085A3E"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edt_passViewDk" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_ViewDk"
+            style="@android:style/Widget.Button"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_margin="20dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/button_login"
+            android:text="Đăng Ký"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edt_pass2" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="horizontal"
+
+            app:layout_constraintTop_toBottomOf="@+id/btn_ViewDk"
+            tools:layout_editor_absoluteX="20dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_gg"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/sytem_login_button"
+                android:drawableEnd="@drawable/gg"
+                android:padding="16dp"
+                android:text="Google"
+                android:textColor="#0B8159"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_fb"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/sytem_login_button"
+                android:drawableEnd="@drawable/face"
+                android:padding="16dp"
+                android:text="Facebook"
+                android:textColor="#0B8159"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_backLogin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/button_login"
+            android:text="Quay lại đăng nhập"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
