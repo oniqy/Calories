@@ -1,11 +1,12 @@
 package com.example.testapp.ui.notifications;
 
+import android.widget.LinearLayout;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class NotificationsViewModel extends ViewModel {
-
     private final MutableLiveData<String> mText;
 
     public NotificationsViewModel() {

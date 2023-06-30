@@ -4,10 +4,10 @@
         <layer-list>
             <item>
                 <shape>
-                    <stroke android:color="#CC0B8159" android:width="2dp">
+                    <stroke android:color="#141514" android:width="2dp">
                     </stroke>
                     <solid android:color="#E4F6E8"></solid>
-                    <corners  android:topRightRadius="70dp" android:bottomRightRadius="70dp"></corners>
+                    <corners  android:radius="20dp"></corners>
                 </shape>
             </item>
 

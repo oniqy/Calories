@@ -1,6 +1,8 @@
 package com.example.testapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +10,11 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.example.testapp.ui.notifications.Input_Info_Fragment;
 
 public class DangNhapPage extends AppCompatActivity {
     Button btn_dk,btn_dn;
@@ -40,8 +47,8 @@ public class DangNhapPage extends AppCompatActivity {
         btn_dn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent trangChu = new Intent(DangNhapPage.this,Info.class);
-                startActivity(trangChu);
+                Intent intent = new Intent(DangNhapPage.this,MainActivity.class);
+                startActivity(intent);
             }
         });
     }

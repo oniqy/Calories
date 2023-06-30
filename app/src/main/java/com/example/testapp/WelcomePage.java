@@ -13,7 +13,8 @@ public class WelcomePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_welcome_page);
         btn_dn_wel = (Button) findViewById(R.id.btn_dn_wel);
         btn_dk_wel = (Button) findViewById(R.id.btn_dk_wel);

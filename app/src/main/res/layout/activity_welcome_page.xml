@@ -14,7 +14,6 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="45dp"
         android:text="Welcome to,Healthy Calories"
-
         android:textColor="#0B8159"
         android:textSize="35dp"
         android:textStyle="bold"
@@ -39,7 +38,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-
         android:layout_marginTop="50dp"
         android:background="@drawable/button_login"
         android:text="Đăng nhập"
