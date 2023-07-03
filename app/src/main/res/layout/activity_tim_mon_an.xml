@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.TimMonAn">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#0BC585">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:orientation="horizontal"
+                    android:id="@+id/timmonan_header">
+
+                    <Button
+                        android:id="@+id/button2"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:padding="0dp"
+                        android:backgroundTint="#0BC585"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginLeft="15dp"
+                        android:drawableLeft="@drawable/bakc_icon_50"
+                        style="?android:attr/borderlessButtonStyle"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="right|center_vertical">
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15pt"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:layout_marginRight="20dp"
+
+                            android:text="Món ăn" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:id="@+id/timmonan_content"
+                    android:layout_below="@+id/timmonan_header"
+                    android:background="@drawable/finding_meals_background">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/finding_meal_searchbox">
+
+
+                        <EditText
+                            android:id="@+id/editTextText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="text"
+                            android:background="@null"
+                            android:text="Tìm món ăn"
+
+                            />
+
+                        <Button
+                            android:id="@+id/button"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="7dp"
+                            android:backgroundTint="#DBDADA"
+                            android:textColor="@color/black"
+                            android:layout_weight="1"
+                            android:drawableLeft="@drawable/search_icon_48"
+                            />
+
+                    </LinearLayout>
+
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="700dp" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
