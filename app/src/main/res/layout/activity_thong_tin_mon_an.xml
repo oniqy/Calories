@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ThongTinMonAn">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="#0BC585">
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:padding="0dp"
+                android:backgroundTint="#0BC585"
+                android:layout_marginTop="7dp"
+                android:layout_marginLeft="15dp"
+                android:drawableLeft="@drawable/bakc_icon_50"
+                style="?android:attr/borderlessButtonStyle"
+
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="right">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15pt"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="15dp"
+
+                    android:text="Thông tin món ăn" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/finding_meals_background"
+            android:layout_marginTop="70dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/ttMonAn_layout_img">
+
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="15dp"
+
+                    android:text="Phở bò tái"
+                    android:textSize="15pt"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imageView10"
+                    android:layout_width="295dp"
+                    android:layout_height="165dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="15dp"
+
+
+                    tools:srcCompat="@drawable/pho_bo" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/ttMonAn_layout_soluong"
+                android:layout_below="@+id/ttMonAn_layout_img"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_horizontal"
+                >
+
+
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/minus_icon_24"
+                    android:background="none"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/thongtinmonan_img_border"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="10pt"
+                    android:textColor="@color/black"
+                    android:text="1" />
+
+                <Button
+                    android:id="@+id/button5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/plus_icon_24"
+                    android:background="none"
+                    android:text="" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/ttMonAn_layout_info"
+                android:layout_below="@+id/ttMonAn_layout_soluong">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/textView19"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textSize="8pt"
+                            android:layout_marginLeft="10dp"
+                            android:text="Chất đạm" />
+
+                        <TextView
+                            android:id="@+id/textView20"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_gravity="right"
+                            android:textSize="8pt"
+
+                            android:text="219g" />
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/progressBar5"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_gravity="center"
+                        android:layout_width="300dp"
+                        android:layout_height="30dp"
+                        android:progress="70"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/textView21"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textSize="8pt"
+                            android:layout_marginLeft="10dp"
+                            android:text="Chất béo" />
+
+                        <TextView
+                            android:id="@+id/textView22"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_gravity="right"
+                            android:textSize="8pt"
+
+                            android:text="93g" />
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/progressBar6"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_gravity="center"
+                        android:layout_width="300dp"
+                        android:layout_height="30dp"
+                        android:progress="70"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/textView23"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textSize="8pt"
+                            android:layout_marginLeft="10dp"
+                            android:text="Carbs" />
+
+                        <TextView
+                            android:id="@+id/textView24"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_gravity="right"
+                            android:textSize="8pt"
+
+                            android:text="219g" />
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/progressBar7"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_gravity="center"
+                        android:layout_width="300dp"
+                        android:layout_height="30dp"
+                        android:progress="70"/>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/button6"
+                    android:layout_width="180dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="center"
+                    android:textSize="10pt"
+                    android:layout_marginTop="15dp"
+                    android:text="Thêm" />
+            </LinearLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
