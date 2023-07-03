@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_BMI"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="993dp"
     tools:context=".ui.notifications.BMI_page_Fragment">
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:background="@drawable/bg_main"
-            android:layout_height="match_parent"
+            android:layout_height="993dp"
             tools:context=".iput_info">
 
             <LinearLayout
@@ -70,9 +70,9 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
-                android:layout_width="match_parent"
-                android:layout_height="800dp"
-                android:background="#B3E5BE"
+                android:layout_width="411dp"
+                android:layout_height="1139dp"
+                android:background="#FCFFFC"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -91,7 +91,7 @@
                     android:id="@+id/imageView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="-20dp"
+                    android:layout_marginStart="-22dp"
                     android:layout_marginTop="20dp"
                     android:rotation="240"
                     android:src="@drawable/ellipse52"
@@ -103,8 +103,8 @@
                     android:id="@+id/imageView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="80dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="78dp"
+                    android:layout_marginEnd="22dp"
                     android:rotation="25"
                     android:src="@drawable/ellipse55"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -145,6 +145,181 @@
                     app:layout_constraintEnd_toStartOf="@+id/imageView4"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="MissingConstraints" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="240dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/button_setting"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView5">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textView16"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="30dp"
+                            android:text="Chiều cao:"
+                            android:textColor="#020101"
+                            android:textSize="24dp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="MissingConstraints" />
+
+                        <EditText
+                            android:id="@+id/editTextText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:ems="10"
+                            android:hint="cm"
+                            android:inputType="text"
+                            android:minHeight="48dp"
+                            android:textAlignment="center"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="MissingConstraints,TouchTargetSizeCheck" />
+
+                        <TextView
+                            android:id="@+id/textView17"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Cân nặng:"
+                            android:textColor="#020101"
+                            android:textSize="24dp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView16"
+                            tools:ignore="MissingConstraints" />
+
+                        <EditText
+                            android:id="@+id/editTextText2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:hint="kg"
+                            android:inputType="text"
+                            android:textAlignment="center"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/editTextText"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/button"
+                            android:layout_width="229dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/bg_button_setting"
+                            android:text="Lưu"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/editTextText2"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                        <TextView
+                            android:id="@+id/textView18"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Chỉ số BMI của bạn là "
+                            android:textColor="#0C0C0C"
+                            android:textSize="22dp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/button" />
+
+                        <TextView
+                            android:id="@+id/textView19"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="20.2"
+                            android:textColor="#00FF47"
+                            android:textSize="22dp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/textView18"
+                            app:layout_constraintTop_toBottomOf="@+id/button" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imageView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="2dp"
+                    android:src="@drawable/line2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+                    tools:ignore="MissingConstraints" />
+
+                <LinearLayout
+                    android:layout_width="335dp"
+                    android:layout_height="300dp"
+                    android:background="@drawable/button_setting"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView11">
+
+                    <TextView
+                        android:id="@+id/textView20"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="10dp"
+                        android:text="Cách đánh giá chỉ số BMI:
+
+
+
+                        -
+                        -
+
+                        - 17  BMI 18.5: Gầy độ
+                            -
+                            -
+
+                        - 18.5  BMI 25: Bình thường
+                           -
+                           -
+
+
+                        - 25  BMI 30: Thừa cân
+
+
+                        -
+                          -
+
+
+                        - 30  BMI 35: Béo phì độ
+
+
+                        -
+                        -
+
+                        - BMI 40: Béo phì độ nặng
+                         "
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

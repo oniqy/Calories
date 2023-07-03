@@ -1,5 +1,6 @@
 package com.example.testapp.ui.notifications;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.testapp.Bmi_Activity;
 import com.example.testapp.R;
 import com.example.testapp.databinding.FragmentNotificationsBinding;
 
@@ -27,7 +29,7 @@ public class NotificationsFragment extends Fragment {
         binding.linearLayoutBmi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new BMI_page_Fragment());
+               loadFragment(new BMI_page_Fragment());
             }
         });
         binding.linearLayoutBmr.setOnClickListener(new View.OnClickListener() {

@@ -73,7 +73,7 @@
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="800dp"
-            android:background="#B3E5BE"
+            android:background="#FAFAFA"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -115,15 +115,15 @@
 
                     <TextView
                         android:id="@+id/textView14"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="18dp"
                         android:clickable="false"
-                        android:text="TDEE của bạn là:"
                         android:gravity="center"
+                        android:text="TDEE của bạn là:"
                         android:textColor="#141614"
                         android:textSize="36dp"
                         android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:ignore="MissingConstraints" />
@@ -193,15 +193,16 @@
 
                     <TextView
                         android:id="@+id/textView_bmr"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="18dp"
+
                         android:clickable="false"
                         android:gravity="center"
                         android:text="BMR của bạn là:"
                         android:textColor="#141614"
                         android:textSize="36dp"
                         android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:ignore="MissingConstraints" />
@@ -272,15 +273,16 @@
 
                     <TextView
                         android:id="@+id/textView_target"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="18dp"
+
                         android:clickable="false"
                         android:gravity="center"
                         android:text="Mục tiêu của bạn:"
                         android:textColor="#141614"
                         android:textSize="36dp"
                         android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:ignore="MissingConstraints" />

@@ -4,9 +4,8 @@
         <layer-list>
             <item>
                 <shape>
-                    <stroke android:color="#141514" android:width="2dp">
-                    </stroke>
-                    <solid android:color="#E4F6E8"></solid>
+
+                    <solid android:color="#C9F1D1"></solid>
                     <corners  android:radius="20dp"></corners>
                 </shape>
             </item>
