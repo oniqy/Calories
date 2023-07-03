@@ -10,17 +10,20 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CFEDD2"
+    android:background="#F3F6F3"
     >
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="406dp"
         android:layout_height="281dp"
-        app:srcCompat="@drawable/dt"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-6dp" />
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/artboard"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textView"

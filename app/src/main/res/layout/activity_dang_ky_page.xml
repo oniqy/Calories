@@ -10,17 +10,20 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#CFEDD2"
+        android:background="#FDFDFD"
         tools:context=".DangKy">
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="412dp"
             android:layout_height="286dp"
-            app:srcCompat="@drawable/dt"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="2dp" />
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/artboard"
+            tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/textView"
@@ -99,9 +102,9 @@
             android:layout_height="55dp"
             android:layout_margin="20dp"
             android:layout_marginTop="40dp"
-            android:background="@drawable/button_login"
+            android:background="@drawable/sytem_login_button"
             android:text="Đăng Ký"
-            android:textColor="@color/white"
+            android:textColor="#0B8159"
             android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
