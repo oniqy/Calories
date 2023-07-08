@@ -39,11 +39,12 @@
             android:id="@+id/btnThem"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_toRightOf="@+id/meal_name"
-            android:layout_marginTop="7dp"
             android:layout_marginLeft="25dp"
-            android:paddingLeft="2dp"
+            android:layout_marginTop="7dp"
+            android:layout_toRightOf="@+id/meal_name"
             android:backgroundTint="@color/white"
-            android:drawableLeft="@drawable/add_icon_50" />
+            android:drawableLeft="@drawable/add_icon_50"
+            android:paddingLeft="2dp"
+            tools:ignore="SpeakableTextPresentCheck" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

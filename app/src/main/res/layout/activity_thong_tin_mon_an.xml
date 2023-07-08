@@ -16,35 +16,43 @@
             android:layout_height="100dp"
             android:background="#0BC585">
 
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:padding="0dp"
-                android:backgroundTint="#0BC585"
-                android:layout_marginTop="7dp"
-                android:layout_marginLeft="15dp"
-                android:drawableLeft="@drawable/bakc_icon_50"
-                style="?android:attr/borderlessButtonStyle"
+            <ImageButton
+                android:id="@+id/imagebtn_back2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="2dp"
+                android:background="#0BC585"
+                android:clickable="true"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                app:srcCompat="@drawable/back"
+                tools:ignore="SpeakableTextPresentCheck" />
 
-                />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="right">
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="0dp"
+                android:gravity="right"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15pt"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
+                    android:layout_marginTop="12dp"
                     android:layout_marginRight="20dp"
-                    android:layout_marginTop="15dp"
+                    android:text="Thông tin món ăn"
+                    android:textColor="@color/white"
+                    android:textSize="15pt"
 
-                    android:text="Thông tin món ăn" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </RelativeLayout>
@@ -96,13 +104,14 @@
                 >
 
 
-                <Button
+                <ImageButton
                     android:id="@+id/button4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/minus_icon_24"
-                    android:background="none"
-                    android:text="" />
+                    android:layout_width="35dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/minus_icon_24"
+
+                    android:text=""
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                 <TextView
                     android:id="@+id/textView18"
@@ -115,13 +124,14 @@
                     android:textColor="@color/black"
                     android:text="1" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/button5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/plus_icon_24"
-                    android:background="none"
-                    android:text="" />
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+
+                    android:background="@drawable/plus_icon_24"
+                    android:text=""
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
             </LinearLayout>
 
             <LinearLayout

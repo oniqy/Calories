@@ -87,75 +87,16 @@
                     android:src="@drawable/human"
                     tools:ignore="MissingConstraints" />
 
-                <ImageView
-                    android:id="@+id/imageView8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="-22dp"
-                    android:layout_marginTop="20dp"
-                    android:rotation="240"
-                    android:src="@drawable/ellipse52"
-                    app:layout_constraintStart_toEndOf="@+id/imageView7"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="MissingConstraints" />
-
-                <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="78dp"
-                    android:layout_marginEnd="22dp"
-                    android:rotation="25"
-                    android:src="@drawable/ellipse55"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/imageView3" />
-
-                <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="56dp"
-                    android:layout_marginEnd="37dp"
-                    android:rotation="20"
-                    android:src="@drawable/ellipse52"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView4"
-                    app:layout_constraintTop_toTopOf="@+id/imageView4"
-                    tools:ignore="MissingConstraints" />
-
-                <ImageView
-                    android:id="@+id/imageView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="28dp"
-                    android:layout_marginBottom="32dp"
-                    android:rotation="90"
-                    android:src="@drawable/ellipse52"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView4"
-                    tools:ignore="MissingConstraints" />
-
-                <ImageView
-                    android:id="@+id/imageView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginEnd="16dp"
-                    android:rotation="165"
-                    android:src="@drawable/ellipse52"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView4"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="MissingConstraints" />
-
                 <LinearLayout
                     android:id="@+id/linearLayout4"
                     android:layout_width="wrap_content"
                     android:layout_height="240dp"
-                    android:layout_marginTop="25dp"
                     android:background="@drawable/button_setting"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView5">
+                    tools:layout_editor_absoluteY="239dp"
+                    tools:ignore="MissingConstraints">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"

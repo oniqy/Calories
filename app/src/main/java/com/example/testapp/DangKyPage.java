@@ -9,9 +9,13 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.testapp.SQL.UserAcc;
+import com.example.testapp.SQL.UserDataSource;
+
 public class DangKyPage extends AppCompatActivity {
     EditText edt_userNameViewdk,edt_pass2,edt_passViewDk;
     Button btn_ViewDk,btn_gg, btn_fb,btn_backLogin;
+    private UserDataSource datasource;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +27,12 @@ public class DangKyPage extends AppCompatActivity {
     }
     private void  addControl(){
         edt_userNameViewdk = (EditText) findViewById(R.id.edt_userNameViewdk);
+        edt_passViewDk = (EditText) findViewById(R.id.edt_passViewDk);
+        edt_pass2 = (EditText) findViewById(R.id.edt_pass2);
         btn_backLogin = (Button) findViewById(R.id.btn_backLogin);
+        datasource =  new UserDataSource(DangKyPage.this);
+        datasource.open();
+
     }
     private void addEvent(){
         //Quay lai trang dadng nhap

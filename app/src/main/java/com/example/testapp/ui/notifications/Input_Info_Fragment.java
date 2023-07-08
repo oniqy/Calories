@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import com.example.testapp.Custom_spinner;
 import com.example.testapp.MainActivity;
 import com.example.testapp.R;
+import com.example.testapp.SQL.UserDataSource;
 import com.example.testapp.adapter_gioitinh;
 import com.example.testapp.adapter_tapluyen;
 import com.example.testapp.databinding.FragmentBMRPageBinding;
@@ -52,6 +53,7 @@ public class Input_Info_Fragment extends Fragment implements Custom_spinner.OnSp
 
     // TODO: Rename and change types of parameters
     private String mParam1;
+
     private String mParam2;
 
     public Input_Info_Fragment() {
@@ -165,6 +167,7 @@ public class Input_Info_Fragment extends Fragment implements Custom_spinner.OnSp
                 loadFragment(new BMR_page_Fragment());
             }
         });
+
         btn_luuBMi = (Button) binding.btnLuuBMi.findViewById(R.id.btn_luuBMi);
         edt_age = (EditText) binding.edtAge.findViewById(R.id.edt_age);
         edt_height = (EditText) binding.edtHeight.findViewById(R.id.edt_height);
