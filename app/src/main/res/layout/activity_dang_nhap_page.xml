@@ -10,7 +10,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F3F6F3"
+    android:background="#FFFFFF"
     >
 
     <ImageView
@@ -45,10 +45,10 @@
         android:layout_margin="20dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/bg_textviewlogin"
-        android:drawableStart="@drawable/emailicon"
+        android:drawableStart="@drawable/baseline_account_box_24"
         android:drawablePadding="15dp"
         android:ems="10"
-        android:hint="@string/hintEmail"
+        android:hint="@string/hinttendn"
         android:inputType="text"
         android:textColor="#085A3E"
         android:textColorHint="#085A3E"

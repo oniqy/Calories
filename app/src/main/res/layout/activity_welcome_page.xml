@@ -40,7 +40,7 @@
         android:layout_margin="20dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/button_login"
-        android:text="Đăng nhập"
+        android:text="Đăng nhập ngay"
         android:textColor="@color/white"
         android:textSize="20dp"
         android:textStyle="bold"
@@ -49,19 +49,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView_welcome" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_dk_wel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:layout_marginTop="32dp"
-        android:text="Đăng ký"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        style="@android:style/Widget.Button"
-        android:background="@drawable/button_login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_dn_wel" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

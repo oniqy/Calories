@@ -12,9 +12,10 @@ public class SQLHelper extends SQLiteOpenHelper{
     public static final String TABLE_FoodMenu = "foodMenu";
     public static final String TABLE_ExerciseMenu = "exescMenu";
     public static final String TABLE_CaloDaily = "caloDaily";
-    public static final String COLUMN_EMAIL = "_email";
-    public static final String COLUMN_NAME_USER= "name_user";
     //Tao thuoc tinh trong table
+    public static final String COLUMN_EMAIL = "email";
+    public static final String COLUMN_NAME_USER= "name_user";
+
     public static final String TABLE_UserInfo_idUser = "idUser";
     public static final String TABLE_UserInfo_Name = "Name";
     public static final String TABLE_UserInfo_UserHeight = "UserHeight";
@@ -43,7 +44,7 @@ public class SQLHelper extends SQLiteOpenHelper{
     public static final String TABLE_CaloDaily_idExercise = "idExercise";
     public static final String TABLE_CaloDaily_idFood = "idFood";
     public static final String TABLE_CaloDaily_TimeType = "TimeType";
-    private static final String DATABASE_NAME = "user.db";
+    private static final String DATABASE_NAME = "appM_healthyCare.db";
     private static final int DATABASE_VERSION = 1;
 
     // Câu lệnh khởi tạo Database.
@@ -63,7 +64,7 @@ public class SQLHelper extends SQLiteOpenHelper{
                 +TABLE_CaloDaily_TimeType+"integer);";
 
         String tbUserAcc = "create table "
-                + TABLE_UserInfo + "( " + COLUMN_EMAIL
+                + TABLE_USER + "( " + COLUMN_EMAIL
                 + " text primary key , " + COLUMN_NAME_USER
                 + " text not null);";
 
@@ -83,7 +84,7 @@ public class SQLHelper extends SQLiteOpenHelper{
                 +TABLE_ExerciseMenu_Mins+"integer);";
 
         String tbUserInfo = "create table "
-                + TABLE_USER + "( " + TABLE_UserInfo_idUser
+                + TABLE_UserInfo + "( " + TABLE_UserInfo_idUser
                 + " integer primary key autoincrement, " + TABLE_UserInfo_Name
                 + " text ,"+TABLE_UserInfo_UserHeight+"integer ,"
                 +TABLE_UserInfo_UserWeight+"integer,"

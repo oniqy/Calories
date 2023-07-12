@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FDFDFD"
+        android:background="#FFFFFF"
         tools:context=".DangKy">
 
         <ImageView
@@ -45,7 +45,7 @@
             android:layout_margin="20dp"
             android:layout_marginTop="32dp"
             android:background="@drawable/bg_textviewlogin"
-            android:drawableStart="@drawable/emailicon"
+            android:drawableStart="@drawable/baseline_account_box_24"
             android:drawablePadding="15dp"
             android:ems="10"
             android:hint="@string/hinttendn"

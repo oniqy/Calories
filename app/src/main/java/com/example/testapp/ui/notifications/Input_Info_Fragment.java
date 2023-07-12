@@ -1,6 +1,5 @@
 package com.example.testapp.ui.notifications;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -17,12 +16,9 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.example.testapp.Custom_spinner;
-import com.example.testapp.MainActivity;
 import com.example.testapp.R;
-import com.example.testapp.SQL.UserDataSource;
 import com.example.testapp.adapter_gioitinh;
 import com.example.testapp.adapter_tapluyen;
-import com.example.testapp.databinding.FragmentBMRPageBinding;
 import com.example.testapp.databinding.FragmentInputInfoBinding;
 import com.example.testapp.item_gioitinh;
 import com.example.testapp.item_tapluyen;
