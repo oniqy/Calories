@@ -7,8 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.database.SQLException;
 
+import com.example.testapp.DTO.UserInfo;
 import com.example.testapp.SQL.SQLHelper;
 import com.example.testapp.DTO.UserAcc;
+import com.example.testapp.ui.notifications.BMR_page_Fragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,9 @@ public class UserDataSource {
     public UserDataSource(Context context) {
         dbHelper = new SQLHelper(context);
     }
+
+
+
     public void open() throws SQLException {
         database = dbHelper.getWritableDatabase();
     }
@@ -47,9 +52,8 @@ public class UserDataSource {
         dbHelper.close();
     }
 
-    public int createUser(UserAcc userAcc) {
+    public int createUserACc(UserAcc userAcc) {
         ContentValues values = new ContentValues();
-
         values.put(SQLHelper.COLUMN_EMAIL, userAcc.getUsername());
         values.put(SQLHelper.COLUMN_NAME_USER, userAcc.getPassWord());
         long insertId = database.insert(SQLHelper.TABLE_USER, null,
@@ -60,6 +64,40 @@ public class UserDataSource {
 
         Log.v("QYLOGG",userAcc.username);
         return 1;
+    }
+    public int createUserInfo(UserInfo userInfo) {
+        ContentValues values = new ContentValues();
+        values.put(SQLHelper.COLUMN_UserInfo_UserHeight, userInfo.getUserHeight());
+        values.put(SQLHelper.COLUMN_UserInfo_UserWeight, userInfo.getUserWeight());
+        values.put(SQLHelper.COLUMN_UserInfo_BirthDay, userInfo.getBirthDay());
+        values.put(SQLHelper.COLUMN_UserInfo_Exercise, userInfo.getExercise());
+        values.put(SQLHelper.COLUMN_UserInfo_Gender, userInfo.getGender());
+        values.put(SQLHelper.COLUMN_UserInfo_Target, userInfo.getTarget());
+        long insertId = database.insert(SQLHelper.TABLE_UserInfo, null,
+                values);
+        if(insertId <= 0 ){
+            return -1;
+        }
+        return 1;
+    }
+    public UserInfo Bmr(){
+        Cursor resultSet = database.rawQuery("Select * from "+SQLHelper.TABLE_UserInfo,null);
+        resultSet.moveToFirst();
+        UserInfo userInfo = new UserInfo();
+        int chieuCao = resultSet.getInt(1);
+        int canNang = resultSet.getInt(2);
+        int age = resultSet.getInt(3);
+        String tapLuyen = resultSet.getString(4);
+        String sex = resultSet.getString(5);
+        String target = resultSet.getString(6);
+
+        userInfo.setUserHeight(chieuCao);
+        userInfo.setUserWeight(canNang);
+        userInfo.setGender(sex);
+        userInfo.setBirthDay(age);
+        userInfo.setExercise(tapLuyen);
+        userInfo.setTarget(target);
+        return userInfo;
     }
     public boolean checkUser(){
         String check = "Select * from "+SQLHelper.TABLE_USER;
@@ -103,6 +141,7 @@ public class UserDataSource {
             return -1;
         }
     }
+
 
 
 

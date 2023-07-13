@@ -56,7 +56,7 @@ public class DangKyPage extends AppCompatActivity implements View.OnClickListene
             if (pw.equals(pw2)) {
                 userAcc.setUsername(usm);
                 userAcc.setPassWord(pw);
-                int k = datasource.createUser(userAcc);
+                int k = datasource.createUserACc(userAcc);
                 if (k == 1) {
                     Toast.makeText(DangKyPage.this, "Đăng ký thành công", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(DangKyPage.this, HomeFragment.class);

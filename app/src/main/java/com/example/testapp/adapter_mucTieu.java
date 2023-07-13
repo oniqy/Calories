@@ -8,29 +8,26 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class adapter_tapluyen  extends BaseAdapter {
-    ArrayList<item_tapluyen> item_tapluyens = new ArrayList<>();
-
+public class adapter_mucTieu extends BaseAdapter {
+    ArrayList<item_mucTieu> item_mucTieus = new ArrayList<>();
     LayoutInflater inflater;
     int layout;
 
-    public adapter_tapluyen(LayoutInflater inflater, ArrayList<item_tapluyen> item_tapluyens, int layout) {
-        this.inflater = inflater;
-        this.item_tapluyens = item_tapluyens;
-        this.layout = layout;
+    public adapter_mucTieu(LayoutInflater layoutInflater, ArrayList<item_mucTieu> item_mucTieus, int item_tapluyen) {
+        this.inflater = layoutInflater;
+        this.item_mucTieus = item_mucTieus;
+        this.layout = item_tapluyen;
     }
-
-
 
 
     @Override
     public int getCount() {
-        return item_tapluyens.size();
+        return item_mucTieus.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return item_tapluyens.get(position);
+        return item_mucTieus.get(position);
     }
 
     @Override
@@ -40,7 +37,7 @@ public class adapter_tapluyen  extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        item_tapluyen item = item_tapluyens.get(position);
+        item_mucTieu item = item_mucTieus.get(position);
         View rowView = inflater.inflate(layout,null,true);
         TextView chedo = (TextView) rowView.findViewById(R.id.tv_chedo);
         chedo.setText(item.getChedo());

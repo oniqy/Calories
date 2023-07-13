@@ -4,17 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_BMI"
     android:layout_width="match_parent"
-    android:layout_height="993dp"
+    android:layout_height="match_parent"
     tools:context=".ui.notifications.BMI_page_Fragment">
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
+        android:layout_height="fill_parent"
         >
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/bg_main"
-            android:layout_height="993dp"
             tools:context=".iput_info">
 
             <LinearLayout
@@ -34,8 +35,8 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginBottom="10dp"
                     android:background="#0BC585"
-                    android:minWidth="48dp"
                     android:clickable="true"
+                    android:minWidth="48dp"
                     android:minHeight="48dp"
                     app:srcCompat="@drawable/back"
                     tools:ignore="SpeakableTextPresentCheck" />
@@ -44,9 +45,9 @@
                     android:id="@+id/textView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:layout_gravity="center"
                     android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="BMI"
@@ -70,32 +71,29 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
-                android:layout_width="411dp"
-                android:layout_height="1139dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="#FCFFFC"
                 android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+                app:layout_constraintVertical_bias="0.032">
 
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/human"
-                    tools:ignore="MissingConstraints" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout4"
                     android:layout_width="wrap_content"
                     android:layout_height="240dp"
+                    android:layout_marginTop="20dp"
                     android:background="@drawable/button_setting"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    tools:layout_editor_absoluteY="239dp"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="MissingConstraints">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -117,7 +115,7 @@
                             tools:ignore="MissingConstraints" />
 
                         <EditText
-                            android:id="@+id/editTextText"
+                            android:id="@+id/edt_BMI_cc"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15dp"
@@ -126,7 +124,9 @@
                             android:inputType="text"
                             android:minHeight="48dp"
                             android:textAlignment="center"
+                            android:textColor="@color/black"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/textView16"
                             app:layout_constraintTop_toTopOf="parent"
                             tools:ignore="MissingConstraints,TouchTargetSizeCheck" />
 
@@ -145,54 +145,55 @@
                             tools:ignore="MissingConstraints" />
 
                         <EditText
-                            android:id="@+id/editTextText2"
+                            android:id="@+id/edt_BMI_cn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:hint="kg"
                             android:inputType="text"
                             android:textAlignment="center"
+                            android:textColor="@color/black"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/editTextText"
+                            app:layout_constraintTop_toBottomOf="@+id/edt_BMI_cc"
                             tools:ignore="TouchTargetSizeCheck" />
 
                         <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/button"
+                            android:id="@+id/btn_luu"
                             android:layout_width="229dp"
                             android:layout_height="40dp"
                             android:layout_marginTop="10dp"
                             android:background="@drawable/bg_button_setting"
                             android:text="Lưu"
+                            android:textColor="@color/black"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/editTextText2"
+                            app:layout_constraintTop_toBottomOf="@+id/edt_BMI_cn"
                             tools:ignore="TouchTargetSizeCheck" />
 
                         <TextView
                             android:id="@+id/textView18"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="4dp"
                             android:text="Chỉ số BMI của bạn là "
                             android:textColor="#0C0C0C"
                             android:textSize="22dp"
                             android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/button" />
+                            app:layout_constraintTop_toBottomOf="@+id/btn_luu" />
 
                         <TextView
-                            android:id="@+id/textView19"
+                            android:id="@+id/tv_kqBMI"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="20.2"
-                            android:textColor="#00FF47"
+                            android:textColor="#0BC484"
                             android:textSize="22dp"
                             android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/textView18"
-                            app:layout_constraintTop_toBottomOf="@+id/button" />
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -203,65 +204,80 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:layout_marginEnd="2dp"
                     android:src="@drawable/line2"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
                     tools:ignore="MissingConstraints" />
 
                 <LinearLayout
                     android:layout_width="335dp"
-                    android:layout_height="300dp"
+                    android:layout_height="220dp"
                     android:background="@drawable/button_setting"
                     android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView11">
 
                     <TextView
                         android:id="@+id/textView20"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginRight="10dp"
-                        android:text="Cách đánh giá chỉ số BMI:
+                        android:text="Kết quả BMI của bạn"
+                        android:textColor="@color/black"
+                        android:textSize="20dp" />
 
+                    <TextView
+                        android:id="@+id/tetV_kq1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text=""
+                        android:textColor="#0BC484"
+                        android:textSize="30dp"
+                        android:textStyle="bold" />
 
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="10dp"
+                        android:text="Nhận xét BMI của bạn:"
+                        android:textColor="@color/black"
+                        android:textSize="20dp" />
 
-                        -
-                        -
-
-                        - 17  BMI 18.5: Gầy độ
-                            -
-                            -
-
-                        - 18.5  BMI 25: Bình thường
-                           -
-                           -
-
-
-                        - 25  BMI 30: Thừa cân
-
-
-                        -
-                          -
-
-
-                        - 30  BMI 35: Béo phì độ
-
-
-                        -
-                        -
-
-                        - BMI 40: Béo phì độ nặng
-                         "
+                    <TextView
+                        android:id="@+id/tv_nx"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="10dp"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="20dp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="778dp"
+                tools:ignore="MissingConstraints"></LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

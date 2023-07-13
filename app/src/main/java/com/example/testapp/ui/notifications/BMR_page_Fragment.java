@@ -11,8 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.testapp.DAO.UserDataSource;
+import com.example.testapp.DTO.UserInfo;
 import com.example.testapp.R;
 import com.example.testapp.databinding.FragmentBMRPageBinding;
+
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,6 +24,7 @@ import com.example.testapp.databinding.FragmentBMRPageBinding;
  * create an instance of this fragment.
  */
 public class BMR_page_Fragment extends Fragment {
+    private UserDataSource datasource;
     View view;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,11 +65,88 @@ public class BMR_page_Fragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+    public double tinhBMR(){
+        UserInfo userInfo = datasource.Bmr();
+        String sex = userInfo.getGender();
+        int chieuCao = userInfo.getUserHeight();
+        int canNang = userInfo.getUserWeight();
+        int age = userInfo.getBirthDay();
+        double BMR ;
+        if(sex == "Nam"){
+            double BMR1 = 88.362+(13.397*canNang)+(4.799*chieuCao);
+            BMR = BMR1 - (5.677 * age);
 
+        }else {
+            double BMR1 = 447.593 +(9.247 *canNang)+(3.098 *chieuCao);
+            BMR = BMR1 - (4.33  * age);
+        }
+        return BMR;
+    }
+    public double tinhTDEE(){
+        UserInfo userInfo = datasource.Bmr();
+        String exercise = userInfo.getExercise();
+        double R = 0;
+        if(exercise.equals("Không tập")){
+            R = 1.2;
+        } else if (exercise.equals("Nhẹ nhàng")) {
+            R = 1.375;
+        }
+        else if (exercise.equals("Vừa phải")) {
+            R = 1.55;
+        }
+        else if (exercise.equals("Nặng")) {
+            R = 1.725;
+        }
+        return R;
+    }
+    public double tinhTarget(){
+        UserInfo userInfo = datasource.Bmr();
+        String exercise = userInfo.getTarget();
+        double R = 0;
+        if(exercise.equals("Giảm cân")){
+            R = -500;
+        } else if (exercise.equals("Giữ nguyên cân nặng")) {
+            R = 0;
+        }
+        else if (exercise.equals("Tăng cân")) {
+            R = 500;
+        }
+        return R;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentBMRPageBinding.inflate(inflater, container, false);
+        datasource = new UserDataSource(getContext());
+        datasource.open();
+        binding.btnTinhBMR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               double bmr = tinhBMR();
+               binding.textViewTylebmr.setText(String.format(Locale.US, "%.0f", bmr)+" Kcal/day");
+            }
+        });
+        binding.btnTinhTDEE.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                double bmr = tinhBMR();
+                double r = tinhTDEE();
+                double tdee = bmr*r;
+
+                binding.textViewTyle.setText(String.format(Locale.US, "%.0f", tdee)+" Kcal/day");
+            }
+        });
+        binding.btnTinhTarget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                double bmr = tinhBMR();
+                double r = tinhTDEE();
+                double tdee = bmr*r;
+                double target = tinhTarget();
+                tdee = tdee + target;
+                binding.textViewTyletarget.setText(String.format(Locale.US, "%.0f", tdee)+" Kcal/day");
+            }
+        });
         binding.imagebtnBack2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
