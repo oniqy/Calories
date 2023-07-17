@@ -1,4 +1,4 @@
-package com.example.testapp;
+package com.example.testapp.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,28 +6,33 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.testapp.R;
+
 import java.util.ArrayList;
 
-public class adapter_mucTieu extends BaseAdapter {
-    ArrayList<item_mucTieu> item_mucTieus = new ArrayList<>();
+public class adapter_tapluyen  extends BaseAdapter {
+    ArrayList<item_tapluyen> item_tapluyens = new ArrayList<>();
+
     LayoutInflater inflater;
     int layout;
 
-    public adapter_mucTieu(LayoutInflater layoutInflater, ArrayList<item_mucTieu> item_mucTieus, int item_tapluyen) {
-        this.inflater = layoutInflater;
-        this.item_mucTieus = item_mucTieus;
-        this.layout = item_tapluyen;
+    public adapter_tapluyen(LayoutInflater inflater, ArrayList<item_tapluyen> item_tapluyens, int layout) {
+        this.inflater = inflater;
+        this.item_tapluyens = item_tapluyens;
+        this.layout = layout;
     }
+
+
 
 
     @Override
     public int getCount() {
-        return item_mucTieus.size();
+        return item_tapluyens.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return item_mucTieus.get(position);
+        return item_tapluyens.get(position);
     }
 
     @Override
@@ -37,7 +42,7 @@ public class adapter_mucTieu extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        item_mucTieu item = item_mucTieus.get(position);
+        item_tapluyen item = item_tapluyens.get(position);
         View rowView = inflater.inflate(layout,null,true);
         TextView chedo = (TextView) rowView.findViewById(R.id.tv_chedo);
         chedo.setText(item.getChedo());

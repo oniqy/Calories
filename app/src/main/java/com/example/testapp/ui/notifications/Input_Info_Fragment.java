@@ -19,16 +19,14 @@ import android.widget.Toast;
 import com.example.testapp.Custom_spinner;
 import com.example.testapp.DAO.UserDataSource;
 import com.example.testapp.DTO.UserInfo;
-import com.example.testapp.DangKyPage;
 import com.example.testapp.R;
-import com.example.testapp.adapter_gioitinh;
-import com.example.testapp.adapter_mucTieu;
-import com.example.testapp.adapter_tapluyen;
+import com.example.testapp.adapter.adapter_gioitinh;
+import com.example.testapp.adapter.adapter_mucTieu;
+import com.example.testapp.adapter.adapter_tapluyen;
 import com.example.testapp.databinding.FragmentInputInfoBinding;
-import com.example.testapp.item_gioitinh;
-import com.example.testapp.item_mucTieu;
-import com.example.testapp.item_tapluyen;
-import com.example.testapp.ui.home.HomeFragment;
+import com.example.testapp.adapter.item_gioitinh;
+import com.example.testapp.adapter.item_mucTieu;
+import com.example.testapp.adapter.item_tapluyen;
 
 import java.util.ArrayList;
 
@@ -130,7 +128,7 @@ public class Input_Info_Fragment extends Fragment implements Custom_spinner.OnSp
 
     }
     private void gioitinh(){
-        int[] img =new int[]{R.drawable.lavatory,R.drawable.lavatory1};
+        int[] img =new int[]{R.drawable.lavator,R.drawable.lavatory1};
         String[] sex = new String[]{"Nam","Nữ"};
 
         spinner_sex.setSpinnerEventsListener(this);

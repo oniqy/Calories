@@ -1,5 +1,6 @@
 package com.example.testapp.ui.notifications;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.testapp.DAO.UserDataSource;
 import com.example.testapp.DTO.UserInfo;
@@ -24,6 +26,7 @@ import java.util.Locale;
  * create an instance of this fragment.
  */
 public class BMR_page_Fragment extends Fragment {
+
     private UserDataSource datasource;
     View view;
     // TODO: Rename parameter arguments, choose names that match
@@ -67,7 +70,11 @@ public class BMR_page_Fragment extends Fragment {
     }
     public double tinhBMR(){
         UserInfo userInfo = datasource.Bmr();
+
         String sex = userInfo.getGender();
+        if(sex == null){
+            return -1;
+        }
         int chieuCao = userInfo.getUserHeight();
         int canNang = userInfo.getUserWeight();
         int age = userInfo.getBirthDay();
@@ -123,28 +130,45 @@ public class BMR_page_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                double bmr = tinhBMR();
-               binding.textViewTylebmr.setText(String.format(Locale.US, "%.0f", bmr)+" Kcal/day");
+               if(bmr == -1){
+                   Toast.makeText(getContext(),"Vui lòng thiết lập chỉ số BMR",Toast.LENGTH_LONG).show();
+               }else {
+                   binding.textViewTylebmr.setText(String.format(Locale.US, "%.0f", bmr)+" Kcal/day");
+               }
+
             }
         });
         binding.btnTinhTDEE.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 double bmr = tinhBMR();
-                double r = tinhTDEE();
-                double tdee = bmr*r;
+                if(bmr == -1){
+                    Toast.makeText(getContext(),"Vui lòng thiết lập chỉ số BMR",Toast.LENGTH_LONG).show();
+                }else {
+                    double r = tinhTDEE();
+                    double tdee = bmr * r;
 
-                binding.textViewTyle.setText(String.format(Locale.US, "%.0f", tdee)+" Kcal/day");
+                    binding.textViewTyle.setText(String.format(Locale.US, "%.0f", tdee) + " Kcal/day");
+                }
             }
         });
         binding.btnTinhTarget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 double bmr = tinhBMR();
-                double r = tinhTDEE();
-                double tdee = bmr*r;
-                double target = tinhTarget();
-                tdee = tdee + target;
-                binding.textViewTyletarget.setText(String.format(Locale.US, "%.0f", tdee)+" Kcal/day");
+                if(bmr == -1){
+                    Toast.makeText(getContext(),"Vui lòng thiết lập chỉ số BMR",Toast.LENGTH_LONG).show();
+                }else {
+                    double r = tinhTDEE();
+                    double tdee = bmr * r;
+                    double target = tinhTarget();
+
+                    tdee = tdee + target;
+                    if(tdee < bmr){
+                        tdee =bmr+65;
+                    }
+                    binding.textViewTyletarget.setText(String.format(Locale.US, "%.0f", tdee) + " Kcal/day");
+                }
             }
         });
         binding.imagebtnBack2.setOnClickListener(new View.OnClickListener() {

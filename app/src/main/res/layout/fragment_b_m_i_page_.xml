@@ -109,7 +109,7 @@
                             android:text="Chiều cao:"
                             android:textColor="#020101"
                             android:textSize="24dp"
-                            android:textStyle="bold"
+                            android:textStyle="normal"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             tools:ignore="MissingConstraints" />
@@ -139,7 +139,7 @@
                             android:text="Cân nặng:"
                             android:textColor="#020101"
                             android:textSize="24dp"
-                            android:textStyle="bold"
+                            android:textStyle="normal"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/textView16"
                             tools:ignore="MissingConstraints" />
@@ -269,15 +269,6 @@
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="778dp"
-                tools:ignore="MissingConstraints"></LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -14,12 +14,18 @@ import android.widget.Toast;
 import com.example.testapp.DAO.UserDataSource;
 import com.example.testapp.DTO.UserAcc;
 import com.example.testapp.ui.home.HomeFragment;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptionsExtension;
 
 public class DangKyPage extends AppCompatActivity implements View.OnClickListener{
     EditText edt_userNameViewdk,edt_pass2,edt_passViewDk;
     Button btn_ViewDk,btn_gg, btn_fb,btn_backLogin;
     private long acc;
     private UserDataSource datasource;
+    GoogleSignInOptions signIn;
+    GoogleSignInClient signInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +36,8 @@ public class DangKyPage extends AppCompatActivity implements View.OnClickListene
         datasource = new UserDataSource(this);
         datasource.open();
         addControl();
+        signIn = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        signInClient = GoogleSignIn.getClient(this,signIn);
     }
     private void  addControl(){
         edt_userNameViewdk = (EditText) findViewById(R.id.edt_userNameViewdk);
@@ -59,8 +67,8 @@ public class DangKyPage extends AppCompatActivity implements View.OnClickListene
                 int k = datasource.createUserACc(userAcc);
                 if (k == 1) {
                     Toast.makeText(DangKyPage.this, "Đăng ký thành công", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(DangKyPage.this, HomeFragment.class);
-                    startActivity(intent);
+                    Intent BackLogin = new Intent(DangKyPage.this, DangNhapPage.class);
+                    startActivity(BackLogin);
                 } else if (k == -1) {
                     Toast.makeText(DangKyPage.this, "Tên đăng nhập không hợp lệ!", Toast.LENGTH_LONG).show();
                 }

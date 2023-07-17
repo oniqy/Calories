@@ -46,11 +46,11 @@
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="15dp"
                     android:layout_marginRight="20dp"
                     android:text="Thông tin món ăn"
                     android:textColor="@color/white"
-                    android:textSize="15pt"
+                    android:textSize="25dp"
 
                     android:textStyle="bold" />
             </LinearLayout>
@@ -70,7 +70,7 @@
                 android:id="@+id/ttMonAn_layout_img">
 
                 <TextView
-                    android:id="@+id/textView17"
+                    android:id="@+id/tv_nameFood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -159,16 +159,18 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="8pt"
+                            android:textColor="@color/black"
                             android:layout_marginLeft="10dp"
                             android:text="Chất đạm" />
 
                         <TextView
-                            android:id="@+id/textView20"
+                            android:id="@+id/tv_chatProtein"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_gravity="right"
                             android:textSize="8pt"
+                            android:textColor="@color/black"
 
                             android:text="219g" />
                     </LinearLayout>
@@ -200,16 +202,17 @@
                             android:layout_weight="1"
                             android:textSize="8pt"
                             android:layout_marginLeft="10dp"
+                            android:textColor="@color/black"
                             android:text="Chất béo" />
 
                         <TextView
-                            android:id="@+id/textView22"
+                            android:id="@+id/tv_chatbeo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_gravity="right"
                             android:textSize="8pt"
-
+                            android:textColor="@color/black"
                             android:text="93g" />
                     </LinearLayout>
 
@@ -239,18 +242,19 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="8pt"
+                            android:textColor="@color/black"
                             android:layout_marginLeft="10dp"
                             android:text="Carbs" />
 
                         <TextView
-                            android:id="@+id/textView24"
+                            android:id="@+id/tv_carbs"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:layout_gravity="right"
-                            android:textSize="8pt"
-
-                            android:text="219g" />
+                            android:layout_weight="1"
+                            android:text="219g"
+                            android:textColor="@color/black"
+                            android:textSize="8pt" />
                     </LinearLayout>
 
                     <ProgressBar

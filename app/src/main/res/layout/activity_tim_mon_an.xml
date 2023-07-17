@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fmg_menufood"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.TimMonAn">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+    tools:context=".MenuFood_Fragment">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#0BC585">
+            android:background="#0BC585"
+            tools:ignore="MissingConstraints">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -22,10 +23,12 @@
                 >
 
                 <LinearLayout
+                    android:id="@+id/timmonan_header"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:orientation="horizontal"
-                    android:id="@+id/timmonan_header">
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="0dp"
+                    android:orientation="horizontal">
 
                     <ImageButton
                         android:id="@+id/imagebtn_back2"
@@ -44,74 +47,96 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:gravity="right|center_vertical">
+                        android:gravity="right|center_vertical"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="15pt"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"
                             android:layout_marginRight="20dp"
+                            android:text="Món ăn"
+                            android:textColor="@color/white"
+                            android:textSize="15pt"
 
-                            android:text="Món ăn" />
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/timmonan_content"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:id="@+id/timmonan_content"
                     android:layout_below="@+id/timmonan_header"
-                    android:background="@drawable/finding_meals_background">
+                    android:background="@drawable/finding_meals_background"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="70dp"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="30dp"
                         android:layout_marginLeft="20dp"
+                        android:layout_marginTop="30dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginBottom="15dp"
-                        android:background="@drawable/finding_meal_searchbox">
+
+                        android:orientation="horizontal">
 
 
                         <EditText
-                            android:id="@+id/editTextText"
+                            android:id="@+id/edtTimKiemFoob"
                             android:layout_width="wrap_content"
                             android:layout_height="50dp"
-                            android:layout_marginTop="10dp"
                             android:layout_marginLeft="15dp"
+                            android:paddingLeft="20dp"
+                            android:layout_marginTop="10dp"
                             android:layout_weight="1"
                             android:ems="10"
                             android:inputType="text"
-                            android:background="@null"
-                            android:text="Tìm món ăn"
-
+                            android:hint="Tìm món ăn"
+                            android:background="@drawable/bk_button"
                             />
 
-                        <Button
-                            android:id="@+id/button"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginTop="7dp"
+                        <ImageButton
+                            android:id="@+id/btnV_search"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
                             android:layout_weight="1"
-                            android:backgroundTint="#DBDADA"
-                            android:drawableLeft="@drawable/search_icon_48"
-                            android:textColor="@color/black"
+                            android:background="@color/white"
+                            app:srcCompat="@drawable/search_icon_48"
                             tools:ignore="SpeakableTextPresentCheck" />
+
+
 
                     </LinearLayout>
 
-                    <ListView
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_loafmenu"
                         android:layout_width="match_parent"
-                        android:layout_height="700dp" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginLeft="30dp"
+                        android:text="Load Menu" />
+
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <ListView
+                                android:id="@+id/lsV"
+                                android:layout_width="match_parent"
+                                android:layout_height="550dp" />
+                        </LinearLayout>
+                    </ScrollView>
+
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
-    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

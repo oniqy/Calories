@@ -30,7 +30,7 @@ public class SQLHelper extends SQLiteOpenHelper{
     public static final String COLUMN_FoodMenu_Fats = "Fats";
     public static final String COLUMN_FoodMenu_Proteins = "Proteins";
     public static final String COLUMN_FoodMenu_Carbs = "Carbs";
-    public static final String COLUMN_FoodMenu_Grams = "Grams";
+    public static final String COLUMN_FoodMenu_soLuong = "SL";
 
 
     public static final String COLUMN_ExerciseMenu_idExercise = "idExercise";
@@ -74,7 +74,7 @@ public class SQLHelper extends SQLiteOpenHelper{
                 +COLUMN_FoodMenu_Fats+" integer,"
                 +COLUMN_FoodMenu_Proteins+" integer,"
                 +COLUMN_FoodMenu_Carbs+" integer,"
-                +COLUMN_FoodMenu_Grams+" text);";
+                +COLUMN_FoodMenu_soLuong+" text);";
 
         String tbExerciseMenu = "create table "
                 + TABLE_ExerciseMenu + "( " + COLUMN_ExerciseMenu_idExercise

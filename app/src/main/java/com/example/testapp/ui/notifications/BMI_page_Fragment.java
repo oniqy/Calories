@@ -95,7 +95,7 @@ public class BMI_page_Fragment extends Fragment {
                 float cn = Float.parseFloat(edt_BMI_cn.getText().toString());
                 float BMI = cn / (M*M);
 
-                tv_kqBMI.setText(Float.toString(Math.round(BMI * 100) / 100));
+                tv_kqBMI.setText(Float.toString(Math.round(BMI * 10) / 10));
                 tetV_kq1.setText(Float.toString(Math.round(BMI * 10) / 10));
                 if(BMI < 16){
                     tv_nx.setText("Chỉ số BMI ở trên cho thấy bạn đang Gầy độ III");
@@ -119,7 +119,7 @@ public class BMI_page_Fragment extends Fragment {
                     tv_nx.setText("Chỉ số BMI ở trên cho thấy bạn đang Béo phì độ II");
                 }
                 else {
-                    tv_nx.setText("Chỉ số BMI ở trên cho thấy bạn đang Béo phì độ II");
+                    tv_nx.setText("Chỉ số BMI ở trên cho thấy bạn đang Béo phì độ III");
                 }
             }
         });
