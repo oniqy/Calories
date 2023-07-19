@@ -14,7 +14,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="45dp"
         android:text="Welcome to,Healthy Calories"
-        android:textColor="#0B8159"
+        android:textColor="#0BC585"
         android:textSize="35dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"

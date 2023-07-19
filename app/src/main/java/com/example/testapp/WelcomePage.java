@@ -20,7 +20,7 @@ public class WelcomePage extends AppCompatActivity {
 
         setContentView(R.layout.activity_welcome_page);
         //let noi database
-        SQLHelper sqlHelper = new SQLHelper(this);
+        SQLHelper sqlHelper =new SQLHelper(getApplicationContext(),"healthyCare",null,1);
         sqlHelper.open();
         //khai bao
         btn_dn_wel = (Button) findViewById(R.id.btn_dn_wel);
@@ -31,5 +31,6 @@ public class WelcomePage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        sqlHelper.close();
     }
 }

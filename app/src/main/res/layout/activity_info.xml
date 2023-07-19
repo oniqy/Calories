@@ -8,9 +8,6 @@
     android:id="@+id/frag_Infro"
     tools:ignore="MissingConstraints">
 <ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
@@ -34,10 +31,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
                 android:layout_marginBottom="10dp"
                 android:background="#0BC585"
-                android:layout_marginLeft="20dp"
-                app:srcCompat="@drawable/back" />
+                app:srcCompat="@drawable/back"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
             <TextView
                 android:id="@+id/textView3"

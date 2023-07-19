@@ -87,25 +87,13 @@ public class MenuFood_Fragment extends Fragment {
 
         lsV = (ListView) view.findViewById(R.id.lsV);
         ImageButton btnV_search = (ImageButton) view.findViewById(R.id.btnV_search);
-        Button btn_loafmenu = (Button) view.findViewById(R.id.btn_loafmenu);
         ImageButton imagebtn_back2 = (ImageButton)view.findViewById(R.id.imagebtn_back2);
         EditText edtTimKiemFoob= (EditText)view.findViewById(R.id.edtTimKiemFoob);
-        btn_loafmenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int i = datasource.createFood();
-                if(i == -1){
-                    Toast.makeText(getContext(),"Lỗi gì đó",Toast.LENGTH_LONG).show();
-                }
-                else{
-                    Toast.makeText(getContext(),"Loading",Toast.LENGTH_LONG).show();
-                    list.clear();
-                    list = datasource.getAllfood();
-                    arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1,list);
-                    lsV.setAdapter(arrayAdapter);
-                }
-            }
-        });
+        list.clear();
+        list = datasource.getAllfood();
+        arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1,list);
+        lsV.setAdapter(arrayAdapter);
+
         btnV_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,9 +119,9 @@ public class MenuFood_Fragment extends Fragment {
                     Toast.makeText(getContext(),"Lỗi gì đó",Toast.LENGTH_LONG).show();
                 }else {
                     String nameFoob = foodMenu.getFoodName();
-                    int Proteins = foodMenu.getProteins();
-                    int Carbs = foodMenu.getCarbs();
-                    int fats = foodMenu.getFats();
+                    String Proteins = String.valueOf(foodMenu.getProteins());
+                    String Carbs = String.valueOf(foodMenu.getCarbs());
+                    String fats = String.valueOf(foodMenu.getFats());
                     Intent intent = new Intent(getContext(), ThongTinMonAn.class);
                     intent.putExtra("name",nameFoob);
                     intent.putExtra("Proteins",Proteins);
@@ -152,7 +140,7 @@ public class MenuFood_Fragment extends Fragment {
 // create a FragmentTransaction to begin the transaction and replace the Fragment
         FragmentTransaction ft = fm.beginTransaction();
 // replace the FrameLayout with new Fragment
-        ft.replace(R.id.fmg_menufood, fragment);
+        ft.replace(R.id.fmg_searchFood, fragment);
         ft.commit(); // save the changes
     }
 }

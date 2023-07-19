@@ -92,7 +92,14 @@ public class TimMonAn extends Activity {
 
     }
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        list.clear();
+        list = datasource.getAllfood();
+        arrayAdapter = new ArrayAdapter<>(TimMonAn.this, android.R.layout.simple_list_item_1,list);
+        lsV.setAdapter(arrayAdapter);
+    }
 
     @Override
     protected void onResume() {

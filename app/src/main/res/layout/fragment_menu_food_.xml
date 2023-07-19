@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/fmg_menufood"
+    android:id="@+id/fmg_searchFood"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MenuFood_Fragment">
@@ -108,13 +108,6 @@
 
                 </LinearLayout>
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_loafmenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginLeft="30dp"
-                    android:text="Load Menu" />
 
                 <ScrollView
                     android:layout_width="match_parent"

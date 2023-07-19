@@ -26,7 +26,7 @@ public class UserDataSource {
             SQLHelper.COLUMN_FoodMenu_name, SQLHelper.COLUMN_FoodMenu_soLuong};
 
     public UserDataSource(Context context) {
-        dbHelper = new SQLHelper(context);
+        dbHelper = new SQLHelper(context.getApplicationContext(), "healthyCare",null,1);
     }
 
 
@@ -124,7 +124,6 @@ public class UserDataSource {
     }
     public int checkUserInfo(){
         Cursor resultSet = database.rawQuery("Select * from "+SQLHelper.TABLE_UserInfo,null);
-
         if(resultSet.getCount() == 0 ){
             return 1;
         }

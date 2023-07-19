@@ -1,12 +1,16 @@
 package com.example.testapp.ui.home;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.testapp.DAO.UserDataSource;
+import com.example.testapp.ImageLoadTask;
 import com.example.testapp.MenuFood_Fragment;
 import com.example.testapp.R;
 import androidx.annotation.NonNull;
@@ -17,23 +21,48 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.testapp.TimMonAn;
 import com.example.testapp.databinding.FragmentHomeBinding;
+import com.example.testapp.ui.notifications.BMR_page_Fragment;
 import com.example.testapp.ui.notifications.Input_Info_Fragment;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 public class HomeFragment extends Fragment {
-
+    private UserDataSource datasource;
+    GoogleSignInOptions gso;
+    GoogleSignInClient gsc;
+    ImageView userImg;
+    TextView userHello,chiSoCalo;
+    BMR_page_Fragment bmr_page_fragment;
     private FragmentHomeBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
-
+        datasource = new UserDataSource(getContext());
+        datasource.open();
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        gsc = GoogleSignIn.getClient(getContext(),gso);
+        userImg = binding.userImg.findViewById(R.id.userImg);
+        userHello = binding.userHello.findViewById(R.id.userHello);
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
+        if(acct!=null){
+            String personName = acct.getDisplayName();
+            userHello.setText("Cka`o ma`y,"+personName);
+            new ImageLoadTask(acct.getPhotoUrl().toString(),userImg).execute();
+        }
         binding.btnVEdtDailyFoob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               loadFragment(new MenuFood_Fragment());
+                int  i = datasource.createFood();
+                if(i == -1){
+
+                }else {
+               loadFragment(new MenuFood_Fragment());}
             }
         });
         binding.textNotificationEdit.setOnClickListener(new View.OnClickListener() {
@@ -43,7 +72,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        final TextView textView = binding.userHello;
 //
         return root;
     }

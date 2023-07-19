@@ -45,16 +45,17 @@ public class SQLHelper extends SQLiteOpenHelper{
     public static final String COLUMN_CaloDaily_TimeType = "TimeType";
     private static final String DATABASE_NAME = "healthyCare.db";
     private static final int DATABASE_VERSION = 1;
+    private static final String PATH="/data/data/com.example.testapp/databases/healthyCare/";
 
     // Câu lệnh khởi tạo Database.
-
-    public SQLHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    public SQLHelper( Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase database)
     {
+//        database = SQLiteDatabase.openDatabase(PATH,null,SQLiteDatabase.CREATE_IF_NECESSARY);
         String tbcalodaily = "create table "
                 + TABLE_CaloDaily + "( " + COLUMN_CaloDaily_IdDate
                 + " integer primary key autoincrement, " + COLUMN_CaloDaily_idUser

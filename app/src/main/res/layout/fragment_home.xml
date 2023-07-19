@@ -80,7 +80,7 @@
                     android:progressDrawable="@drawable/circolum_process" />
 
                 <TextView
-                    android:id="@+id/progress_text"
+                    android:id="@+id/chiSoCalo"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_alignParentRight="true"

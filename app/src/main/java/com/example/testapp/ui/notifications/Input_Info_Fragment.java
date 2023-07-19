@@ -1,5 +1,6 @@
 package com.example.testapp.ui.notifications;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.example.testapp.Custom_spinner;
 import com.example.testapp.DAO.UserDataSource;
 import com.example.testapp.DTO.UserInfo;
+import com.example.testapp.MainActivity;
 import com.example.testapp.R;
 import com.example.testapp.adapter.adapter_gioitinh;
 import com.example.testapp.adapter.adapter_mucTieu;
@@ -27,6 +29,7 @@ import com.example.testapp.databinding.FragmentInputInfoBinding;
 import com.example.testapp.adapter.item_gioitinh;
 import com.example.testapp.adapter.item_mucTieu;
 import com.example.testapp.adapter.item_tapluyen;
+import com.example.testapp.ui.home.HomeFragment;
 
 import java.util.ArrayList;
 
@@ -99,18 +102,23 @@ public class Input_Info_Fragment extends Fragment implements Custom_spinner.OnSp
         btn_luuBMi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                loadFragment(new HomeFragment());
-                ttUser();
+                if(ttUser()==1){
+                    Intent intent = new Intent(getContext(), MainActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(getContext(), "Có gì đó sai sai", Toast.LENGTH_LONG).show();
+
+                }
+
             }
         });
     }
-    private void ttUser(){
+    private int ttUser(){
         UserInfo userInfo = new UserInfo();
-        String name = edt_ten.getText().toString();
         int age = Integer.parseInt(edt_age.getText().toString());
         int height = Integer.parseInt(edt_height.getText().toString());
         int weight = Integer.parseInt(edt_weight.getText().toString());
-        userInfo.setName(name);
         userInfo.setBirthDay(age);
         userInfo.setUserHeight(height);
         userInfo.setUserWeight(weight);
@@ -119,10 +127,12 @@ public class Input_Info_Fragment extends Fragment implements Custom_spinner.OnSp
         userInfo.setTarget(getMucTieu);
         int t = datasource.createUserInfo(userInfo);
         if(t == 1){
+
             Toast.makeText(getContext(), "Lưu thông tin thành công", Toast.LENGTH_LONG).show();
+            return 1;
         }else {
             Toast.makeText(getContext(), "Có gì đó sai sai", Toast.LENGTH_LONG).show();
-
+            return 0;
         }
 
 
@@ -204,7 +214,6 @@ public class Input_Info_Fragment extends Fragment implements Custom_spinner.OnSp
         });
         btn_luuBMi = (Button) binding.btnLuuBMi.findViewById(R.id.btn_luuBMi);
         edt_age = (EditText) binding.edtAge.findViewById(R.id.edt_age);
-        edt_ten = (EditText) binding.edtTen.findViewById(R.id.edt_ten);
         edt_height = (EditText) binding.edtHeight.findViewById(R.id.edt_height);
         spinner_sex = (Custom_spinner)binding.spinnerSex.findViewById(R.id.spinner_sex);
         edt_weight = (EditText) binding.edtWeight.findViewById(R.id.edt_weight);
