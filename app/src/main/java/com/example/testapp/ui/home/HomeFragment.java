@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.testapp.DAO.UserDataSource;
 import com.example.testapp.ImageLoadTask;
@@ -56,9 +57,15 @@ public class HomeFragment extends Fragment {
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
         if(acct!=null){
             String personName = acct.getDisplayName();
-            String Uri = acct.getPhotoUrl().toString();
-            userHello.setText("Hi,"+personName);
-            new ImageLoadTask(Uri,userImg).execute();
+            Uri  uri= acct.getPhotoUrl();
+
+            if (uri == null){
+                 new ImageLoadTask("https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png",userImg).execute();
+            }
+            else {
+                userHello.setText("Hi," + personName);
+                new ImageLoadTask(uri.toString(), userImg).execute();
+            }
         }
         Calendar calendar = Calendar.getInstance();
         String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
@@ -71,7 +78,9 @@ public class HomeFragment extends Fragment {
                 if(i == -1){
 
                 }else {
-               loadFragment(new MenuFood_Fragment());}
+                    Intent intent = new Intent(getContext(),TimMonAn.class);
+                    startActivity(intent);
+                }
             }
         });
         binding.textNotificationEdit.setOnClickListener(new View.OnClickListener() {

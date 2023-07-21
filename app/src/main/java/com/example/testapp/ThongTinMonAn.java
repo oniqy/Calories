@@ -40,7 +40,8 @@ public class ThongTinMonAn extends AppCompatActivity {
         imagebtn_back2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new MenuFood_Fragment());
+                Intent intent = new Intent(getApplicationContext(),TimMonAn.class);
+                startActivity(intent);
             }
         });
     }

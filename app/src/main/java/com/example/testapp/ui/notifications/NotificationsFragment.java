@@ -53,9 +53,14 @@ public class NotificationsFragment extends Fragment {
             String personName = acct.getDisplayName();
             String personEmail = acct.getEmail();
             Uri personPhoto = acct.getPhotoUrl();
-            profile_username.setText(personName);
-            profile_userid.setText(personEmail);
-            new ImageLoadTask(personPhoto.toString(),profile_image).execute();
+            if (personPhoto == null){
+                new ImageLoadTask("https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png",profile_image).execute();
+            }
+            else {
+                profile_username.setText(personName);
+                profile_userid.setText(personEmail);
+                new ImageLoadTask(personPhoto.toString(), profile_image).execute();
+            }
         }
 
         profile_logoutBtn.setOnClickListener(new View.OnClickListener() {

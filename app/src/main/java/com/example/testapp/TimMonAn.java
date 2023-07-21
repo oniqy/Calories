@@ -36,34 +36,28 @@ public class TimMonAn extends Activity {
         datasource.open();
 
         lsV = (ListView) findViewById(R.id.lsV);
-        ImageButton btnV_search = (ImageButton) findViewById(R.id.btnV_search);
-        Button btn_loafmenu = (Button) findViewById(R.id.btn_loafmenu);
+        ImageButton btnV_search = (ImageButton)findViewById(R.id.btnV_search);
         ImageButton imagebtn_back2 = (ImageButton)findViewById(R.id.imagebtn_back2);
         EditText edtTimKiemFoob= (EditText)findViewById(R.id.edtTimKiemFoob);
-
-        btn_loafmenu.setOnClickListener(new View.OnClickListener() {
+        list.clear();
+        list = datasource.getAllfood();
+        arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1,list);
+        lsV.setAdapter(arrayAdapter);
+        imagebtn_back2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int i = datasource.createFood();
-                if(i == -1){
-                    Toast.makeText(TimMonAn.this,"Lỗi gì đó",Toast.LENGTH_LONG).show();
-                }
-                else{
-                    Toast.makeText(TimMonAn.this,"Loading",Toast.LENGTH_LONG).show();
-                    list.clear();
-                    list = datasource.getAllfood();
-                    arrayAdapter = new ArrayAdapter<>(TimMonAn.this, android.R.layout.simple_list_item_1,list);
-                    lsV.setAdapter(arrayAdapter);
-                }
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);
             }
         });
+
         btnV_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String nameFood = edtTimKiemFoob.getText().toString();
                 list.clear();
                 list = datasource.timKiemfood(nameFood);
-                arrayAdapter = new ArrayAdapter<>(TimMonAn.this, android.R.layout.simple_list_item_1,list);
+                arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1,list);
                 lsV.setAdapter(arrayAdapter);
 
             }
@@ -73,13 +67,13 @@ public class TimMonAn extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FoodMenu foodMenu = datasource.detail_food(position);
                 if(foodMenu == null){
-                    Toast.makeText(TimMonAn.this,"Lỗi gì đó",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Lỗi gì đó",Toast.LENGTH_LONG).show();
                 }else {
                     String nameFoob = foodMenu.getFoodName();
-                    int Proteins = foodMenu.getProteins();
-                    int Carbs = foodMenu.getCarbs();
-                    int fats = foodMenu.getFats();
-                    Intent intent = new Intent(TimMonAn.this, ThongTinMonAn.class);
+                    String Proteins = String.valueOf(foodMenu.getProteins());
+                    String Carbs = String.valueOf(foodMenu.getCarbs());
+                    String fats = String.valueOf(foodMenu.getFats());
+                    Intent intent = new Intent(getApplicationContext(), ThongTinMonAn.class);
                     intent.putExtra("name",nameFoob);
                     intent.putExtra("Proteins",Proteins);
                     intent.putExtra("Carbs",Carbs);

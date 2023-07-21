@@ -1,5 +1,6 @@
 package com.example.testapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -52,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
         DailyCalo_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new MenuFood_Fragment());
+                Intent intent = new Intent(getApplicationContext(),TimMonAn.class);
+                startActivity(intent);
             }
         });
 
