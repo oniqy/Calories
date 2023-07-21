@@ -1,8 +1,6 @@
 package com.example.testapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -65,7 +63,7 @@ public class DangNhapPage extends AppCompatActivity implements View.OnClickListe
                     loadFragment(new Input_Info_Fragment());
                     Toast.makeText(this,"Hãy thiết lập chỉ số BMR của bạn trước khi sử dụng HealthyCare",Toast.LENGTH_LONG).show();
                 }else {
-                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                    Intent intent = new Intent(DangNhapPage.this,MainActivity.class);
                     startActivity(intent);
                 }
 

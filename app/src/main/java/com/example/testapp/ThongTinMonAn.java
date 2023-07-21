@@ -50,7 +50,7 @@ public class ThongTinMonAn extends AppCompatActivity {
 // create a FragmentTransaction to begin the transaction and replace the Fragment
         FragmentTransaction ft = fm.beginTransaction();
 // replace the FrameLayout with new Fragment
-        ft.replace(R.id.fmg_menufood, fragment);
+        ft.replace(R.id.fmg_detailfood, fragment);
         ft.commit(); // save the changes
     }
 }

@@ -99,7 +99,7 @@
                     android:layout_height="75dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="0"
-                    android:background="@android:color/transparent"
+                    android:background="@color/white"
                     android:src="@drawable/baseline_logout_24"
                     app:tint="@color/black"
                     tools:ignore="SpeakableTextPresentCheck" />
@@ -385,22 +385,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout_colories" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_dx"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/bg_button_setting"
-        android:text="Đăng xuất"
-        android:textAllCaps="false"
-        android:textColor="#085A3E"
-        android:textSize="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_ttcn" />
-
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
@@ -410,7 +394,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_dx"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/button_ttcn"></LinearLayout>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

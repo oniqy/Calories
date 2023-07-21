@@ -28,12 +28,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
+import java.text.DateFormat;
+import java.util.Locale;
+import java.util.Calendar;
+import java.util.Date;
 public class HomeFragment extends Fragment {
     private UserDataSource datasource;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     ImageView userImg;
-    TextView userHello,chiSoCalo;
+    TextView userHello,chiSoCalo,userDate;
     BMR_page_Fragment bmr_page_fragment;
     private FragmentHomeBinding binding;
 
@@ -52,9 +56,14 @@ public class HomeFragment extends Fragment {
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
         if(acct!=null){
             String personName = acct.getDisplayName();
-            userHello.setText("Cka`o ma`y,"+personName);
-            new ImageLoadTask(acct.getPhotoUrl().toString(),userImg).execute();
+            String Uri = acct.getPhotoUrl().toString();
+            userHello.setText("Hi,"+personName);
+            new ImageLoadTask(Uri,userImg).execute();
         }
+        Calendar calendar = Calendar.getInstance();
+        String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+        userDate = binding.userDate.findViewById(R.id.userDate);
+        userDate.setText(currentDate);
         binding.btnVEdtDailyFoob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
