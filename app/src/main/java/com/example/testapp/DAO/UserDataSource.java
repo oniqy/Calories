@@ -8,6 +8,7 @@ import android.util.Log;
 import android.database.SQLException;
 import android.widget.Toast;
 
+import com.example.testapp.DTO.DailyCalories;
 import com.example.testapp.DTO.FoodMenu;
 import com.example.testapp.DTO.UserInfo;
 import com.example.testapp.SQL.SQLHelper;
@@ -90,6 +91,19 @@ public class UserDataSource {
             return 1;
         }
     }
+    public int createDailyFood(DailyCalories dailyCalories) {
+        ContentValues values = new ContentValues();
+        values.put(SQLHelper.COLUMN_CaloDaily_IdDate, dailyCalories.getId().getTime());
+        values.put(SQLHelper.COLUMN_CaloDaily_idFood, dailyCalories.getIdFood());
+        values.put(SQLHelper.COLUMN_CaloDaily_NameFoodOfday, dailyCalories.getNameFoodOfday());
+        values.put(SQLHelper.COLUMN_CaloDaily_TimeofDay, dailyCalories.getTimeofDay());
+            long insertId = database.insert(SQLHelper.TABLE_CaloDaily, null,
+                    values);
+            if (insertId <= 0) {
+                return -1;
+            }
+            return 1;
+    }
 
     public int createFood() {
         int[] id ={1,2,3,4};
@@ -156,12 +170,14 @@ public class UserDataSource {
              if(resultSet.getCount() == 0 ){
             return foodMenu;
              }
+             int id= resultSet.getInt(0);
             String FoodName = resultSet.getString(1);
             String sl = resultSet.getString(6);
             int Calories= resultSet.getInt(2);
             int Fats= resultSet.getInt(3);
             int setProteins= resultSet.getInt(4);
             int setCarbs= resultSet.getInt(5);
+            foodMenu.setIdFood(id);
             foodMenu.setFoodName(FoodName);
             foodMenu.setCalories(Calories);
             foodMenu.setFats(Fats);
@@ -175,6 +191,22 @@ public class UserDataSource {
         List<String> people = new ArrayList<>();
 
         Cursor cursor = database.rawQuery("select * from "+SQLHelper.TABLE_FoodMenu, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            FoodMenu foodMenu = new FoodMenu();
+            foodMenu.setFoodName(cursor.getString(1));
+            foodMenu.setsl(cursor.getString(6));
+            String chuoi = foodMenu.getFoodName()+" - "+foodMenu.getsl();
+            people.add(chuoi);
+            cursor.moveToNext();
+        }
+        // Nhớ đóng con trỏ lại nhé.
+        cursor.close();
+        return people;
+    }
+    public List<String> getFood(String timeOfDay){
+        List<String> people = new ArrayList<>();
+        Cursor cursor = database.rawQuery("Select * from " + SQLHelper.TABLE_CaloDaily + " Where " + SQLHelper.COLUMN_CaloDaily_TimeofDay +" = '"+ timeOfDay +"'", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             FoodMenu foodMenu = new FoodMenu();

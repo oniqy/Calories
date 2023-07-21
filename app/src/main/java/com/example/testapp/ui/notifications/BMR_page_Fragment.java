@@ -136,6 +136,7 @@ public class BMR_page_Fragment extends Fragment {
                    binding.textViewTylebmr.setText(String.format(Locale.US, "%.0f", bmr)+" Kcal/day");
                }
 
+
             }
         });
         binding.btnTinhTDEE.setOnClickListener(new View.OnClickListener() {
@@ -169,6 +170,7 @@ public class BMR_page_Fragment extends Fragment {
                     }
                     binding.textViewTyletarget.setText(String.format(Locale.US, "%.0f", tdee) + " Kcal/day");
                 }
+
             }
         });
         binding.imagebtnBack2.setOnClickListener(new View.OnClickListener() {

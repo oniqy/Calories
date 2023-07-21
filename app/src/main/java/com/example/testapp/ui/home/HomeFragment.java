@@ -8,11 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.testapp.DAO.UserDataSource;
+import com.example.testapp.DTO.DailyCalories;
 import com.example.testapp.ImageLoadTask;
-import com.example.testapp.MenuFood_Fragment;
 import com.example.testapp.R;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,6 +19,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.testapp.ThongTinMonAn;
 import com.example.testapp.TimMonAn;
 import com.example.testapp.databinding.FragmentHomeBinding;
 import com.example.testapp.ui.notifications.BMR_page_Fragment;
@@ -30,17 +30,22 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import java.text.DateFormat;
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Calendar;
 import java.util.Date;
 public class HomeFragment extends Fragment {
     private UserDataSource datasource;
+    private ThongTinMonAn thongTinMonAn;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     ImageView userImg;
+    List<String> list = new ArrayList<>();
     TextView userHello,chiSoCalo,userDate;
     BMR_page_Fragment bmr_page_fragment;
     private FragmentHomeBinding binding;
+    DailyCalories dailyCalories ;
+    String getType ;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -81,17 +86,93 @@ public class HomeFragment extends Fragment {
                     Intent intent = new Intent(getContext(),TimMonAn.class);
                     startActivity(intent);
                 }
+
             }
         });
         binding.textNotificationEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadFragment(new Input_Info_Fragment());
+
+            }
+        });
+
+        binding.imgbtnBs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DailyCalories dailyCalories = new DailyCalories();
+
+                dailyCalories.setTimeofDay("Sang");
+                int  i = datasource.createFood();
+                if(i == -1){
+
+                }else {
+                    Intent intent = new Intent(getContext(),TimMonAn.class);
+                    startActivity(intent);
+                }
+
+
+            }
+        });
+        binding.imgbtnBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DailyCalories dailyCalories1 = new DailyCalories();
+                dailyCalories1.setTimeofDay("Trua");
+
+
+            }
+        });
+        binding.imgbtnBtoi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int  i = datasource.createFood();
+                if(i == -1){
+
+                }else {
+                    Intent intent = new Intent(getContext(),TimMonAn.class);
+                    startActivity(intent);
+                }
+
+
+            }
+        });
+        binding.layoutbuoiSang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
             }
         });
 
 //
         return root;
+    }
+    public String getTypeofDay(){
+
+        binding.imgbtnBs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getType = "Sang";
+            }
+
+        });
+        binding.imgbtnBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getType = "Trua";
+            }
+
+        });
+        binding.imgbtnBtoi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getType = "Toi";
+            }
+
+        });
+        return getType;
     }
 
     public void loadFragment(Fragment fragment) {

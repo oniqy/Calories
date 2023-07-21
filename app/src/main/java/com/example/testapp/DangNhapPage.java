@@ -120,6 +120,7 @@ public class DangNhapPage extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(DangNhapPage.this,DangKyPage.class);
             startActivity(intent);
         }
+
     }
     public void loadFragment(Fragment fragment) {
 // create a FragmentManager

@@ -103,6 +103,7 @@ public class MenuFood_Fragment extends Fragment {
                 arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1,list);
                 lsV.setAdapter(arrayAdapter);
 
+
             }
         });
         imagebtn_back2.setOnClickListener(new View.OnClickListener() {

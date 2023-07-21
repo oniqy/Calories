@@ -85,6 +85,7 @@ public class BMI_page_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 loadFragment(new NotificationsFragment());
+
             }
         });
        btn_luu.setOnClickListener(new View.OnClickListener() {
@@ -121,6 +122,7 @@ public class BMI_page_Fragment extends Fragment {
                 else {
                     tv_nx.setText("Chỉ số BMI ở trên cho thấy bạn đang Béo phì độ III");
                 }
+
             }
         });
 

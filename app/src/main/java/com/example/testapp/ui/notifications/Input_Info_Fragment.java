@@ -111,6 +111,7 @@ public class Input_Info_Fragment extends Fragment implements Custom_spinner.OnSp
 
                 }
 
+
             }
         });
     }

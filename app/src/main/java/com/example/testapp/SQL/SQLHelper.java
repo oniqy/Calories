@@ -39,10 +39,11 @@ public class SQLHelper extends SQLiteOpenHelper{
     public static final String COLUMN_ExerciseMenu_Mins = "Mins";
 
     public static final String COLUMN_CaloDaily_IdDate = "IdDate";
-    public static final String COLUMN_CaloDaily_idUser = "idUser";
     public static final String COLUMN_CaloDaily_idExercise = "idExercise";
     public static final String COLUMN_CaloDaily_idFood = "idFood";
-    public static final String COLUMN_CaloDaily_TimeType = "TimeType";
+    public static final String COLUMN_CaloDaily_NameFoodOfday = "foodDaily";
+    public static final String COLUMN_CaloDaily_NameExerciseOfDay = "NameExercise";
+    public static final String COLUMN_CaloDaily_TimeofDay = "TimeType";
     private static final String DATABASE_NAME = "healthyCare.db";
     private static final int DATABASE_VERSION = 1;
     private static final String PATH="/data/data/com.example.testapp/databases/healthyCare/";
@@ -58,10 +59,10 @@ public class SQLHelper extends SQLiteOpenHelper{
 //        database = SQLiteDatabase.openDatabase(PATH,null,SQLiteDatabase.CREATE_IF_NECESSARY);
         String tbcalodaily = "create table "
                 + TABLE_CaloDaily + "( " + COLUMN_CaloDaily_IdDate
-                + " integer primary key autoincrement, " + COLUMN_CaloDaily_idUser
-                + " text ,"+COLUMN_CaloDaily_idExercise+" integer ,"
+                + " NUMERIC primary key , "
                 +COLUMN_CaloDaily_idFood+" integer,"
-                +COLUMN_CaloDaily_TimeType+" integer);";
+                +COLUMN_CaloDaily_NameFoodOfday+" text,"
+                +COLUMN_CaloDaily_TimeofDay+" text);";
 
         String tbUserAcc = "create table "
                 + TABLE_USER + "( " + COLUMN_EMAIL

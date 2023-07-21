@@ -67,18 +67,21 @@ public class NotificationsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 signOut();
+
             }
         });
         binding.linearLayoutBmi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                loadFragment(new BMI_page_Fragment());
+
             }
         });
         binding.linearLayoutBmr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadFragment(new BMR_page_Fragment());
+
             }
         });
         View root = binding.getRoot();

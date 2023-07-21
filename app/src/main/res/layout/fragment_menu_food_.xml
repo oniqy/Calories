@@ -50,12 +50,14 @@
 
                     <TextView
                         android:id="@+id/textView"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginRight="70dp"
                         android:text="Món ăn"
+                        android:gravity="center"
+                        android:layout_gravity="center"
                         android:textColor="@color/white"
-                        android:textSize="15pt"
+                        android:textSize="25dp"
 
                         android:textStyle="bold" />
                 </LinearLayout>

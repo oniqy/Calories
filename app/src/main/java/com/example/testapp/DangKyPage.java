@@ -52,6 +52,7 @@ public class DangKyPage extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onClick(View v) {
                 signIn();
+
             }
         });
     }
@@ -137,8 +138,6 @@ public class DangKyPage extends AppCompatActivity implements View.OnClickListene
         if (v.getId() == R.id.btn_gg) {
 
         }
-
-
     }
     public void loadFragment(Fragment fragment) {
 // create a FragmentManager

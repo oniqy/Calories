@@ -29,6 +29,7 @@ public class WelcomePage extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(WelcomePage.this,DangNhapPage.class);
                 startActivity(intent);
+
             }
         });
         sqlHelper.close();
