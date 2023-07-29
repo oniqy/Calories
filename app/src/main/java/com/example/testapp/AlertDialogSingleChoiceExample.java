@@ -5,16 +5,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.example.testapp.DTO.DailyCalories;
-
 import java.util.HashSet;
 import java.util.Set;
 
 public class AlertDialogSingleChoiceExample {
-
-    static String type;
-    public static String showAlertDialog(final Activity activity)  {
-
+    String rs;
+    public String showAlertDialog(final Activity activity)  {
+        String re;
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         // Set Title.
@@ -39,22 +36,25 @@ public class AlertDialogSingleChoiceExample {
         //
         builder.setCancelable(true);
         builder.setIcon(R.drawable.plus_icon_24);
-
         // Create "Yes" button with OnClickListener.
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 if(selectedItems.isEmpty()) {
-                    return;
+                    return ;
                 }else {
-                    String animal = selectedItems.iterator().next();
+                    String meats = selectedItems.iterator().next();
+                    String rs = handleButtonClick(meats);
                     // Close Dialog
                     dialog.dismiss();
                     // Do something, for example: Call a method of Activity...
-                    Toast.makeText(activity, "You select " + animal,
+                    Toast.makeText(activity, "You select " + meats,
                             Toast.LENGTH_SHORT).show();
+
                 }
             }
+
         });
+
         // Create "Cancel" button with OnClickListener.
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -68,7 +68,10 @@ public class AlertDialogSingleChoiceExample {
         // Create AlertDialog:
         AlertDialog alert = builder.create();
         alert.show();
-        return selectedItems.toString();
+        return rs;
     }
 
+    public String handleButtonClick(String value) {
+        return value;
+    }
 }

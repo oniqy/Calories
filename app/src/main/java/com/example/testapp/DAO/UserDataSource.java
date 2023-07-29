@@ -2,22 +2,24 @@ package com.example.testapp.DAO;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.database.SQLException;
-import android.widget.Toast;
 
 import com.example.testapp.DTO.DailyCalories;
+import com.example.testapp.DTO.DaulyFood;
 import com.example.testapp.DTO.FoodMenu;
 import com.example.testapp.DTO.UserInfo;
 import com.example.testapp.SQL.SQLHelper;
 import com.example.testapp.DTO.UserAcc;
-import com.example.testapp.ui.notifications.BMR_page_Fragment;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-
+import android.content.SharedPreferences;
 public class UserDataSource {
     private SQLiteDatabase database;
     private SQLHelper dbHelper;
@@ -93,7 +95,7 @@ public class UserDataSource {
     }
     public int createDailyFood(DailyCalories dailyCalories) {
         ContentValues values = new ContentValues();
-        values.put(SQLHelper.COLUMN_CaloDaily_IdDate, dailyCalories.getId().getTime());
+        values.put(SQLHelper.COLUMN_CaloDaily_IdDate, String.valueOf(dailyCalories.getId()));
         values.put(SQLHelper.COLUMN_CaloDaily_idFood, dailyCalories.getIdFood());
         values.put(SQLHelper.COLUMN_CaloDaily_NameFoodOfday, dailyCalories.getNameFoodOfday());
         values.put(SQLHelper.COLUMN_CaloDaily_TimeofDay, dailyCalories.getTimeofDay());
@@ -143,22 +145,45 @@ public class UserDataSource {
         }
         return 0;
     }
+    public int checkFood(){
+        Cursor resultSet = database.rawQuery("Select * from "+SQLHelper.TABLE_UserInfo,null);
+        if(resultSet.getCount() == 0 ){
+            return 1;
+        }
+        return 0;
+    }
+    public int deteleFood(String id){
+        database.delete(SQLHelper.TABLE_CaloDaily, SQLHelper.COLUMN_CaloDaily_IdDate
+                + " = " +"'"+id+"'", null);
+
+        return 0;
+    }
+    public int Tinhcalo(){
+        Cursor resultSet = database.rawQuery("Select sum(" + SQLHelper.COLUMN_FoodMenu_Calories +") from "+SQLHelper.TABLE_FoodMenu+" , "+ SQLHelper.TABLE_CaloDaily +" where "+SQLHelper.TABLE_CaloDaily+"."+SQLHelper.COLUMN_CaloDaily_idFood+" = "+SQLHelper.TABLE_FoodMenu+"."+SQLHelper.COLUMN_FoodMenu_idFood+""
+                ,null);
+        resultSet.moveToFirst();
+        int id= resultSet.getInt(0);
+        if(id == 0){
+            return -1;
+        }
+        return id;
+    }
     public List<String> timKiemfood(String nameFood){
-        List<String> people = new ArrayList<>();
+        List<String> food = new ArrayList<>();
         Cursor resultSet = database.rawQuery("Select * from " + SQLHelper.TABLE_FoodMenu + " Where "
                 + SQLHelper.COLUMN_FoodMenu_name
                 +" like '"+ nameFood +"%'",null);
         if(resultSet.getCount() == 0 ){
-            return people;
+            return food;
         }
         resultSet.moveToFirst();
         FoodMenu foodMenu = new FoodMenu();
         foodMenu.setFoodName(resultSet.getString(1));
         foodMenu.setsl(resultSet.getString(6));
         String chuoi = foodMenu.getFoodName()+" - "+foodMenu.getsl();
-        people.add(chuoi);
+        food.add(chuoi);
         resultSet.close();
-        return people;
+        return food;
     }
     public FoodMenu detail_food(int idFood){
            idFood +=1;
@@ -204,21 +229,34 @@ public class UserDataSource {
         cursor.close();
         return people;
     }
-    public List<String> getFood(String timeOfDay){
-        List<String> people = new ArrayList<>();
+    String ttluu = "tkmkLog";
+    public ArrayList<DaulyFood> getFood(String timeOfDay){
+        ArrayList<DaulyFood> foods = new ArrayList<>();
+        List<String> IdDate = new ArrayList<>();
+        List<String> NameFoodOfday = new ArrayList<>();
+        List<Integer> IdFood = new ArrayList<>();
+        List<String> TimeofDay = new ArrayList<>();
         Cursor cursor = database.rawQuery("Select * from " + SQLHelper.TABLE_CaloDaily + " Where " + SQLHelper.COLUMN_CaloDaily_TimeofDay +" = '"+ timeOfDay +"'", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            FoodMenu foodMenu = new FoodMenu();
-            foodMenu.setFoodName(cursor.getString(1));
-            foodMenu.setsl(cursor.getString(6));
-            String chuoi = foodMenu.getFoodName()+" - "+foodMenu.getsl();
-            people.add(chuoi);
+           DaulyFood daulyFood = new DaulyFood();
+           daulyFood.setIdDate(cursor.getString(0));
+            daulyFood.setNameFoodOfday(cursor.getString(2));
+            daulyFood.setIdFood(cursor.getInt(1));
+            daulyFood.setTimeofDay(cursor.getString(3));
+            IdDate.add(daulyFood.getIdDate());
+            NameFoodOfday.add(daulyFood.getNameFoodOfday());
+            IdFood.add(daulyFood.getIdFood());
+            TimeofDay.add(daulyFood.getTimeofDay());
+
+            Log.v("getFood", "" + foods);
             cursor.moveToNext();
         }
+        foods = DaulyFood.initfood(IdDate,NameFoodOfday,IdFood,TimeofDay);
         // Nhớ đóng con trỏ lại nhé.
         cursor.close();
-        return people;
+        Log.v("readData", ""+foods);
+        return foods;
     }
     public UserInfo Bmr(){
         Cursor resultSet = database.rawQuery("Select * from "+SQLHelper.TABLE_UserInfo,null);
@@ -250,7 +288,24 @@ public class UserDataSource {
         database.delete(SQLHelper.TABLE_USER, SQLHelper.COLUMN_EMAIL
                 + " = " + id, null);
     }
+    public void getCaloriesIn1Day(Calendar calendar){
+        Calendar calendarStart = calendar;
+        calendarStart.set(Calendar.HOUR_OF_DAY, 0);
+        calendarStart.set(Calendar.MINUTE, 0);
+        calendarStart.set(Calendar.SECOND, 0);
+        Log.v("Test LOG", "START!! "+String.valueOf(calendarStart.getTime()));
 
+        Calendar calendarEnd = calendar;
+        calendarEnd.set(Calendar.HOUR_OF_DAY,23);
+        calendarEnd.set(Calendar.MINUTE, 59);
+        calendarEnd.set(Calendar.SECOND, 58);
+        Log.v("Test LOG", "END!! "+String.valueOf(calendarEnd.getTime()));
+
+        Date startDate = calendarStart.getTime();
+        Date endDate = calendarEnd.getTime();
+//        Cursor cursor = database.rawQuery("Select * from " + SQLHelper.TABLE_CaloDaily + " Where " + SQLHelper.COLUMN_CaloDaily_TimeofDay +" = '"+ timeOfDay +"'", null);
+//        cursor.moveToFirst();
+    }
 
     private UserAcc cursorToUserAcc(Cursor cursor) {
         UserAcc user = new UserAcc();

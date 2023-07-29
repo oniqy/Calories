@@ -59,7 +59,7 @@ public class SQLHelper extends SQLiteOpenHelper{
 //        database = SQLiteDatabase.openDatabase(PATH,null,SQLiteDatabase.CREATE_IF_NECESSARY);
         String tbcalodaily = "create table "
                 + TABLE_CaloDaily + "( " + COLUMN_CaloDaily_IdDate
-                + " NUMERIC primary key , "
+                + " NUMERIC , "
                 +COLUMN_CaloDaily_idFood+" integer,"
                 +COLUMN_CaloDaily_NameFoodOfday+" text,"
                 +COLUMN_CaloDaily_TimeofDay+" text);";

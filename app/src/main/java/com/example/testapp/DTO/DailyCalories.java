@@ -72,4 +72,5 @@ public class DailyCalories {
         this.NameExerciseOfDay = NameExerciseOfDay;
     }
 
+
 }

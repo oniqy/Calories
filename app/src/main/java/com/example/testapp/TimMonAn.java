@@ -36,7 +36,7 @@ public class TimMonAn extends Activity {
         setContentView(R.layout.activity_tim_mon_an);
         datasource = new UserDataSource(this);
         datasource.open();
-        String meats =  alertDialogSingleChoiceExample.showAlertDialog(TimMonAn.this);
+
         lsV = (ListView) findViewById(R.id.lsV);
         ImageButton btnV_search = (ImageButton)findViewById(R.id.btnV_search);
         ImageButton imagebtn_back2 = (ImageButton)findViewById(R.id.imagebtn_back2);
@@ -74,15 +74,13 @@ public class TimMonAn extends Activity {
                     Toast.makeText(getApplicationContext(),"Lỗi gì đó",Toast.LENGTH_LONG).show();
                 }else {
                     String day = dailyCalories.getNameFoodOfday();
-                    String typeofDay = dailyCalories.setTimeofDay(meats);
-                    String idFood = String.valueOf(foodMenu.getIdFood()-1);
+                    String idFood = String.valueOf(foodMenu.getIdFood());
                     String nameFoob = foodMenu.getFoodName();
                     String Proteins = String.valueOf(foodMenu.getProteins());
                     String Carbs = String.valueOf(foodMenu.getCarbs());
                     String fats = String.valueOf(foodMenu.getFats());
                     Intent intent = new Intent(getApplicationContext(), ThongTinMonAn.class);
                     intent.putExtra("idFood",idFood);
-                    intent.putExtra("type",typeofDay);
                     intent.putExtra("name",nameFoob);
                     intent.putExtra("Proteins",Proteins);
                     intent.putExtra("Carbs",Carbs);

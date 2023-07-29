@@ -53,7 +53,7 @@
                     app:cardCornerRadius="40dp"
                     app:layout_constraintEnd_toEndOf="@+id/imageView3"
                     app:layout_constraintStart_toStartOf="@+id/imageView3"
-                    app:layout_constraintTop_toBottomOf="@+id/userDate">
+                    app:layout_constraintTop_toBottomOf="@+id/btnDatePicker">
 
                     <ImageView
                         android:id="@+id/userImg"
@@ -81,21 +81,18 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
-                <TextView
-                    android:id="@+id/userDate"
+                <Button
+                    android:id="@+id/btnDatePicker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/userImg"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="12dp"
-                    android:text="Tue, June 8 23"
-                    android:textColor="@color/black"
-                    android:textSize="8pt"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView3"
-                    app:layout_constraintStart_toStartOf="@+id/imageView3"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="NotSibling" />
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="#3D62AF"
+                    android:drawableLeft="@drawable/baseline_calendar_month_24"
+                    android:text="Jul 05 2023"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <RelativeLayout
@@ -103,7 +100,7 @@
                 android:layout_height="wrap_content">
 
                 <ProgressBar
-                    android:id="@+id/progressBar"
+                    android:id="@+id/progressBarCalo"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
@@ -344,8 +341,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/btnV_edtDailyFoob"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
                     android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_todaymeals"
                     tools:ignore="MissingConstraints">
 
@@ -384,16 +385,20 @@
                         android:id="@+id/lsv_sang"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:paddingLeft="20dp" />
+
+                        />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/linearLayout5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginEnd="15dp"
                     android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
                     <LinearLayout
@@ -438,8 +443,12 @@
                     android:id="@+id/linearLayout6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginEnd="15dp"
                     android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
 
                     <LinearLayout
@@ -479,11 +488,16 @@
                         android:layout_marginTop="5dp"
                         android:paddingLeft="20dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginEnd="15dp"
                     android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
 
                     <LinearLayout

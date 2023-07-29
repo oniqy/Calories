@@ -32,6 +32,7 @@ public class WelcomePage extends AppCompatActivity {
 
             }
         });
+
         sqlHelper.close();
     }
 }

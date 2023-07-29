@@ -108,34 +108,18 @@
                 android:orientation="horizontal">
 
 
-                <ImageButton
-                    android:id="@+id/button4"
-                    android:layout_width="35dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/minus_icon_24"
-
-                    android:text=""
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-
-                <TextView
-                    android:id="@+id/textView18"
-                    android:layout_width="100dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/thongtinmonan_img_border"
-                    android:gravity="center"
-                    android:text="1"
-                    android:textColor="@color/black"
-                    android:textSize="10pt"
-                    android:textStyle="bold" />
-
-                <ImageButton
-                    android:id="@+id/button5"
-                    android:layout_width="40dp"
-                    android:layout_height="match_parent"
-
-                    android:background="@drawable/plus_icon_24"
-                    android:text=""
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                <Button
+                    android:id="@+id/btnDatePickerIndetailFood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="#3D62AF"
+                    android:drawableLeft="@drawable/baseline_calendar_month_25"
+                    android:text="Jul 05 2023"
+                    android:textAlignment="viewStart"
+                    android:textColor="#0BC585"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
             </LinearLayout>
 
             <LinearLayout

@@ -9,6 +9,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -32,7 +33,7 @@ public class DangNhapPage extends AppCompatActivity implements View.OnClickListe
     UserAcc userAcc;
     GoogleSignInOptions signIn;
     GoogleSignInClient signInClient;
-
+TextView tv_dangKy;
     private UserDataSource datasource;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,25 @@ public class DangNhapPage extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 signIn();
+            }
+        });
+        Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                .getBoolean("isFirstRun", true);
+
+        if (isFirstRun) {
+            //show start activity
+
+            startActivity(new Intent(DangNhapPage.this, WelcomePage.class));
+        }
+
+
+        getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+                .putBoolean("isFirstRun", false).commit();
+        tv_dangKy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DangNhapPage.this,DangKyPage.class);
+                startActivity(intent);
             }
         });
     }
@@ -85,6 +105,7 @@ public class DangNhapPage extends AppCompatActivity implements View.OnClickListe
         btn_dk.setOnClickListener(this::onClick);
         btn_dn.setOnClickListener(this::onClick);
         btn_dk.setVisibility(View.GONE);
+        tv_dangKy = (TextView) findViewById(R.id.tv_dangKy);
 
     }
 

@@ -16,7 +16,7 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="406dp"
-        android:layout_height="281dp"
+        android:layout_height="250dp"
         android:layout_marginTop="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,16 +93,15 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_dk"
+        style="@android:style/Widget.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:layout_marginTop="32dp"
         android:text="Đăng ký"
-        android:textStyle="bold"
         android:textColor="@color/white"
         android:textSize="20dp"
-        style="@android:style/Widget.Button"
-        android:background="@drawable/button_login"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_dn" />
@@ -111,13 +110,26 @@
         android:id="@+id/imgBtn_signupGG"
         android:layout_width="84dp"
         android:layout_height="66dp"
+        android:layout_marginTop="-14dp"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btn_dk"
+        app:layout_constraintTop_toBottomOf="@+id/btn_dn"
         app:srcCompat="@drawable/googl"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/tv_dangKy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Bạn chưa có tài khoản?"
+        android:textColor="#03A9F4"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgBtn_signupGG" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

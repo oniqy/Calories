@@ -49,6 +49,7 @@ delete from userInfo where idUser = 2]]></console>
         <condition column="IdDate" operator="=" value="1" active="true" />
       </filter>
     </filter-actions>
+    <filter-actions connection-id="0e880b89-1516-4742-952e-ab375ec9c989" dataset="main.android_metadata" active-filter-id="" />
     <filter-actions connection-id="0e880b89-1516-4742-952e-ab375ec9c989" dataset="main.foodMenu" active-filter-id="c090272e-58db-42b4-a2bc-f920903e0011">
       <filter id="c090272e-58db-42b4-a2bc-f920903e0011" name="1" temporary="false" custom-name="false" type="basic" join-type="AND">
         <condition column="idFood" operator="=" value="1" active="true" />
