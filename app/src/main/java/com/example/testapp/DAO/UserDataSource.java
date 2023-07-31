@@ -182,58 +182,104 @@ public class UserDataSource {
         return 0;
     }
     public int Tinhcalo(String email,String date){
-        Cursor resultSet = database.rawQuery("Select sum(" + SQLHelper.COLUMN_FoodMenu_Calories +") from "
-                        +SQLHelper.TABLE_FoodMenu+" , "+ SQLHelper.TABLE_CaloDaily
-                        +" where "+SQLHelper.TABLE_CaloDaily+"."+SQLHelper.COLUMN_CaloDaily_idFood+" = "
-                        +SQLHelper.TABLE_FoodMenu+"."+SQLHelper.COLUMN_FoodMenu_idFood+ " and "+SQLHelper.COLUMN_CaloDaily_idEmail+
-                " = '" + email + "'"
-                ,null);
-        resultSet.moveToFirst();
-        int id= resultSet.getInt(0);
-        if(id == 0){
-            return -1;
+        int sum = 0;
+        try {
+            String sql = "SELECT SUM(" + SQLHelper.COLUMN_FoodMenu_Calories + ") FROM "
+                    + SQLHelper.TABLE_FoodMenu + ", "
+                    + SQLHelper.TABLE_CaloDaily + " WHERE "
+                    + SQLHelper.TABLE_CaloDaily + "."
+                    + SQLHelper.COLUMN_CaloDaily_idFood + " = "
+                    + SQLHelper.TABLE_FoodMenu + "."
+                    + SQLHelper.COLUMN_FoodMenu_idFood + " AND "
+                    + SQLHelper.TABLE_CaloDaily + "."
+                    + SQLHelper.COLUMN_CaloDaily_IdDate + " = '"+date+ "' AND "
+                    + SQLHelper.TABLE_CaloDaily + "."
+                    + SQLHelper.COLUMN_CaloDaily_idEmail + " = '"+email+"'";
+            Cursor cursor = database.rawQuery(sql, null);
+
+            if (cursor != null && cursor.moveToFirst()) {
+                sum = cursor.getInt(0);
+                cursor.close();
+            }
+        } catch (SQLException e) {
+            Log.e("SQL", "Error executing SQL query: " + e.getMessage());
         }
-        return id;
+        return sum;
     }
     public int TinhProtein(String email,String date){
-        Cursor resultSet = database.rawQuery("Select sum(" + SQLHelper.COLUMN_FoodMenu_Proteins +") from "
-                        +SQLHelper.TABLE_FoodMenu+" , "+ SQLHelper.TABLE_CaloDaily +" where "
-                        +SQLHelper.TABLE_CaloDaily+"."+SQLHelper.COLUMN_CaloDaily_idFood+" = "
-                        +SQLHelper.TABLE_FoodMenu+"."+SQLHelper.COLUMN_FoodMenu_idFood+ " and "+SQLHelper.COLUMN_CaloDaily_idEmail+
-                        " = '" + email  + "'"
-                ,null);
-        resultSet.moveToFirst();
-        int id= resultSet.getInt(0);
-        if(id == 0){
-            return -1;
+        int sum = 0;
+        try {
+            String sql = "SELECT SUM(" + SQLHelper.COLUMN_FoodMenu_Proteins + ") FROM "
+                    + SQLHelper.TABLE_FoodMenu + ", "
+                    + SQLHelper.TABLE_CaloDaily + " WHERE "
+                    + SQLHelper.TABLE_CaloDaily + "."
+                    + SQLHelper.COLUMN_CaloDaily_idFood + " = "
+                    + SQLHelper.TABLE_FoodMenu + "."
+                    + SQLHelper.COLUMN_FoodMenu_idFood + " AND "
+                    + SQLHelper.TABLE_CaloDaily + "."
+                    + SQLHelper.COLUMN_CaloDaily_IdDate + " = '"+date+ "' AND "
+                    + SQLHelper.TABLE_CaloDaily + "."
+                    + SQLHelper.COLUMN_CaloDaily_idEmail + " = '"+email+"'";
+            Cursor cursor = database.rawQuery(sql, null);
+
+            if (cursor != null && cursor.moveToFirst()) {
+                sum = cursor.getInt(0);
+                cursor.close();
+            }
+        } catch (SQLException e) {
+            Log.e("SQL", "Error executing SQL query: " + e.getMessage());
         }
-        return id;
+        return sum;
     }
     public int TinhFat(String email,String date){
-        Cursor resultSet = database.rawQuery("Select sum(" + SQLHelper.COLUMN_FoodMenu_Fats +") from "
-                        +SQLHelper.TABLE_FoodMenu+" , "+ SQLHelper.TABLE_CaloDaily +" where "
-                        +SQLHelper.TABLE_CaloDaily+"."+SQLHelper.COLUMN_CaloDaily_idFood+" = "
-                        +SQLHelper.TABLE_FoodMenu+"."+SQLHelper.COLUMN_FoodMenu_idFood+ " and "+SQLHelper.COLUMN_CaloDaily_idEmail+
-                        " = '" + email  + "'"
-                ,null);
-        resultSet.moveToFirst();
-        int id= resultSet.getInt(0);
-        if(id == 0){
-            return -1;
+        int sum = 0;
+        try {
+            String sql = "SELECT SUM(" + SQLHelper.COLUMN_FoodMenu_Fats + ") FROM "
+                    + SQLHelper.TABLE_FoodMenu + ", "
+                    + SQLHelper.TABLE_CaloDaily + " WHERE "
+                    + SQLHelper.TABLE_CaloDaily + "."
+                    + SQLHelper.COLUMN_CaloDaily_idFood + " = "
+                    + SQLHelper.TABLE_FoodMenu + "."
+                    + SQLHelper.COLUMN_FoodMenu_idFood + " AND "
+                    + SQLHelper.TABLE_CaloDaily + "."
+                    + SQLHelper.COLUMN_CaloDaily_IdDate + " = '"+date+ "' AND "
+                    + SQLHelper.TABLE_CaloDaily + "."
+                    + SQLHelper.COLUMN_CaloDaily_idEmail + " = '"+email+"'";
+            Cursor cursor = database.rawQuery(sql, null);
+
+            if (cursor != null && cursor.moveToFirst()) {
+                sum = cursor.getInt(0);
+                cursor.close();
+            }
+        } catch (SQLException e) {
+            Log.e("SQL", "Error executing SQL query: " + e.getMessage());
         }
-        return id;
+        return sum;
     }
     public int TinhCarb(String email,String date){
-        Cursor resultSet = database.rawQuery("select Sum("+SQLHelper.COLUMN_FoodMenu_Carbs+") from "+SQLHelper.TABLE_FoodMenu+" , "+SQLHelper.TABLE_CaloDaily+" " +
-                        "where "+SQLHelper.TABLE_FoodMenu+"."+SQLHelper.COLUMN_FoodMenu_idFood+" = "+SQLHelper.TABLE_CaloDaily+"."+SQLHelper.COLUMN_CaloDaily_idFood +""+
-                        " and "+SQLHelper.COLUMN_CaloDaily_idEmail+" = '"+ email+"'"
-                ,null);
-        resultSet.moveToFirst();
-        int id= resultSet.getInt(0);
-        if(id == 0){
-            return -1;
+        int sum = 0;
+        try {
+            String sql = "SELECT SUM(" + SQLHelper.COLUMN_FoodMenu_Carbs + ") FROM "
+                    + SQLHelper.TABLE_FoodMenu + ", "
+                    + SQLHelper.TABLE_CaloDaily + " WHERE "
+                    + SQLHelper.TABLE_CaloDaily + "."
+                    + SQLHelper.COLUMN_CaloDaily_idFood + " = "
+                    + SQLHelper.TABLE_FoodMenu + "."
+                    + SQLHelper.COLUMN_FoodMenu_idFood + " AND "
+                    + SQLHelper.TABLE_CaloDaily + "."
+                    + SQLHelper.COLUMN_CaloDaily_IdDate + " = '"+date+ "' AND "
+                    + SQLHelper.TABLE_CaloDaily + "."
+                    + SQLHelper.COLUMN_CaloDaily_idEmail + " = '"+email+"'";
+            Cursor cursor = database.rawQuery(sql, null);
+
+            if (cursor != null && cursor.moveToFirst()) {
+                sum = cursor.getInt(0);
+                cursor.close();
+            }
+        } catch (SQLException e) {
+            Log.e("SQL", "Error executing SQL query: " + e.getMessage());
         }
-        return id;
+        return sum;
     }
     public List<String> timKiemfood(String nameFood){
         List<String> food = new ArrayList<>();

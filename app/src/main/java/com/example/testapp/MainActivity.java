@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
-                .getBoolean("isFirstRun", true);
+                .getBoolean("isFirstRunIntro", true);
 
         if (isFirstRun) {
             //show start activity
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
-                .putBoolean("isFirstRun", false).commit();
+                .putBoolean("isFirstRunIntro", false).commit();
     }
     public void loadFragment(Fragment fragment) {
 // create a FragmentManager

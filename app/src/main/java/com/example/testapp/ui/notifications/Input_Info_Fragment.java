@@ -107,6 +107,7 @@ public class Input_Info_Fragment extends Fragment implements Custom_spinner.OnSp
                 if(ttUser()==1){
                     Intent intent = new Intent(getContext(), MainActivity.class);
                     startActivity(intent);
+
                 }
                 else {
                     Toast.makeText(getContext(), "Có gì đó sai sai", Toast.LENGTH_LONG).show();
@@ -215,6 +216,7 @@ public class Input_Info_Fragment extends Fragment implements Custom_spinner.OnSp
         binding = FragmentInputInfoBinding.inflate(inflater, container, false);
         datasource = new UserDataSource(getContext());
         datasource.open();
+
         binding.imagebtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

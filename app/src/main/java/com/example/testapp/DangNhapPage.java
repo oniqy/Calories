@@ -63,8 +63,7 @@ TextView tv_dangKy;
         }
 
 
-        getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
-                .putBoolean("isFirstRun", false).commit();
+        getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("isFirstRun", false).commit();
         tv_dangKy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +90,7 @@ TextView tv_dangKy;
                         int k = datasource.createUserACc(userAcc);
                         if (k == 1) {
                             loadFragment(new Input_Info_Fragment());
+
                             Toast.makeText(this, "Hãy thiết lập chỉ số BMR của bạn trước khi sử dụng HealthyCare", Toast.LENGTH_LONG).show();
                         } else if (k == -1) {
                             Toast.makeText(DangNhapPage.this, "Tên đăng nhập không hợp lệ!", Toast.LENGTH_LONG).show();

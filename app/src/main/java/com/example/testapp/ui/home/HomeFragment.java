@@ -95,7 +95,7 @@ public class HomeFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
         btnDatePicker.setText(currentDate);
-        showCalories();
+        showCalories(getType);
 
 
 
@@ -106,7 +106,7 @@ public class HomeFragment extends Fragment {
         Calendar calendarcheck = Calendar.getInstance();
         return calendarcheck.getTime();
     }
-    private void showCalories(){
+    private void showCalories(String type){
         int checkDate = currentDate.get(Calendar.HOUR_OF_DAY);
         if(checkDate == 0){
             numb_caloIn.setText(Integer.toString(0));
@@ -136,7 +136,7 @@ public class HomeFragment extends Fragment {
             binding.chiSoCalo.setText(String.format(Locale.US, "%.0f", tdee) + "\n/Kcal");
         }
 
-        int caloriesIn = datasource.Tinhcalo(email,getType);
+        int caloriesIn = datasource.Tinhcalo(email,type);
         if(caloriesIn == -1){
             numb_caloIn.setText(Integer.toString(0));
             progressBarCalo.setProgress(0);
@@ -147,9 +147,10 @@ public class HomeFragment extends Fragment {
         }
 
         double proteins = tdee*0.35/4;
-        int proteinIn = datasource.TinhProtein(email,getType);
+        int proteinIn = datasource.TinhProtein(email,type);
         if(proteinIn == -1){
             progressBar_dam.setProgress(0);
+            tv_showproteinInday.setText(Integer.toString(0));
             tv_processProtein.setText(Integer.toString(0));
         }else {
             progressBar_dam.setMax((int) proteins);
@@ -159,10 +160,11 @@ public class HomeFragment extends Fragment {
         }
 
         double fats = tdee*0.3/9;
-        int fatsIn = datasource.TinhFat(email,getType);
+        int fatsIn = datasource.TinhFat(email,type);
         if(fatsIn == -1){
             progressBar_beo.setProgress(0);
             tv_processFat.setText(Integer.toString(0));
+            tv_showFatInday.setText(Integer.toString(0));
         }else {
             progressBar_beo.setMax((int) fats);
             tv_showFatInday.setText(String.valueOf(fatsIn));
@@ -171,10 +173,11 @@ public class HomeFragment extends Fragment {
         }
 
         double carb = tdee*0.35/4;
-        int carbIn = datasource.TinhCarb(email,getType);
+        int carbIn = datasource.TinhCarb(email,type);
         if(carbIn == -1){
             progressBar_car.setProgress(0);
             tv_processCarb.setText(Integer.toString(0));
+            tv_showCarbInday.setText(Integer.toString(0));
         }else {
             progressBar_car.setMax((int) carb);
             tv_showCarbInday.setText(String.valueOf(carbIn));
@@ -371,6 +374,7 @@ public class HomeFragment extends Fragment {
                                 String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
                                 btnDatePicker.setText(currentDate);
                                 getType=DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+                                showCalories(getType);
                             }
 
                         }, mYear, mMonth, mDay);
@@ -442,7 +446,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        showCalories();
+        showCalories(getType);
     }
 
     public void loadFragment(Fragment fragment) {

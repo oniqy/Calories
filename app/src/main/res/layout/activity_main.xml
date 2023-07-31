@@ -38,6 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginRight="16dp"
+                android:paddingHorizontal="20dp"
                 app:labelVisibilityMode="selected"
                 android:background="@drawable/transparent_bg"
                 app:menu="@menu/bottom_nav_menu"

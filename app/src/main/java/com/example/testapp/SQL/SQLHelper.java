@@ -62,12 +62,11 @@ public class SQLHelper extends SQLiteOpenHelper{
                 + TABLE_CaloDaily + "( " + COLUMN_CaloDaily_Id
                 + " integer primary key autoincrement, "
                 + COLUMN_CaloDaily_IdDate
-                + " NUMERIC , "
+                + " text , "
                 +COLUMN_CaloDaily_idFood+" integer,"
                 +COLUMN_CaloDaily_idEmail+" text ,"
                 +COLUMN_CaloDaily_NameFoodOfday+" text,"
                 +COLUMN_CaloDaily_TimeofDay+" text);";
-
         String tbUserAcc = "create table "
                 + TABLE_USER + "( " + COLUMN_EMAIL
                 + " text primary key , " + COLUMN_NAME_USER
