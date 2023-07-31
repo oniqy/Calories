@@ -3,6 +3,7 @@ package com.example.testapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -45,6 +46,7 @@ TextView tv_dangKy;
         datasource.open();
         signIn = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         signInClient = GoogleSignIn.getClient(this,signIn);
+
         addControl();
         imgBtn_signupGG.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +59,6 @@ TextView tv_dangKy;
 
         if (isFirstRun) {
             //show start activity
-
             startActivity(new Intent(DangNhapPage.this, WelcomePage.class));
         }
 
@@ -78,13 +79,27 @@ TextView tv_dangKy;
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 task.getResult(ApiException.class);
-                int check = datasource.checkUserInfo();
-                if(check == 1){
-                    loadFragment(new Input_Info_Fragment());
-                    Toast.makeText(this,"Hãy thiết lập chỉ số BMR của bạn trước khi sử dụng HealthyCare",Toast.LENGTH_LONG).show();
-                }else {
-                    Intent intent = new Intent(DangNhapPage.this,MainActivity.class);
-                    startActivity(intent);
+                GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(DangNhapPage.this);
+                if(acct!=null){
+                    String personEmail = acct.getEmail();
+                    String personid = acct.getId();
+                    UserAcc userAcc = new UserAcc();
+                    userAcc.setUsername(personEmail);
+                    userAcc.setPassWord(personid);
+                    int check = datasource.checkUserAcc(personEmail);
+                    if(check == 1) {
+                        int k = datasource.createUserACc(userAcc);
+                        if (k == 1) {
+                            loadFragment(new Input_Info_Fragment());
+                            Toast.makeText(this, "Hãy thiết lập chỉ số BMR của bạn trước khi sử dụng HealthyCare", Toast.LENGTH_LONG).show();
+                        } else if (k == -1) {
+                            Toast.makeText(DangNhapPage.this, "Tên đăng nhập không hợp lệ!", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    else {
+                        Intent intent = new Intent(DangNhapPage.this, MainActivity.class);
+                        startActivity(intent);
+                    }
                 }
 
             } catch (ApiException e) {

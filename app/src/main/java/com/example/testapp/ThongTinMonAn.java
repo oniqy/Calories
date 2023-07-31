@@ -32,7 +32,11 @@ import android.widget.Toast;
 
 import com.example.testapp.DAO.UserDataSource;
 import com.example.testapp.DTO.DailyCalories;
+import com.example.testapp.DTO.DaulyFood;
 import com.example.testapp.ui.home.HomeFragment;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+
 import android.content.DialogInterface;
 import android.widget.Toast;
 
@@ -53,7 +57,7 @@ public class ThongTinMonAn extends AppCompatActivity  implements View.OnClickLis
     private int mYear, mMonth, mDay;
     Calendar calendar = Calendar.getInstance();
     DailyCalories dailyCalories = new DailyCalories();
-
+    DaulyFood daulyFood = new DaulyFood();
     @Override
     @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +82,8 @@ public class ThongTinMonAn extends AppCompatActivity  implements View.OnClickLis
         namFoodofDay = intent.getStringExtra("name");
         tv_nameFood.setText(intent.getStringExtra("name"));
         tv_chatProtein.setText(intent.getStringExtra("Proteins")+"g");
-        tv_chatbeo.setText(intent.getStringExtra("Carbs")+"g");
-        tv_carbs.setText(intent.getStringExtra("fats")+"g");
+        tv_chatbeo.setText(intent.getStringExtra("fats")+"g");
+        tv_carbs.setText(intent.getStringExtra("Carbs")+"g");
 
         imagebtn_back2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,13 +95,18 @@ public class ThongTinMonAn extends AppCompatActivity  implements View.OnClickLis
         btn_addFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dailyCalories.setId(calendar.getTime());
-                dailyCalories.setTimeofDay(meat);
-                dailyCalories.setIdFood(Integer.parseInt(intent.getStringExtra("idFood")));
-                dailyCalories.setNameFoodOfday(namFoodofDay);
-
+                String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+                daulyFood.setIdDate(currentDate);
+                daulyFood.setTimeofDay(meat);
+                daulyFood.setIdFood(Integer.parseInt(intent.getStringExtra("idFood")));
+                daulyFood.setNameFoodOfday(namFoodofDay);
+                String email = null;
+                GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+                if(acct!=null){
+                     email = acct.getEmail();
+                }
                 //insert
-                int insert = datasource.createDailyFood(dailyCalories);
+                int insert = datasource.createDailyFood(daulyFood,email);
                 if(insert == 1){
                     Toast.makeText(getApplicationContext(), "Thêm món thành công", Toast.LENGTH_LONG).show();
                 }else {
@@ -123,8 +132,9 @@ public class ThongTinMonAn extends AppCompatActivity  implements View.OnClickLis
 
 
                                 calendar.set(year,monthOfYear,dayOfMonth);
-                                btnDatePickerIndetailFood.setText((CharSequence) calendar);
-                                dailyCalories.setId(new Date((calendar.getTime()).getTime()));
+                                String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+                                btnDatePickerIndetailFood.setText(currentDate);
+                                daulyFood.setIdDate(currentDate);
                             }
 
                         }, mYear, mMonth, mDay);

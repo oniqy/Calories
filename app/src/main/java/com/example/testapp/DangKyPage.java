@@ -64,11 +64,17 @@ public class DangKyPage extends AppCompatActivity implements View.OnClickListene
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        String email=null;
         if(resultCode == -1){
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+            if(acct!=null){
+                 email = acct.getEmail();
+            }
+
             try {
                 task.getResult(ApiException.class);
-                int check = datasource.checkUserInfo();
+                int check = datasource.checkUserInfo(email);
                 if(check == 1){
                     loadFragment(new Input_Info_Fragment());
                     Toast.makeText(this,"Hãy thiết lập chỉ số BMR của bạn trước khi sử dụng HealthyCare",Toast.LENGTH_LONG).show();

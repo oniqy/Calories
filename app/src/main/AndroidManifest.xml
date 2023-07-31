@@ -25,7 +25,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".DangNhapPage"
+            android:name=".WelcomePage"
             android:exported="false" />
         <activity
             android:name=".TimMonAn"
@@ -34,7 +34,7 @@
             android:name=".ThongTinMonAn"
             android:exported="false" />
         <activity
-            android:name=".WelcomePage"
+            android:name=".DangNhapPage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

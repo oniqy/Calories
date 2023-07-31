@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,7 +28,10 @@ public class TimMonAn extends Activity {
     private UserDataSource datasource;
     ArrayAdapter<String> arrayAdapter;
     List<String> list = new ArrayList<>();
+    FoodMenu foodMenu ;
     ListView lsV;
+    String ttluu = "tkmkLog";
+
     private AlertDialogSingleChoiceExample alertDialogSingleChoiceExample;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -56,11 +60,16 @@ public class TimMonAn extends Activity {
         btnV_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences sharedPreferences = getSharedPreferences(ttluu,MODE_PRIVATE);
+                SharedPreferences.Editor editor =sharedPreferences.edit();
                 String nameFood = edtTimKiemFoob.getText().toString();
                 list.clear();
                 list = datasource.timKiemfood(nameFood);
                 arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1,list);
                 lsV.setAdapter(arrayAdapter);
+                int idFood = datasource.checkFood(nameFood);
+                editor.putInt("idFood", idFood);
+                editor.commit();
 
 
             }
@@ -68,12 +77,16 @@ public class TimMonAn extends Activity {
         lsV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                FoodMenu foodMenu = datasource.detail_food(position);
-                DailyCalories dailyCalories = new DailyCalories();
+                SharedPreferences sharedPreferences = getSharedPreferences(ttluu,MODE_PRIVATE);
+                SharedPreferences.Editor editor =sharedPreferences.edit();
+                int checkID = sharedPreferences.getInt("idFood",position);
+                if(checkID == 0){
+                    checkID = position+1;
+                }
+                FoodMenu foodMenu = datasource.detail_food(checkID);
                 if(foodMenu == null){
                     Toast.makeText(getApplicationContext(),"Lỗi gì đó",Toast.LENGTH_LONG).show();
                 }else {
-                    String day = dailyCalories.getNameFoodOfday();
                     String idFood = String.valueOf(foodMenu.getIdFood());
                     String nameFoob = foodMenu.getFoodName();
                     String Proteins = String.valueOf(foodMenu.getProteins());
@@ -87,6 +100,8 @@ public class TimMonAn extends Activity {
                     intent.putExtra("fats",fats);
                     startActivity(intent);
                 }
+                editor.putInt("idFood", 0);
+                editor.commit();
             }
 
         });

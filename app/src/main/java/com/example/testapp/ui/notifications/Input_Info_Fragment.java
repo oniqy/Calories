@@ -30,6 +30,8 @@ import com.example.testapp.adapter.item_gioitinh;
 import com.example.testapp.adapter.item_mucTieu;
 import com.example.testapp.adapter.item_tapluyen;
 import com.example.testapp.ui.home.HomeFragment;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import java.util.ArrayList;
 
@@ -116,6 +118,12 @@ public class Input_Info_Fragment extends Fragment implements Custom_spinner.OnSp
         });
     }
     private int ttUser(){
+        String Email = null;
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
+        if(acct!=null){
+             Email = acct.getEmail();
+        }
+
         UserInfo userInfo = new UserInfo();
         int age = Integer.parseInt(edt_age.getText().toString());
         int height = Integer.parseInt(edt_height.getText().toString());
@@ -126,7 +134,7 @@ public class Input_Info_Fragment extends Fragment implements Custom_spinner.OnSp
         userInfo.setGender(getSex);
         userInfo.setExercise(getCheDoTap);
         userInfo.setTarget(getMucTieu);
-        int t = datasource.createUserInfo(userInfo);
+        int t = datasource.createUserInfo(userInfo,Email);
         if(t == 1){
 
             Toast.makeText(getContext(), "Lưu thông tin thành công", Toast.LENGTH_LONG).show();

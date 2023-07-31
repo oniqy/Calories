@@ -49,7 +49,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Calendar;
 import java.util.Locale;
-
+import java.util.Scanner;
+import java.text.DecimalFormat;
 public class HomeFragment extends Fragment {
     private UserDataSource datasource;
     private ThongTinMonAn thongTinMonAn;
@@ -63,16 +64,16 @@ public class HomeFragment extends Fragment {
     adapter_dailyFood adapter_dailyFoods;
     ImageView userImg;
     List<String> list = new ArrayList<>();
-    TextView userHello,chiSoCalo,userDate,numb_caloIn;
+    TextView userHello,chiSoCalo,userDate,numb_caloIn,tv_processFat,tv_processProtein,tv_processCarb,tv_showCarbInday,tv_showFatInday,tv_showproteinInday;
     BMR_page_Fragment bmr_page_fragment;
     private FragmentHomeBinding binding;
     DailyCalories dailyCalories ;
     String getType ;
-    ProgressBar progressBarCalo;
+    ProgressBar progressBarCalo,progressBar_beo,progressBar_dam,progressBar_car;
     Button btnDatePicker;
     private int mYear, mMonth, mDay;
     Calendar currentDate = Calendar.getInstance();
-
+    String email= null;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
@@ -81,6 +82,11 @@ public class HomeFragment extends Fragment {
         datasource.open();
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
+        if(acct!=null){
+            email = acct.getEmail();
+        };
+        getType=DateFormat.getDateInstance(DateFormat.FULL).format(currentDate.getTime());
         addControl();
         addEnvent();
         singUpGG();
@@ -101,7 +107,18 @@ public class HomeFragment extends Fragment {
         return calendarcheck.getTime();
     }
     private void showCalories(){
-
+        int checkDate = currentDate.get(Calendar.HOUR_OF_DAY);
+        if(checkDate == 0){
+            numb_caloIn.setText(Integer.toString(0));
+            progressBarCalo.setProgress(0);
+            progressBar_dam.setProgress(0);
+            tv_processProtein.setText(Integer.toString(0));
+            progressBar_beo.setProgress(0);
+            tv_processFat.setText(Integer.toString(0));
+            progressBar_car.setProgress(0);
+            tv_processCarb.setText(Integer.toString(0));
+        }
+        DecimalFormat df = new DecimalFormat("#");
 
         double tdee = 0;
         double bmr = tinhBMR();
@@ -118,16 +135,52 @@ public class HomeFragment extends Fragment {
             }
             binding.chiSoCalo.setText(String.format(Locale.US, "%.0f", tdee) + "\n/Kcal");
         }
-        int caloriesIn = datasource.Tinhcalo();
+
+        int caloriesIn = datasource.Tinhcalo(email,getType);
         if(caloriesIn == -1){
             numb_caloIn.setText(Integer.toString(0));
             progressBarCalo.setProgress(0);
         }else {
             progressBarCalo.setMax((int) tdee);
-            double caloriesConLai = tdee - caloriesIn;
-            double caloriesInDay = tdee - caloriesConLai;
             numb_caloIn.setText(Integer.toString(caloriesIn));
-            progressBarCalo.setProgress((int) caloriesInDay);
+            progressBarCalo.setProgress((int) caloriesIn);
+        }
+
+        double proteins = tdee*0.35/4;
+        int proteinIn = datasource.TinhProtein(email,getType);
+        if(proteinIn == -1){
+            progressBar_dam.setProgress(0);
+            tv_processProtein.setText(Integer.toString(0));
+        }else {
+            progressBar_dam.setMax((int) proteins);
+            tv_showproteinInday.setText(String.valueOf(proteinIn));
+            tv_processProtein.setText(df.format(proteins));
+            progressBar_dam.setProgress((int) proteinIn);
+        }
+
+        double fats = tdee*0.3/9;
+        int fatsIn = datasource.TinhFat(email,getType);
+        if(fatsIn == -1){
+            progressBar_beo.setProgress(0);
+            tv_processFat.setText(Integer.toString(0));
+        }else {
+            progressBar_beo.setMax((int) fats);
+            tv_showFatInday.setText(String.valueOf(fatsIn));
+            tv_processFat.setText(df.format(fats));
+            progressBar_beo.setProgress((int) fatsIn);
+        }
+
+        double carb = tdee*0.35/4;
+        int carbIn = datasource.TinhCarb(email,getType);
+        if(carbIn == -1){
+            progressBar_car.setProgress(0);
+            tv_processCarb.setText(Integer.toString(0));
+        }else {
+            progressBar_car.setMax((int) carb);
+            tv_showCarbInday.setText(String.valueOf(carbIn));
+            tv_processCarb.setText(df.format(carb));
+
+            progressBar_car.setProgress((int) carbIn);
         }
 
     }
@@ -151,6 +204,15 @@ public class HomeFragment extends Fragment {
         gsc = GoogleSignIn.getClient(getContext(),gso);
         userImg = binding.userImg.findViewById(R.id.userImg);
         progressBarCalo = binding.progressBarCalo.findViewById(R.id.progressBarCalo);
+        progressBar_beo = binding.progressBarBeo.findViewById(R.id.progressBar_beo);
+        progressBar_dam = binding.progressBarDam.findViewById(R.id.progressBar_dam);
+        progressBar_car = binding.progressBarCar.findViewById(R.id.progressBar_car);
+        tv_processFat = binding.tvProcessFat.findViewById(R.id.tv_processFat);
+        tv_processProtein = binding.tvProcessProtein.findViewById(R.id.tv_processProtein);
+        tv_processCarb = binding.tvProcessCarb.findViewById(R.id.tv_processCarb);
+        tv_showCarbInday = binding.tvShowCarbInday.findViewById(R.id.tv_showCarbInday);
+        tv_showFatInday = binding.tvShowFatInday.findViewById(R.id.tv_showFatInday);
+        tv_showproteinInday = binding.tvShowproteinInday.findViewById(R.id.tv_showproteinInday);
         numb_caloIn = binding.numbCaloIn.findViewById(R.id.numb_caloIn);
         LinearLayout layoutbuoiSang =  binding.layoutbuoiSang.findViewById(R.id.layoutbuoiSang);
         userHello = binding.userHello.findViewById(R.id.userHello);
@@ -223,7 +285,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 recyc =(RecyclerView) binding.lsvSang.findViewById(R.id.lsv_sang);
-                daulyFoods = datasource.getFood("Sáng");
+                daulyFoods = datasource.getFood("Sáng",email,getType);
 
                 adapter_dailyFoods =new adapter_dailyFood(daulyFoods);
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -233,8 +295,7 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onIttemClick(int position) {
                         String date = daulyFoods.get(position).getIdDate();
-                        String savedData = sharedPreferences.getString("DATA", "");
-                        int delete = datasource.deteleFood(date);
+                        int delete = datasource.deteleFood(date,email);
                         if (delete == 0){
                             daulyFoods.remove(position);
                         }
@@ -248,7 +309,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 recyc =(RecyclerView) binding.lsvTrua.findViewById(R.id.lsv_trua);
-                daulyFoods = datasource.getFood("Trưa");
+                daulyFoods = datasource.getFood("Trưa",email,getType);
                 adapter_dailyFoods =new adapter_dailyFood(daulyFoods);
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
                 recyc.setLayoutManager(layoutManager);
@@ -257,8 +318,7 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onIttemClick(int position) {
                         String date = daulyFoods.get(position).getIdDate();
-                        String savedData = sharedPreferences.getString("DATA", "");
-                        int delete = datasource.deteleFood(date);
+                        int delete = datasource.deteleFood(date,email);
                         if (delete == 0){
                             daulyFoods.remove(position);
                         }
@@ -271,7 +331,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 recyc =(RecyclerView) binding.lsvToi.findViewById(R.id.lsv_toi);
-                daulyFoods = datasource.getFood("Tối");
+                daulyFoods = datasource.getFood("Tối",email,getType);
                 adapter_dailyFoods =new adapter_dailyFood(daulyFoods);
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
                 recyc.setLayoutManager(layoutManager);
@@ -280,8 +340,7 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onIttemClick(int position) {
                         String date = daulyFoods.get(position).getIdDate();
-                        String savedData = sharedPreferences.getString("DATA", "");
-                        int delete = datasource.deteleFood(date);
+                        int delete = datasource.deteleFood(date,email);
                         if (delete == 0){
                             daulyFoods.remove(position);
                         }
@@ -311,7 +370,7 @@ public class HomeFragment extends Fragment {
                                 calendar.set(year,monthOfYear,dayOfMonth);
                                 String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
                                 btnDatePicker.setText(currentDate);
-                                showCalories();
+                                getType=DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
                             }
 
                         }, mYear, mMonth, mDay);
@@ -323,7 +382,7 @@ public class HomeFragment extends Fragment {
 
     }
     public double tinhBMR(){
-        UserInfo userInfo = datasource.Bmr();
+        UserInfo userInfo = datasource.Bmr(email);
 
         String sex = userInfo.getGender();
         if(sex == null){
@@ -344,7 +403,7 @@ public class HomeFragment extends Fragment {
         return BMR;
     }
     public double tinhTDEE(){
-        UserInfo userInfo = datasource.Bmr();
+        UserInfo userInfo = datasource.Bmr(email);
         String exercise = userInfo.getExercise();
         double R = 0;
         if(exercise.equals("Không tập")){
@@ -361,7 +420,7 @@ public class HomeFragment extends Fragment {
         return R;
     }
     public double tinhTarget(){
-        UserInfo userInfo = datasource.Bmr();
+        UserInfo userInfo = datasource.Bmr(email);
         String exercise = userInfo.getTarget();
         double R = 0;
         if(exercise.equals("Giảm cân")){

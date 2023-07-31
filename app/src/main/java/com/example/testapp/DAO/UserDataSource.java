@@ -14,6 +14,8 @@ import com.example.testapp.DTO.FoodMenu;
 import com.example.testapp.DTO.UserInfo;
 import com.example.testapp.SQL.SQLHelper;
 import com.example.testapp.DTO.UserAcc;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,7 +29,6 @@ public class UserDataSource {
             SQLHelper.COLUMN_NAME_USER};
     private String[] colFood = {SQLHelper.COLUMN_FoodMenu_idFood,
             SQLHelper.COLUMN_FoodMenu_name, SQLHelper.COLUMN_FoodMenu_soLuong};
-
     public UserDataSource(Context context) {
         dbHelper = new SQLHelper(context.getApplicationContext(), "healthyCare",null,1);
     }
@@ -72,7 +73,7 @@ public class UserDataSource {
         return 1;
     }
 
-    public int createUserInfo(UserInfo userInfo) {
+    public int createUserInfo(UserInfo userInfo,String email) {
         ContentValues values = new ContentValues();
         values.put(SQLHelper.COLUMN_UserInfo_UserHeight, userInfo.getUserHeight());
         values.put(SQLHelper.COLUMN_UserInfo_UserWeight, userInfo.getUserWeight());
@@ -80,7 +81,8 @@ public class UserDataSource {
         values.put(SQLHelper.COLUMN_UserInfo_Exercise, userInfo.getExercise());
         values.put(SQLHelper.COLUMN_UserInfo_Gender, userInfo.getGender());
         values.put(SQLHelper.COLUMN_UserInfo_Target, userInfo.getTarget());
-        int check = checkUserInfo();
+        values.put(SQLHelper.COLUMN_UserInfo_idEmail, email);
+        int check = checkUserInfo(email);
         if (check == 1) {
             long insertId = database.insert(SQLHelper.TABLE_UserInfo, null,
                     values);
@@ -93,12 +95,13 @@ public class UserDataSource {
             return 1;
         }
     }
-    public int createDailyFood(DailyCalories dailyCalories) {
+    public int createDailyFood(DaulyFood daulyFood,String email) {
         ContentValues values = new ContentValues();
-        values.put(SQLHelper.COLUMN_CaloDaily_IdDate, String.valueOf(dailyCalories.getId()));
-        values.put(SQLHelper.COLUMN_CaloDaily_idFood, dailyCalories.getIdFood());
-        values.put(SQLHelper.COLUMN_CaloDaily_NameFoodOfday, dailyCalories.getNameFoodOfday());
-        values.put(SQLHelper.COLUMN_CaloDaily_TimeofDay, dailyCalories.getTimeofDay());
+        values.put(SQLHelper.COLUMN_CaloDaily_IdDate, daulyFood.getIdDate());
+        values.put(SQLHelper.COLUMN_CaloDaily_idFood, daulyFood.getIdFood());
+        values.put(SQLHelper.COLUMN_CaloDaily_idEmail, email);
+        values.put(SQLHelper.COLUMN_CaloDaily_NameFoodOfday, daulyFood.getNameFoodOfday());
+        values.put(SQLHelper.COLUMN_CaloDaily_TimeofDay, daulyFood.getTimeofDay());
             long insertId = database.insert(SQLHelper.TABLE_CaloDaily, null,
                     values);
             if (insertId <= 0) {
@@ -138,28 +141,92 @@ public class UserDataSource {
         }
         return 1;
     }
-    public int checkUserInfo(){
-        Cursor resultSet = database.rawQuery("Select * from "+SQLHelper.TABLE_UserInfo,null);
+    public int checkUserInfo(String email){
+        Cursor resultSet = database.rawQuery("Select * from " + SQLHelper.TABLE_UserInfo + " Where "
+                + SQLHelper.COLUMN_UserInfo_idEmail
+                + " = '" + email + "'", null);
         if(resultSet.getCount() == 0 ){
             return 1;
         }
         return 0;
     }
-    public int checkFood(){
-        Cursor resultSet = database.rawQuery("Select * from "+SQLHelper.TABLE_UserInfo,null);
+    public int checkUserAcc(String email){
+        Cursor resultSet = database.rawQuery("Select * from " + SQLHelper.TABLE_USER + " Where "
+                + SQLHelper.COLUMN_EMAIL
+                + " = '" + email + "'", null);
+
         if(resultSet.getCount() == 0 ){
             return 1;
         }
         return 0;
     }
-    public int deteleFood(String id){
+    public int checkFood(String nameFood){
+        Cursor resultSet = database.rawQuery("Select * from " + SQLHelper.TABLE_FoodMenu + " Where "
+                + SQLHelper.COLUMN_FoodMenu_name
+                +" like '"+ nameFood +"%'",null);
+        if(resultSet.getCount() == 0 ){
+            return -1;
+        }
+        resultSet.moveToFirst();
+        int id= resultSet.getInt(0);
+        if(id == 0){
+            return -1;
+        }
+        resultSet.close();
+        return id;
+    }
+    public int deteleFood(String id,String email){
         database.delete(SQLHelper.TABLE_CaloDaily, SQLHelper.COLUMN_CaloDaily_IdDate
-                + " = " +"'"+id+"'", null);
+                + " = " +"'"+id+"'", new String[]{SQLHelper.COLUMN_CaloDaily_idEmail + " = " + "'" + email + "'"} );
 
         return 0;
     }
-    public int Tinhcalo(){
-        Cursor resultSet = database.rawQuery("Select sum(" + SQLHelper.COLUMN_FoodMenu_Calories +") from "+SQLHelper.TABLE_FoodMenu+" , "+ SQLHelper.TABLE_CaloDaily +" where "+SQLHelper.TABLE_CaloDaily+"."+SQLHelper.COLUMN_CaloDaily_idFood+" = "+SQLHelper.TABLE_FoodMenu+"."+SQLHelper.COLUMN_FoodMenu_idFood+""
+    public int Tinhcalo(String email,String date){
+        Cursor resultSet = database.rawQuery("Select sum(" + SQLHelper.COLUMN_FoodMenu_Calories +") from "
+                        +SQLHelper.TABLE_FoodMenu+" , "+ SQLHelper.TABLE_CaloDaily
+                        +" where "+SQLHelper.TABLE_CaloDaily+"."+SQLHelper.COLUMN_CaloDaily_idFood+" = "
+                        +SQLHelper.TABLE_FoodMenu+"."+SQLHelper.COLUMN_FoodMenu_idFood+ " and "+SQLHelper.COLUMN_CaloDaily_idEmail+
+                " = '" + email + "'"
+                ,null);
+        resultSet.moveToFirst();
+        int id= resultSet.getInt(0);
+        if(id == 0){
+            return -1;
+        }
+        return id;
+    }
+    public int TinhProtein(String email,String date){
+        Cursor resultSet = database.rawQuery("Select sum(" + SQLHelper.COLUMN_FoodMenu_Proteins +") from "
+                        +SQLHelper.TABLE_FoodMenu+" , "+ SQLHelper.TABLE_CaloDaily +" where "
+                        +SQLHelper.TABLE_CaloDaily+"."+SQLHelper.COLUMN_CaloDaily_idFood+" = "
+                        +SQLHelper.TABLE_FoodMenu+"."+SQLHelper.COLUMN_FoodMenu_idFood+ " and "+SQLHelper.COLUMN_CaloDaily_idEmail+
+                        " = '" + email  + "'"
+                ,null);
+        resultSet.moveToFirst();
+        int id= resultSet.getInt(0);
+        if(id == 0){
+            return -1;
+        }
+        return id;
+    }
+    public int TinhFat(String email,String date){
+        Cursor resultSet = database.rawQuery("Select sum(" + SQLHelper.COLUMN_FoodMenu_Fats +") from "
+                        +SQLHelper.TABLE_FoodMenu+" , "+ SQLHelper.TABLE_CaloDaily +" where "
+                        +SQLHelper.TABLE_CaloDaily+"."+SQLHelper.COLUMN_CaloDaily_idFood+" = "
+                        +SQLHelper.TABLE_FoodMenu+"."+SQLHelper.COLUMN_FoodMenu_idFood+ " and "+SQLHelper.COLUMN_CaloDaily_idEmail+
+                        " = '" + email  + "'"
+                ,null);
+        resultSet.moveToFirst();
+        int id= resultSet.getInt(0);
+        if(id == 0){
+            return -1;
+        }
+        return id;
+    }
+    public int TinhCarb(String email,String date){
+        Cursor resultSet = database.rawQuery("select Sum("+SQLHelper.COLUMN_FoodMenu_Carbs+") from "+SQLHelper.TABLE_FoodMenu+" , "+SQLHelper.TABLE_CaloDaily+" " +
+                        "where "+SQLHelper.TABLE_FoodMenu+"."+SQLHelper.COLUMN_FoodMenu_idFood+" = "+SQLHelper.TABLE_CaloDaily+"."+SQLHelper.COLUMN_CaloDaily_idFood +""+
+                        " and "+SQLHelper.COLUMN_CaloDaily_idEmail+" = '"+ email+"'"
                 ,null);
         resultSet.moveToFirst();
         int id= resultSet.getInt(0);
@@ -178,6 +245,7 @@ public class UserDataSource {
         }
         resultSet.moveToFirst();
         FoodMenu foodMenu = new FoodMenu();
+        foodMenu.setIdFood(resultSet.getInt(0));
         foodMenu.setFoodName(resultSet.getString(1));
         foodMenu.setsl(resultSet.getString(6));
         String chuoi = foodMenu.getFoodName()+" - "+foodMenu.getsl();
@@ -185,8 +253,7 @@ public class UserDataSource {
         resultSet.close();
         return food;
     }
-    public FoodMenu detail_food(int idFood){
-           idFood +=1;
+    public FoodMenu detail_food(long idFood){
             Cursor resultSet = database.rawQuery("Select * from " + SQLHelper.TABLE_FoodMenu + " Where "
                     + SQLHelper.COLUMN_FoodMenu_idFood
                     + " = '" + idFood + "'", null);
@@ -230,20 +297,23 @@ public class UserDataSource {
         return people;
     }
     String ttluu = "tkmkLog";
-    public ArrayList<DaulyFood> getFood(String timeOfDay){
+    public ArrayList<DaulyFood> getFood(String timeOfDay,String email,String date){
         ArrayList<DaulyFood> foods = new ArrayList<>();
         List<String> IdDate = new ArrayList<>();
         List<String> NameFoodOfday = new ArrayList<>();
         List<Integer> IdFood = new ArrayList<>();
         List<String> TimeofDay = new ArrayList<>();
-        Cursor cursor = database.rawQuery("Select * from " + SQLHelper.TABLE_CaloDaily + " Where " + SQLHelper.COLUMN_CaloDaily_TimeofDay +" = '"+ timeOfDay +"'", null);
+        Cursor cursor = database.rawQuery("Select * from " + SQLHelper.TABLE_CaloDaily + " Where "
+                + SQLHelper.COLUMN_CaloDaily_TimeofDay +" = '"+ timeOfDay + "' and "+SQLHelper.COLUMN_CaloDaily_idEmail+
+                " = '" + email  + "' and "+SQLHelper.COLUMN_CaloDaily_IdDate+
+                " = '" + date + "'", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
            DaulyFood daulyFood = new DaulyFood();
-           daulyFood.setIdDate(cursor.getString(0));
-            daulyFood.setNameFoodOfday(cursor.getString(2));
-            daulyFood.setIdFood(cursor.getInt(1));
-            daulyFood.setTimeofDay(cursor.getString(3));
+           daulyFood.setIdDate(cursor.getString(1));
+            daulyFood.setNameFoodOfday(cursor.getString(4));
+            daulyFood.setIdFood(cursor.getInt(2));
+            daulyFood.setTimeofDay(cursor.getString(5));
             IdDate.add(daulyFood.getIdDate());
             NameFoodOfday.add(daulyFood.getNameFoodOfday());
             IdFood.add(daulyFood.getIdFood());
@@ -258,8 +328,10 @@ public class UserDataSource {
         Log.v("readData", ""+foods);
         return foods;
     }
-    public UserInfo Bmr(){
-        Cursor resultSet = database.rawQuery("Select * from "+SQLHelper.TABLE_UserInfo,null);
+    public UserInfo Bmr(String email){
+        Cursor resultSet = database.rawQuery("Select * from " + SQLHelper.TABLE_UserInfo + " Where "
+                + SQLHelper.COLUMN_UserInfo_idEmail
+                + " = '" + email + "'",null);
         resultSet.moveToFirst();
 
         UserInfo userInfo = new UserInfo();
@@ -268,10 +340,10 @@ public class UserDataSource {
         }
         int chieuCao = resultSet.getInt(1);
         int canNang = resultSet.getInt(2);
-        int age = resultSet.getInt(3);
-        String tapLuyen = resultSet.getString(4);
-        String sex = resultSet.getString(5);
-        String target = resultSet.getString(6);
+        int age = resultSet.getInt(4);
+        String tapLuyen = resultSet.getString(5);
+        String sex = resultSet.getString(6);
+        String target = resultSet.getString(7);
 
         userInfo.setUserHeight(chieuCao);
         userInfo.setUserWeight(canNang);

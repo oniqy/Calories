@@ -17,6 +17,7 @@ public class SQLHelper extends SQLiteOpenHelper{
     public static final String COLUMN_NAME_USER= "name_user";
 
     public static final String COLUMN_UserInfo_idUser = "idUser";
+    public static final String COLUMN_UserInfo_idEmail = "emailUserInfo";
     public static final String COLUMN_UserInfo_UserHeight = "UserHeight";
     public static final String COLUMN_UserInfo_UserWeight = "UserWeight";
     public static final String COLUMN_UserInfo_BirthDay = "BirthDay";
@@ -37,9 +38,9 @@ public class SQLHelper extends SQLiteOpenHelper{
     public static final String COLUMNE_ExerciseMenu_name = "nameExercise";
     public static final String COLUMN_ExerciseMenu_Reps = "Reps";
     public static final String COLUMN_ExerciseMenu_Mins = "Mins";
-
+    public static final String COLUMN_CaloDaily_Id = "IdDaily";
     public static final String COLUMN_CaloDaily_IdDate = "IdDate";
-    public static final String COLUMN_CaloDaily_idExercise = "idExercise";
+    public static final String COLUMN_CaloDaily_idEmail = "emailCaloDaily";
     public static final String COLUMN_CaloDaily_idFood = "idFood";
     public static final String COLUMN_CaloDaily_NameFoodOfday = "foodDaily";
     public static final String COLUMN_CaloDaily_NameExerciseOfDay = "NameExercise";
@@ -58,9 +59,12 @@ public class SQLHelper extends SQLiteOpenHelper{
     {
 //        database = SQLiteDatabase.openDatabase(PATH,null,SQLiteDatabase.CREATE_IF_NECESSARY);
         String tbcalodaily = "create table "
-                + TABLE_CaloDaily + "( " + COLUMN_CaloDaily_IdDate
+                + TABLE_CaloDaily + "( " + COLUMN_CaloDaily_Id
+                + " integer primary key autoincrement, "
+                + COLUMN_CaloDaily_IdDate
                 + " NUMERIC , "
                 +COLUMN_CaloDaily_idFood+" integer,"
+                +COLUMN_CaloDaily_idEmail+" text ,"
                 +COLUMN_CaloDaily_NameFoodOfday+" text,"
                 +COLUMN_CaloDaily_TimeofDay+" text);";
 
@@ -89,6 +93,7 @@ public class SQLHelper extends SQLiteOpenHelper{
                 + " integer primary key autoincrement, "
                 +COLUMN_UserInfo_UserHeight+" integer ,"
                 +COLUMN_UserInfo_UserWeight+" integer ,"
+                +COLUMN_UserInfo_idEmail+" text ,"
                 +COLUMN_UserInfo_BirthDay+" integer ,"
                 +COLUMN_UserInfo_Exercise+" text ,"
                 +COLUMN_UserInfo_Gender+" text ,"

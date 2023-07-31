@@ -17,6 +17,8 @@ import com.example.testapp.DAO.UserDataSource;
 import com.example.testapp.DTO.UserInfo;
 import com.example.testapp.R;
 import com.example.testapp.databinding.FragmentBMRPageBinding;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import java.util.Locale;
 
@@ -59,6 +61,7 @@ public class BMR_page_Fragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+    String email= null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,64 +71,17 @@ public class BMR_page_Fragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-    public double tinhBMR(){
-        UserInfo userInfo = datasource.Bmr();
 
-        String sex = userInfo.getGender();
-        if(sex == null){
-            return -1;
-        }
-        int chieuCao = userInfo.getUserHeight();
-        int canNang = userInfo.getUserWeight();
-        int age = userInfo.getBirthDay();
-        double BMR ;
-        if(sex == "Nam"){
-            double BMR1 = 88.362+(13.397*canNang)+(4.799*chieuCao);
-            BMR = BMR1 - (5.677 * age);
-
-        }else {
-            double BMR1 = 447.593 +(9.247 *canNang)+(3.098 *chieuCao);
-            BMR = BMR1 - (4.33  * age);
-        }
-        return BMR;
-    }
-    public double tinhTDEE(){
-        UserInfo userInfo = datasource.Bmr();
-        String exercise = userInfo.getExercise();
-        double R = 0;
-        if(exercise.equals("Không tập")){
-            R = 1.2;
-        } else if (exercise.equals("Nhẹ nhàng")) {
-            R = 1.375;
-        }
-        else if (exercise.equals("Vừa phải")) {
-            R = 1.55;
-        }
-        else if (exercise.equals("Nặng")) {
-            R = 1.725;
-        }
-        return R;
-    }
-    public double tinhTarget(){
-        UserInfo userInfo = datasource.Bmr();
-        String exercise = userInfo.getTarget();
-        double R = 0;
-        if(exercise.equals("Giảm cân")){
-            R = -500;
-        } else if (exercise.equals("Giữ nguyên cân nặng")) {
-            R = 0;
-        }
-        else if (exercise.equals("Tăng cân")) {
-            R = 500;
-        }
-        return R;
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentBMRPageBinding.inflate(inflater, container, false);
         datasource = new UserDataSource(getContext());
         datasource.open();
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
+        if(acct!=null){
+            email = acct.getEmail();
+        };
         binding.btnTinhBMR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,6 +144,58 @@ public class BMR_page_Fragment extends Fragment {
         // Inflate the layout for this fragment
         View root = binding.getRoot();
         return root;
+    }
+    public double tinhBMR(){
+        UserInfo userInfo = datasource.Bmr(email);
+
+        String sex = userInfo.getGender();
+        if(sex == null){
+            return -1;
+        }
+        int chieuCao = userInfo.getUserHeight();
+        int canNang = userInfo.getUserWeight();
+        int age = userInfo.getBirthDay();
+        double BMR ;
+        if(sex == "Nam"){
+            double BMR1 = 88.362+(13.397*canNang)+(4.799*chieuCao);
+            BMR = BMR1 - (5.677 * age);
+
+        }else {
+            double BMR1 = 447.593 +(9.247 *canNang)+(3.098 *chieuCao);
+            BMR = BMR1 - (4.33  * age);
+        }
+        return BMR;
+    }
+    public double tinhTDEE(){
+        UserInfo userInfo = datasource.Bmr(email);
+        String exercise = userInfo.getExercise();
+        double R = 0;
+        if(exercise.equals("Không tập")){
+            R = 1.2;
+        } else if (exercise.equals("Nhẹ nhàng")) {
+            R = 1.375;
+        }
+        else if (exercise.equals("Vừa phải")) {
+            R = 1.55;
+        }
+        else if (exercise.equals("Nặng")) {
+            R = 1.725;
+        }
+        return R;
+    }
+    public double tinhTarget(){
+        UserInfo userInfo = datasource.Bmr(email);
+        String exercise = userInfo.getTarget();
+        double R = 0;
+        if(exercise.equals("Giảm cân")){
+            R = -500;
+        } else if (exercise.equals("Giữ nguyên cân nặng")) {
+            R = 0;
+        }
+        else if (exercise.equals("Tăng cân")) {
+            R = 500;
+        }
+        return R;
     }
     public void loadFragment(Fragment fragment) {
 // create a FragmentManager

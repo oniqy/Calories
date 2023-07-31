@@ -143,7 +143,6 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="89dp"
-                    android:layout_toStartOf="@+id/progressBar"
                     android:clickable="true"
                     android:contextClickable="true"
                     android:minHeight="48dp"
@@ -208,7 +207,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp">
 
-                <RelativeLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_chatdam"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -218,26 +217,59 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:text="Chất đạm"
 
+                        android:text="Chất đạm"
                         android:textColor="@color/black"
                         android:textSize="10pt"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@+id/progressBar_dam"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <ProgressBar
-                        android:id="@+id/progressBar2"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="200dp"
-                        android:layout_height="50dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp"
+                        android:id="@+id/progressBar_dam"
+                        style="@style/CustomProgressBar"
+                        android:layout_width="250dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
                         android:max="100"
                         android:minWidth="100dp"
-                        android:minHeight="50dp"
-                        android:progress="75" />
-                </RelativeLayout>
+                        android:minHeight="20dp"
+                        android:progress="75"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
-                <RelativeLayout
+                    <TextView
+                        android:id="@+id/tv_processProtein"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:text="TextView"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/progressBar_dam"
+                        app:layout_constraintTop_toBottomOf="@+id/textView8"
+                        tools:ignore="TextSizeCheck" />
+
+                    <TextView
+                        android:id="@+id/tv_showproteinInday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="TextView"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/progressBar_dam"
+                        app:layout_constraintTop_toBottomOf="@+id/textView8"
+                        tools:ignore="TextSizeCheck" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_chatbeo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -248,25 +280,58 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
                         android:text="Chất béo"
                         android:textColor="@color/black"
                         android:textSize="10pt"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ProgressBar
-                        android:id="@+id/progressBar3"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="200dp"
-                        android:layout_height="50dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp"
+                        android:id="@+id/progressBar_beo"
+                        style="@style/CustomProgressBar"
+                        android:layout_width="250dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
                         android:max="100"
                         android:minWidth="100dp"
-                        android:minHeight="50dp"
-                        android:progress="75" />
-                </RelativeLayout>
+                        android:minHeight="20dp"
+                        android:progress="75"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
-                <RelativeLayout
+                    <TextView
+                        android:id="@+id/tv_processFat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:text="TextView"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/progressBar_beo"
+                        app:layout_constraintEnd_toEndOf="@+id/progressBar_beo"
+                        app:layout_constraintTop_toBottomOf="@+id/textView9"
+                        tools:ignore="TextSizeCheck" />
+
+                    <TextView
+                        android:id="@+id/tv_showFatInday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="TextView"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/progressBar_beo"
+                        app:layout_constraintTop_toBottomOf="@+id/textView9"
+                        tools:ignore="TextSizeCheck" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/layout_chatbeo">
@@ -276,24 +341,56 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
                         android:text="Carbs"
                         android:textColor="@color/black"
                         android:textSize="10pt"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ProgressBar
-                        android:id="@+id/progressBar4"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="200dp"
-                        android:layout_height="50dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp"
+                        android:id="@+id/progressBar_car"
+                        style="@style/CustomProgressBar"
+                        android:layout_width="250dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
                         android:max="100"
                         android:minWidth="100dp"
-                        android:minHeight="50dp"
+                        android:minHeight="20dp"
+                        android:progress="75"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
-                        android:progress="75" />
-                </RelativeLayout>
+                    <TextView
+                        android:id="@+id/tv_processCarb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:text="TextView"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/progressBar_car"
+                        app:layout_constraintEnd_toEndOf="@+id/progressBar_car"
+                        app:layout_constraintTop_toBottomOf="@+id/textView10"
+                        tools:ignore="TextSizeCheck" />
+
+                    <TextView
+                        android:id="@+id/tv_showCarbInday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="TextView"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/progressBar_car"
+                        app:layout_constraintTop_toBottomOf="@+id/textView10"
+                        tools:ignore="TextSizeCheck" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </RelativeLayout>
 
