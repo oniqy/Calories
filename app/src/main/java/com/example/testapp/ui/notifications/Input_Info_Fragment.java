@@ -1,12 +1,14 @@
 package com.example.testapp.ui.notifications;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 import com.example.testapp.Custom_spinner;
 import com.example.testapp.DAO.UserDataSource;
 import com.example.testapp.DTO.UserInfo;
+import com.example.testapp.DTO.Weight;
 import com.example.testapp.MainActivity;
 import com.example.testapp.R;
 import com.example.testapp.adapter.adapter_gioitinh;
@@ -34,7 +37,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import java.util.ArrayList;
-
+import java.util.Calendar;
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Input_Info_Fragment#newInstance} factory method to
@@ -50,11 +53,13 @@ public class Input_Info_Fragment extends Fragment implements Custom_spinner.OnSp
     adapter_tapluyen adapterTapluyen;
     Custom_spinner spinner_sex,spinner_tapLuyen,spinner_muctieu;
     Button btn_luuBMi;
+    Calendar currentDate = Calendar.getInstance();
     EditText edt_age,edt_height,edt_weight,edt_ten;
     ImageButton imagebtn_back;
     private UserDataSource datasource;
     private  BMR_page_Fragment bmr_page_fragment;
-
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
     private FragmentInputInfoBinding binding;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -129,15 +134,29 @@ public class Input_Info_Fragment extends Fragment implements Custom_spinner.OnSp
         int age = Integer.parseInt(edt_age.getText().toString());
         int height = Integer.parseInt(edt_height.getText().toString());
         int weight = Integer.parseInt(edt_weight.getText().toString());
+
+        //
+        Weight weight1 = new Weight();
+        String dateUp = String.valueOf(currentDate);
+
+        weight1.setWeight(weight);
+        weight1.setControlWeight_Date(dateUp);
+        weight1.getEmail();
+
         userInfo.setBirthDay(age);
         userInfo.setUserHeight(height);
         userInfo.setUserWeight(weight);
         userInfo.setGender(getSex);
         userInfo.setExercise(getCheDoTap);
         userInfo.setTarget(getMucTieu);
+        int updateWeight = datasource.createNewWeight(weight1);
+        if(updateWeight == 1){
+            Log.e("update wieght", String.valueOf(updateWeight));
+        }else {
+            Toast.makeText(getContext(), "Có gì đó sai sai", Toast.LENGTH_LONG).show();
+        }
         int t = datasource.createUserInfo(userInfo,Email);
         if(t == 1){
-
             Toast.makeText(getContext(), "Lưu thông tin thành công", Toast.LENGTH_LONG).show();
             return 1;
         }else {

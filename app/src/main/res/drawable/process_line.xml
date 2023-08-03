@@ -10,10 +10,10 @@
             <corners android:radius="5dip" />
             <gradient
                 android:angle="270"
-                android:centerColor="#80BFBFBF"
+                android:centerColor="#FFF1EEEE"
                 android:centerY="0.50"
-                android:endColor="#80BFBFBF"
-                android:startColor="#80BFBFBF" />
+                android:endColor="#FFF1EEEE"
+                android:startColor="#FFF1EEEE" />
         </shape>
     </item>
     <item android:id="@android:id/progress">

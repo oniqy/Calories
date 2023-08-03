@@ -12,6 +12,7 @@ public class SQLHelper extends SQLiteOpenHelper{
     public static final String TABLE_FoodMenu = "foodMenu";
     public static final String TABLE_ExerciseMenu = "exescMenu";
     public static final String TABLE_CaloDaily = "caloDaily";
+    public static final String TABLE_ControlWeight = "weightChanges";
     //Tao thuoc tinh trong table
     public static final String COLUMN_EMAIL = "email";
     public static final String COLUMN_NAME_USER= "name_user";
@@ -45,6 +46,10 @@ public class SQLHelper extends SQLiteOpenHelper{
     public static final String COLUMN_CaloDaily_NameFoodOfday = "foodDaily";
     public static final String COLUMN_CaloDaily_NameExerciseOfDay = "NameExercise";
     public static final String COLUMN_CaloDaily_TimeofDay = "TimeType";
+
+    public static final String COLUMN_ControlWeight_Date = "dayUp";
+    public static final String COLUMN_ControlWeight_NewWeight = "newWeight";
+    public static final String COLUMN_ControlWeight_EMAIL = "ControlWeightEMAIL";
     private static final String DATABASE_NAME = "healthyCare.db";
     private static final int DATABASE_VERSION = 1;
     private static final String PATH="/data/data/com.example.testapp/databases/healthyCare/";
@@ -71,7 +76,10 @@ public class SQLHelper extends SQLiteOpenHelper{
                 + TABLE_USER + "( " + COLUMN_EMAIL
                 + " text primary key , " + COLUMN_NAME_USER
                 + " text not null);";
-
+        String tbUpWeight = "create table "
+                + TABLE_ControlWeight + "( " + COLUMN_ControlWeight_Date
+                + " text  , " + COLUMN_ControlWeight_NewWeight
+                + " interger,"+COLUMN_ControlWeight_EMAIL+" text);";
         String tbfood = "create table "
                 + TABLE_FoodMenu + "( " + COLUMN_FoodMenu_idFood
                 + " integer primary key autoincrement, " + COLUMN_FoodMenu_name
@@ -103,6 +111,7 @@ public class SQLHelper extends SQLiteOpenHelper{
         database.execSQL(tbExerciseMenu);
         database.execSQL(tbfood);
         database.execSQL(tbcalodaily);
+        database.execSQL(tbUpWeight);
     }
 
     @Override

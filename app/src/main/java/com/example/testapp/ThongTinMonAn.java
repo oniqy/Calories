@@ -190,7 +190,7 @@ public class ThongTinMonAn extends AppCompatActivity  implements View.OnClickLis
                     // Close Dialog
                     dialog.dismiss();
                     // Do something, for example: Call a method of Activity...
-                    Toast.makeText(activity, "You select " + meats,
+                    Toast.makeText(activity, "Món ăn này dành cho buổi " + meats,
                             Toast.LENGTH_SHORT).show();
 
                 }

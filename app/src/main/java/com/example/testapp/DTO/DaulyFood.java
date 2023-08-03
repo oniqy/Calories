@@ -7,23 +7,28 @@ import java.util.Date;
 import java.util.List;
 
 public class DaulyFood {
+    public int id;
     public String IdDate;
     public String NameFoodOfday;
     public  int idFood;
 
-    public DaulyFood(String idDate, String nameFoodOfday, int idFood, String timeofDay) {
+    public DaulyFood(int id,String idDate, String nameFoodOfday, int idFood, String timeofDay) {
+        this.id = id;
         IdDate = idDate;
         NameFoodOfday = nameFoodOfday;
         this.idFood = idFood;
         TimeofDay = timeofDay;
     }
-
     public String TimeofDay;
-
     public DaulyFood() {
 
     }
-
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getIdDate() {
         return IdDate;
     }
@@ -55,10 +60,10 @@ public class DaulyFood {
     public void setTimeofDay(String timeofDay) {
         TimeofDay = timeofDay;
     }
-    public static ArrayList<DaulyFood> initfood(List<String> IdDate, List<String> NameFoodOfday, List<Integer> idFood, List<String> TimeofDay){
+    public static ArrayList<DaulyFood> initfood(List<Integer> id,List<String> IdDate, List<String> NameFoodOfday, List<Integer> idFood, List<String> TimeofDay){
         ArrayList<DaulyFood> DaulyFoods = new ArrayList<>();
         for(int i = 0;i<IdDate.size();i++){
-            DaulyFood item = new DaulyFood(IdDate.get(i),NameFoodOfday.get(i),idFood.get(i),TimeofDay.get(i));
+            DaulyFood item = new DaulyFood(id.get(i),IdDate.get(i),NameFoodOfday.get(i),idFood.get(i),TimeofDay.get(i));
 
             DaulyFoods .add(item);
             Log.v("initfood", "" + DaulyFoods.get(i));

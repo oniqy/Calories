@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    android:id="@+id/swipe_refresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<ScrollView
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     tools:layout_editor_absoluteX="-16dp"
     tools:layout_editor_absoluteY="-120dp">
+
 <FrameLayout
     android:id="@+id/fmg_homme"
     android:layout_width="match_parent"
@@ -20,12 +26,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            tools:ignore="MissingConstraints">
+            tools:ignore="ExtraText,MissingConstraints">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -109,7 +114,7 @@
                     android:background="@drawable/cricel_shape"
                     android:indeterminate="false"
                     android:max="100"
-                    android:progress="75"
+                    android:progress="0"
                     android:progressDrawable="@drawable/circolum_process" />
 
                 <TextView
@@ -119,7 +124,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="20dp"
                     android:gravity="center"
-                    android:text="2815/&#10;kcal"
+                    android:text="0/&#10;kcal"
                     android:textColor="@color/black"
                     android:textSize="8pt"
                     android:textStyle="bold" />
@@ -178,7 +183,7 @@
                     android:shadowDx="1.5"
                     android:shadowDy="1.3"
                     android:shadowRadius="1.6"
-                    android:text="2650"
+                    android:text="0"
                     android:textColor="#00FF47"
                     android:textSize="10pt"
                     android:textStyle="bold" />
@@ -195,7 +200,7 @@
                     android:shadowDx="1.5"
                     android:shadowDy="1.3"
                     android:shadowRadius="1.6"
-                    android:text="700"
+                    android:text="0"
                     android:textColor="#837E7E"
                     android:textSize="10pt"
                     android:textStyle="bold" />
@@ -236,7 +241,7 @@
                         android:max="100"
                         android:minWidth="100dp"
                         android:minHeight="20dp"
-                        android:progress="75"
+                        android:progress="0"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView8" />
@@ -246,7 +251,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="5dp"
-                        android:text="TextView"
+                        android:text="0"
                         android:textColor="@color/black"
                         android:textSize="15dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -259,7 +264,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="TextView"
+                        android:text="0"
                         android:textColor="@color/black"
                         android:textSize="15dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -299,7 +304,7 @@
                         android:max="100"
                         android:minWidth="100dp"
                         android:minHeight="20dp"
-                        android:progress="75"
+                        android:progress="0"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView9" />
@@ -309,7 +314,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="5dp"
-                        android:text="TextView"
+                        android:text="0"
                         android:textColor="@color/black"
                         android:textSize="15dp"
                         app:layout_constraintBottom_toBottomOf="@+id/progressBar_beo"
@@ -322,7 +327,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="TextView"
+                        android:text="0"
                         android:textColor="@color/black"
                         android:textSize="15dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -360,7 +365,7 @@
                         android:max="100"
                         android:minWidth="100dp"
                         android:minHeight="20dp"
-                        android:progress="75"
+                        android:progress="0"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView10" />
@@ -370,7 +375,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="5dp"
-                        android:text="TextView"
+                        android:text="0"
                         android:textColor="@color/black"
                         android:textSize="15dp"
                         app:layout_constraintBottom_toBottomOf="@+id/progressBar_car"
@@ -383,7 +388,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="TextView"
+                        android:text="0"
                         android:textColor="@color/black"
                         android:textSize="15dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -394,7 +399,7 @@
 
             </RelativeLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            v<androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="1085dp"
                 android:layout_marginTop="50dp">
@@ -667,7 +672,7 @@
                         android:textSize="25dp" />
 
                     <TextView
-                        android:id="@+id/textView24"
+                        android:id="@+id/tv_goiy"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:textAlignment="center"
@@ -679,8 +684,8 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
 </ScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

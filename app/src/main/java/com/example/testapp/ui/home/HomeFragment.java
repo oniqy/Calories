@@ -1,8 +1,14 @@
 package com.example.testapp.ui.home;
-
+import java.util.*;
+import java.util.Random.*;
+import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -31,6 +37,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.testapp.ThongTinMonAn;
 import com.example.testapp.TimMonAn;
@@ -45,18 +52,20 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Scanner;
 import java.text.DecimalFormat;
+import androidx.appcompat.app.AlertDialog;
+import android.content.DialogInterface;
 public class HomeFragment extends Fragment {
     private UserDataSource datasource;
     private ThongTinMonAn thongTinMonAn;
     GoogleSignInOptions gso;
     SharedPreferences sharedPreferences;
-
     SharedPreferences.Editor editor;
     GoogleSignInClient gsc;
     RecyclerView recyc;
@@ -64,11 +73,12 @@ public class HomeFragment extends Fragment {
     adapter_dailyFood adapter_dailyFoods;
     ImageView userImg;
     List<String> list = new ArrayList<>();
-    TextView userHello,chiSoCalo,userDate,numb_caloIn,tv_processFat,tv_processProtein,tv_processCarb,tv_showCarbInday,tv_showFatInday,tv_showproteinInday;
+    TextView userHello,chiSoCalo,userDate,tv_goiy,numb_caloIn,tv_processFat,tv_processProtein,tv_processCarb,tv_showCarbInday,tv_showFatInday,tv_showproteinInday;
     BMR_page_Fragment bmr_page_fragment;
     private FragmentHomeBinding binding;
     DailyCalories dailyCalories ;
     String getType ;
+    SwipeRefreshLayout swipeRefreshLayout;
     ProgressBar progressBarCalo,progressBar_beo,progressBar_dam,progressBar_car;
     Button btnDatePicker;
     private int mYear, mMonth, mDay;
@@ -86,20 +96,23 @@ public class HomeFragment extends Fragment {
         if(acct!=null){
             email = acct.getEmail();
         };
+
         getType=DateFormat.getDateInstance(DateFormat.FULL).format(currentDate.getTime());
         addControl();
         addEnvent();
         singUpGG();
         initPreferences();
         currentDate();
+        showCalories(getType);
         Calendar calendar = Calendar.getInstance();
+        List<String> myList = Arrays.asList("Nên ăn phối hợp nhiều loại thực phẩm trong ngày để cơ thể đủ chất dinh dưỡng và khỏe mạnh. Trong đó có 4 nhóm dinh dưỡng chính cần phải được bổ sung đầy đủ", "Theo Boldsky, cơ thể của bạn cần khoảng thời gian nhất định để tiêu hóa thức ăn và hấp thụ tốt các chất dinh dưỡng", "Một cây súp lơ chứa hơn 100% nhu cầu vitamin K và gần 200% nhu cầu vitamin C hàng ngày cho cơ thể. Đây là 2 chất dinh dưỡng cần thiết cho sự phát triển của xương.", " Một trái bơ chứa khoảng 50% nhu cầu chất xơ và 40% nhu cầu Folate hàng ngày của cơ thể, có thể giảm nguy cơ mắc bệnh tim");
+        Random r = new Random();
+        int randomitem = r.nextInt(myList.size());
+        String randomElement = myList.get(randomitem);
+        tv_goiy.setText(randomElement);
         String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
         btnDatePicker.setText(currentDate);
-        showCalories(getType);
 
-
-
-//
         return root;
     }
     private Date currentDate(){
@@ -107,6 +120,7 @@ public class HomeFragment extends Fragment {
         return calendarcheck.getTime();
     }
     private void showCalories(String type){
+
         int checkDate = currentDate.get(Calendar.HOUR_OF_DAY);
         if(checkDate == 0){
             numb_caloIn.setText(Integer.toString(0));
@@ -135,7 +149,6 @@ public class HomeFragment extends Fragment {
             }
             binding.chiSoCalo.setText(String.format(Locale.US, "%.0f", tdee) + "\n/Kcal");
         }
-
         int caloriesIn = datasource.Tinhcalo(email,type);
         if(caloriesIn == -1){
             numb_caloIn.setText(Integer.toString(0));
@@ -145,7 +158,6 @@ public class HomeFragment extends Fragment {
             numb_caloIn.setText(Integer.toString(caloriesIn));
             progressBarCalo.setProgress((int) caloriesIn);
         }
-
         double proteins = tdee*0.35/4;
         int proteinIn = datasource.TinhProtein(email,type);
         if(proteinIn == -1){
@@ -154,11 +166,10 @@ public class HomeFragment extends Fragment {
             tv_processProtein.setText(Integer.toString(0));
         }else {
             progressBar_dam.setMax((int) proteins);
-            tv_showproteinInday.setText(String.valueOf(proteinIn));
-            tv_processProtein.setText(df.format(proteins));
+            tv_showproteinInday.setText(String.valueOf(proteinIn)+"g");
+            tv_processProtein.setText(df.format(proteins)+"g");
             progressBar_dam.setProgress((int) proteinIn);
         }
-
         double fats = tdee*0.3/9;
         int fatsIn = datasource.TinhFat(email,type);
         if(fatsIn == -1){
@@ -167,11 +178,10 @@ public class HomeFragment extends Fragment {
             tv_showFatInday.setText(Integer.toString(0));
         }else {
             progressBar_beo.setMax((int) fats);
-            tv_showFatInday.setText(String.valueOf(fatsIn));
-            tv_processFat.setText(df.format(fats));
+            tv_showFatInday.setText(String.valueOf(fatsIn)+"g");
+            tv_processFat.setText(df.format(fats)+"g");
             progressBar_beo.setProgress((int) fatsIn);
         }
-
         double carb = tdee*0.35/4;
         int carbIn = datasource.TinhCarb(email,type);
         if(carbIn == -1){
@@ -180,19 +190,17 @@ public class HomeFragment extends Fragment {
             tv_showCarbInday.setText(Integer.toString(0));
         }else {
             progressBar_car.setMax((int) carb);
-            tv_showCarbInday.setText(String.valueOf(carbIn));
-            tv_processCarb.setText(df.format(carb));
+            tv_showCarbInday.setText(String.valueOf(carbIn)+"g");
+            tv_processCarb.setText(df.format(carb)+"g");
 
             progressBar_car.setProgress((int) carbIn);
         }
-
     }
     private void singUpGG(){
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
         if(acct!=null){
             String personName = acct.getDisplayName();
             Uri  uri= acct.getPhotoUrl();
-
             if (uri == null){
                 new ImageLoadTask("https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png",userImg).execute();
             }
@@ -211,6 +219,7 @@ public class HomeFragment extends Fragment {
         progressBar_dam = binding.progressBarDam.findViewById(R.id.progressBar_dam);
         progressBar_car = binding.progressBarCar.findViewById(R.id.progressBar_car);
         tv_processFat = binding.tvProcessFat.findViewById(R.id.tv_processFat);
+        tv_goiy = binding.tvGoiy.findViewById(R.id.tv_goiy);
         tv_processProtein = binding.tvProcessProtein.findViewById(R.id.tv_processProtein);
         tv_processCarb = binding.tvProcessCarb.findViewById(R.id.tv_processCarb);
         tv_showCarbInday = binding.tvShowCarbInday.findViewById(R.id.tv_showCarbInday);
@@ -220,6 +229,7 @@ public class HomeFragment extends Fragment {
         LinearLayout layoutbuoiSang =  binding.layoutbuoiSang.findViewById(R.id.layoutbuoiSang);
         userHello = binding.userHello.findViewById(R.id.userHello);
         btnDatePicker = binding.btnDatePicker.findViewById(R.id.btnDatePicker);
+        swipeRefreshLayout = binding.swipeRefresh.findViewById(R.id.swipe_refresh);
     }
     private void addEnvent(){
         binding.btnVEdtDailyFoob.setOnClickListener(new View.OnClickListener() {
@@ -235,6 +245,13 @@ public class HomeFragment extends Fragment {
 
             }
         });
+        binding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                showCalories(getType);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
         binding.textNotificationEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -242,13 +259,9 @@ public class HomeFragment extends Fragment {
 
             }
         });
-
         binding.imgbtnBs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DailyCalories dailyCalories = new DailyCalories();
-
-                dailyCalories.setTimeofDay("Sang");
                 int  i = datasource.createFood();
                 if(i == -1){
 
@@ -297,17 +310,14 @@ public class HomeFragment extends Fragment {
                 adapter_dailyFoods.setOnItemClick(new adapter_dailyFood.OnItemClick() {
                     @Override
                     public void onIttemClick(int position) {
-                        String date = daulyFoods.get(position).getIdDate();
-                        int delete = datasource.deteleFood(date,email);
-                        if (delete == 0){
-                            daulyFoods.remove(position);
-                        }
+                        Integer idDaily = daulyFoods.get(position).getId();
+                        showAlertDialog(getContext(), String.valueOf(idDaily), email,position);
+
+
                     }
                 });
-
             }
         });
-
         binding.layoutBuoitrua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -320,11 +330,9 @@ public class HomeFragment extends Fragment {
                 adapter_dailyFoods.setOnItemClick(new adapter_dailyFood.OnItemClick() {
                     @Override
                     public void onIttemClick(int position) {
-                        String date = daulyFoods.get(position).getIdDate();
-                        int delete = datasource.deteleFood(date,email);
-                        if (delete == 0){
-                            daulyFoods.remove(position);
-                        }
+                        Integer idDaily = daulyFoods.get(position).getId();
+                        showAlertDialog(getContext(), String.valueOf(idDaily), email,position);
+
                     }
                 });
 
@@ -342,11 +350,9 @@ public class HomeFragment extends Fragment {
                 adapter_dailyFoods.setOnItemClick(new adapter_dailyFood.OnItemClick() {
                     @Override
                     public void onIttemClick(int position) {
-                        String date = daulyFoods.get(position).getIdDate();
-                        int delete = datasource.deteleFood(date,email);
-                        if (delete == 0){
-                            daulyFoods.remove(position);
-                        }
+                        Integer idDaily = daulyFoods.get(position).getId();
+                        showAlertDialog(getContext(), String.valueOf(idDaily), email,position);
+
                     }
                 });
             }
@@ -383,7 +389,6 @@ public class HomeFragment extends Fragment {
                 datePickerDialog.show();
             }
         });
-
     }
     public double tinhBMR(){
         UserInfo userInfo = datasource.Bmr(email);
@@ -446,8 +451,48 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        showCalories(getType);
+
     }
+    public void showAlertDialog(final Context context,String idDay , String email,int position)  {
+        final Drawable positiveIcon = context.getResources().getDrawable(R.drawable.baseline_check_24);
+        final Drawable negativeIcon = context.getResources().getDrawable(R.drawable.baseline_close_24);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        // Set Title and Message:
+        builder.setTitle("Confirmation").setMessage("Bạn đang thực hiện xóa món ăn");
+
+        //
+        builder.setCancelable(true);
+        builder.setIcon(R.drawable.baseline_lunch_dining_24);
+
+        // Create "Yes" button with OnClickListener.
+        builder.setPositiveButton("Xóa món ăn", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                int delete = datasource.deleteFood(String.valueOf(idDay),email);
+                if (delete == 0){
+                    daulyFoods.remove(position);
+                }
+            }
+        });
+        builder.setPositiveButtonIcon(positiveIcon);
+
+        // Create "No" button with OnClickListener.
+        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Toast.makeText(context,"You choose No button",
+                        Toast.LENGTH_SHORT).show();
+                //  Cancel
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButtonIcon(negativeIcon);
+
+        // Create AlertDialog:
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
 
     public void loadFragment(Fragment fragment) {
 // create a FragmentManager
