@@ -2,6 +2,7 @@ package com.example.testapp.ui.home;
 import java.util.*;
 import java.util.Random.*;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -119,6 +120,7 @@ public class HomeFragment extends Fragment {
         Calendar calendarcheck = Calendar.getInstance();
         return calendarcheck.getTime();
     }
+    @SuppressLint("ObjectAnimatorBinding")
     private void showCalories(String type){
 
         int checkDate = currentDate.get(Calendar.HOUR_OF_DAY);
@@ -157,6 +159,13 @@ public class HomeFragment extends Fragment {
             progressBarCalo.setMax((int) tdee);
             numb_caloIn.setText(Integer.toString(caloriesIn));
             progressBarCalo.setProgress((int) caloriesIn);
+            ObjectAnimator progressAnimator = ObjectAnimator.ofInt(progressBarCalo,
+                    "progress", 0, caloriesIn);
+            progressAnimator.setDuration(2000);
+            progressAnimator.start();
+            if(caloriesIn >= tdee){
+                Toast.makeText(getContext(),"Mục tiêu Calories trong ngày hoàn thành",Toast.LENGTH_LONG).show();
+            }
         }
         double proteins = tdee*0.35/4;
         int proteinIn = datasource.TinhProtein(email,type);
@@ -169,6 +178,13 @@ public class HomeFragment extends Fragment {
             tv_showproteinInday.setText(String.valueOf(proteinIn)+"g");
             tv_processProtein.setText(df.format(proteins)+"g");
             progressBar_dam.setProgress((int) proteinIn);
+            ObjectAnimator progressAnimator = ObjectAnimator.ofInt(progressBar_dam,
+                    "progress", 0,  proteinIn);
+            progressAnimator.setDuration(2000);
+            progressAnimator.start();
+            if(proteinIn >= proteins){
+                Toast.makeText(getContext(),"Mục tiêu Protein trong ngày hoàn thành",Toast.LENGTH_LONG).show();
+            }
         }
         double fats = tdee*0.3/9;
         int fatsIn = datasource.TinhFat(email,type);
@@ -181,6 +197,13 @@ public class HomeFragment extends Fragment {
             tv_showFatInday.setText(String.valueOf(fatsIn)+"g");
             tv_processFat.setText(df.format(fats)+"g");
             progressBar_beo.setProgress((int) fatsIn);
+            ObjectAnimator progressAnimator = ObjectAnimator.ofInt(progressBar_beo,
+                    "progress", 0, fatsIn);
+            progressAnimator.setDuration(2000);
+            progressAnimator.start();
+            if(fatsIn >= fats){
+                Toast.makeText(getContext(),"Mục tiêu chất béo trong ngày hoàn thành",Toast.LENGTH_LONG).show();
+            }
         }
         double carb = tdee*0.35/4;
         int carbIn = datasource.TinhCarb(email,type);
@@ -192,8 +215,14 @@ public class HomeFragment extends Fragment {
             progressBar_car.setMax((int) carb);
             tv_showCarbInday.setText(String.valueOf(carbIn)+"g");
             tv_processCarb.setText(df.format(carb)+"g");
-
             progressBar_car.setProgress((int) carbIn);
+            ObjectAnimator progressAnimator = ObjectAnimator.ofInt(progressBar_car,
+                    "progress", 0,  carbIn);
+            progressAnimator.setDuration(2000);
+            progressAnimator.start();
+            if(carbIn >= carb){
+                Toast.makeText(getContext(),"Mục tiêu Tinh bột trong ngày hoàn thành",Toast.LENGTH_LONG).show();
+            }
         }
     }
     private void singUpGG(){

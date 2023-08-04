@@ -182,7 +182,8 @@ public class UserDataSource {
         Cursor resultSet = database.rawQuery("SELECT * FROM " + SQLHelper.TABLE_ControlWeight + " WHERE " +
                 SQLHelper.COLUMN_ControlWeight_EMAIL + " = '" + email + "' AND " +
                 SQLHelper.COLUMN_ControlWeight_id + " = (SELECT MAX(" + SQLHelper.COLUMN_ControlWeight_id + ") FROM " +
-                SQLHelper.TABLE_ControlWeight + " WHERE " + SQLHelper.COLUMN_ControlWeight_EMAIL + " = '" + email + "')", null);       if (resultSet.getCount() == 0) {
+                SQLHelper.TABLE_ControlWeight + " WHERE " + SQLHelper.COLUMN_ControlWeight_EMAIL + " = '" + email + "')", null);
+        if (resultSet.getCount() == 0) {
             Log.e("LOI ROI", "No data found");
             resultSet.close();
             return null; // Return null or handle the case when no data is found
@@ -382,12 +383,14 @@ public class UserDataSource {
         cursor.close();
         return people;
     }
-    public ArrayList<Weight> getAllWeightUp(){
+    public ArrayList<Weight> getAllWeightUp(String email2){
         ArrayList<Weight> weights = new ArrayList<>();
         List<Double> newwei = new ArrayList<>();
         List<String> IdDate = new ArrayList<>();
         List<String> email = new ArrayList<>();
-        Cursor cursor = database.rawQuery("select * from "+SQLHelper.TABLE_ControlWeight, null);
+        Cursor cursor = database.rawQuery("Select * from " + SQLHelper.TABLE_ControlWeight + " Where "
+                + SQLHelper.COLUMN_ControlWeight_EMAIL
+                + " = '" + email2 + "'", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Weight weight = new Weight();
@@ -402,6 +405,54 @@ public class UserDataSource {
         // Nhớ đóng con trỏ lại nhé.
         cursor.close();
         return weights;
+    }
+    public List<String> getAllWeightToDrawChart(String email2){
+        ArrayList<Weight> weights = new ArrayList<>();
+        List<Double> newwei = new ArrayList<>();
+        List<String> IdDate = new ArrayList<>();
+        List<String> cannag = new ArrayList<>();
+        List<String> email = new ArrayList<>();
+        Cursor cursor = database.rawQuery("Select * from " + SQLHelper.TABLE_ControlWeight + " Where "
+                + SQLHelper.COLUMN_ControlWeight_EMAIL
+                + " = '" + email2 + "'", null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Weight weight = new Weight();
+            weight.setControlWeight_Date(cursor.getString(1));
+            weight.setWeight(cursor.getDouble(2));
+            newwei.add(weight.getWeight());
+            email.add(weight.getEmail());
+            cannag.add(String.valueOf(weight.getWeight()));
+            IdDate.add(weight.getControlWeight_Date());
+            cursor.moveToNext();
+        }
+        weights = Weight.initWeight(newwei,IdDate,email);
+        // Nhớ đóng con trỏ lại nhé.
+        cursor.close();
+        return cannag;
+    }
+    public List<String> getAllDateWeightToDrawChart(String email2){
+        ArrayList<Weight> weights = new ArrayList<>();
+        List<Double> newwei = new ArrayList<>();
+        List<String> IdDate = new ArrayList<>();
+        List<String> email = new ArrayList<>();
+        Cursor cursor = database.rawQuery("Select * from " + SQLHelper.TABLE_ControlWeight + " Where "
+                + SQLHelper.COLUMN_ControlWeight_EMAIL
+                + " = '" + email2 + "'", null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Weight weight = new Weight();
+            weight.setControlWeight_Date(cursor.getString(1));
+            weight.setWeight(cursor.getDouble(2));
+            newwei.add(weight.getWeight());
+            email.add(weight.getEmail());
+            IdDate.add(weight.getControlWeight_Date());
+            cursor.moveToNext();
+        }
+        weights = Weight.initWeight(newwei,IdDate,email);
+        // Nhớ đóng con trỏ lại nhé.
+        cursor.close();
+        return IdDate;
     }
     String ttluu = "tkmkLog";
     public ArrayList<DaulyFood> getFood(String timeOfDay,String email,String date){

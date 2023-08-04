@@ -35,7 +35,7 @@ public class DangNhapPage extends AppCompatActivity implements View.OnClickListe
     UserAcc userAcc;
     GoogleSignInOptions signIn;
     GoogleSignInClient signInClient;
-TextView tv_dangKy;
+    TextView tv_dangKy;
     private UserDataSource datasource;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +65,7 @@ TextView tv_dangKy;
 
 
         getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("isFirstRun", false).commit();
-        tv_dangKy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DangNhapPage.this,DangKyPage.class);
-                startActivity(intent);
-            }
-        });
+
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -117,15 +111,8 @@ TextView tv_dangKy;
         startActivityForResult(signIntent,1000);
     }
     private void addControl(){
-        btn_dk = (Button) findViewById(R.id.btn_dk);
-        btn_dn=(Button) findViewById(R.id.btn_dn);
-        edt_userName = (EditText) findViewById(R.id.edt_userName);
-        edt_pass = (EditText) findViewById(R.id.edt_pass);
+
         imgBtn_signupGG = (ImageButton)findViewById(R.id.imgBtn_signupGG);
-        btn_dk.setOnClickListener(this::onClick);
-        btn_dn.setOnClickListener(this::onClick);
-        btn_dk.setVisibility(View.GONE);
-        tv_dangKy = (TextView) findViewById(R.id.tv_dangKy);
 
     }
 
@@ -154,13 +141,7 @@ TextView tv_dangKy;
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btn_dn) {
-            CheckLogin();
-        }
-        if (v.getId()== R.id.btn_dk){
-            Intent intent = new Intent(DangNhapPage.this,DangKyPage.class);
-            startActivity(intent);
-        }
+
 
     }
     public void loadFragment(Fragment fragment) {

@@ -5,7 +5,7 @@ plugins {
 android {
     signingConfigs {
         debug {
-            storeFile file('E:\\Coding\\Android2023\\QY\\testApp\\app\\src\\main\\java\\com\\example\\testapp\\keys\\debug.keystore')
+            storeFile file('D:\\Android\\HealthyCare\\app\\src\\main\\java\\com\\example\\testapp\\keys\\debug.keystore')
         }
     }
     namespace 'com.example.testapp'

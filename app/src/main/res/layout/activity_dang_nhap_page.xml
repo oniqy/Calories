@@ -28,108 +28,27 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="15dp"
         android:text="Đăng nhập"
         android:textColor="#0BC585"
         android:textSize="40dp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <EditText
-        android:id="@+id/edt_userName"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_margin="20dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/bg_textviewlogin"
-        android:drawableStart="@drawable/baseline_account_box_24"
-        android:drawablePadding="15dp"
-        android:ems="10"
-        android:hint="@string/hinttendn"
-        android:inputType="text"
-        android:textColor="#085A3E"
-        android:textColorHint="#0BC585"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <EditText
-        android:id="@+id/edt_pass"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_margin="20dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/bg_textviewlogin"
-        android:drawableStart="@drawable/baseline_lock_24"
-        android:drawablePadding="15dp"
-        android:ems="10"
-        android:hint="@string/hintpw"
-        android:inputType="textPassword"
-        android:textColor="#085A3E"
-        android:textColorHint="#0BC585"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_userName" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_dn"
-        style="@android:style/Widget.Button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/button_login"
-        android:text="Đăng nhập"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_pass" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_dk"
-        style="@android:style/Widget.Button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:layout_marginTop="32dp"
-        android:text="Đăng ký"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_dn" />
 
     <ImageButton
         android:id="@+id/imgBtn_signupGG"
         android:layout_width="84dp"
         android:layout_height="66dp"
-        android:layout_marginTop="-14dp"
+        android:layout_marginTop="50dp"
         android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_dn"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
         app:srcCompat="@drawable/googl"
         tools:ignore="SpeakableTextPresentCheck" />
-
-    <TextView
-        android:id="@+id/tv_dangKy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Bạn chưa có tài khoản?"
-        android:textColor="#03A9F4"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgBtn_signupGG" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

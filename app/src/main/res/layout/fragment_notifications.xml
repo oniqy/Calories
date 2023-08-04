@@ -359,7 +359,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
 
-                android:text="Biểu đồ Calo , lượng calo đã nạp vào trong 1 tuần , tổng phần trăm chất béo ,chất nạm ,Carbs trong 1 tuần"
+                android:text="Biểu đồ cho sự thay đổi cân nặng của bạn, giúp bạn có thể dễ dàng theo dõi cân nặng"
                 android:textColor="@color/black"
                 android:textSize="18dp"
                 app:layout_constraintStart_toStartOf="parent"

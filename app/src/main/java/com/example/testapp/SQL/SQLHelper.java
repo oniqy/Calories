@@ -137,6 +137,10 @@ public class SQLHelper extends SQLiteOpenHelper{
                 "Upgrading database from version " + oldVersion + " to "
                         + newVersion + ", which will destroy all old data");
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CaloDaily);
+        Log.w(SQLHelper.class.getName(),
+                "Upgrading database from version " + oldVersion + " to "
+                        + newVersion + ", which will destroy all old data");
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ControlWeight);
         onCreate(db);
     }
     public SQLiteDatabase open()  {
