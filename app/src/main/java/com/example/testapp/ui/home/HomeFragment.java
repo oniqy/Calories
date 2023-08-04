@@ -252,13 +252,7 @@ public class HomeFragment extends Fragment {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-        binding.textNotificationEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new Input_Info_Fragment());
 
-            }
-        });
         binding.imgbtnBs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

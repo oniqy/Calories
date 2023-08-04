@@ -74,17 +74,16 @@ public class UserDataSource {
         }
         return 1;
     }
-    public int createNewWeight(Weight weight) {
+    public int createNewWeight(Weight weight, String email) {
         ContentValues values = new ContentValues();
         values.put(SQLHelper.COLUMN_ControlWeight_Date, weight.getControlWeight_Date());
         values.put(SQLHelper.COLUMN_ControlWeight_NewWeight, weight.getWeight());
-        values.put(SQLHelper.COLUMN_ControlWeight_EMAIL, weight.getEmail());
-        long insertId = database.insert(SQLHelper.TABLE_ControlWeight, null,
-                values);
+        values.put(SQLHelper.COLUMN_ControlWeight_EMAIL, email);
+        long insertId = database.insert(SQLHelper.TABLE_ControlWeight, null, values);
         if (insertId <= 0) {
-            return -1;
+            return -1; // Return -1 if the insertion was unsuccessful
         }
-        return 1;
+        return 1; // Return 1 if the insertion was successful
     }
 
     public int createUserInfo(UserInfo userInfo, String email) {
@@ -178,6 +177,22 @@ public class UserDataSource {
         }
         resultSet.close();
         return 0;
+    }
+    public Weight checkUpWeight(String email) {
+        Cursor resultSet = database.rawQuery("SELECT * FROM " + SQLHelper.TABLE_ControlWeight + " WHERE " +
+                SQLHelper.COLUMN_ControlWeight_EMAIL + " = '" + email + "' AND " +
+                SQLHelper.COLUMN_ControlWeight_id + " = (SELECT MAX(" + SQLHelper.COLUMN_ControlWeight_id + ") FROM " +
+                SQLHelper.TABLE_ControlWeight + " WHERE " + SQLHelper.COLUMN_ControlWeight_EMAIL + " = '" + email + "')", null);       if (resultSet.getCount() == 0) {
+            Log.e("LOI ROI", "No data found");
+            resultSet.close();
+            return null; // Return null or handle the case when no data is found
+        }
+
+        resultSet.moveToFirst();
+        Weight weight = new Weight();
+        weight.setWeight(resultSet.getInt(resultSet.getColumnIndexOrThrow(SQLHelper.COLUMN_ControlWeight_NewWeight)));
+        resultSet.close();
+        return weight;
     }
 
     public int checkFood(String nameFood) {
@@ -366,6 +381,27 @@ public class UserDataSource {
         // Nhớ đóng con trỏ lại nhé.
         cursor.close();
         return people;
+    }
+    public ArrayList<Weight> getAllWeightUp(){
+        ArrayList<Weight> weights = new ArrayList<>();
+        List<Double> newwei = new ArrayList<>();
+        List<String> IdDate = new ArrayList<>();
+        List<String> email = new ArrayList<>();
+        Cursor cursor = database.rawQuery("select * from "+SQLHelper.TABLE_ControlWeight, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Weight weight = new Weight();
+            weight.setControlWeight_Date(cursor.getString(1));
+            weight.setWeight(cursor.getDouble(2));
+            newwei.add(weight.getWeight());
+            email.add(weight.getEmail());
+            IdDate.add(weight.getControlWeight_Date());
+            cursor.moveToNext();
+        }
+        weights = Weight.initWeight(newwei,IdDate,email);
+        // Nhớ đóng con trỏ lại nhé.
+        cursor.close();
+        return weights;
     }
     String ttluu = "tkmkLog";
     public ArrayList<DaulyFood> getFood(String timeOfDay,String email,String date){

@@ -1,7 +1,10 @@
 package com.example.testapp.DTO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Weight {
-    public int Weight;
+    public double Weight;
     public String ControlWeight_Date;
     public String Email;
     public Weight() {
@@ -16,11 +19,11 @@ public class Weight {
         Email = email;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return Weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(double weight) {
         Weight = weight;
     }
 
@@ -32,9 +35,17 @@ public class Weight {
         ControlWeight_Date = controlWeight_Date;
     }
 
-    public Weight(int weight, String controlWeight_Date,String email) {
+    public Weight(double weight, String controlWeight_Date,String email) {
         Weight = weight;
         Email = email;
         ControlWeight_Date = controlWeight_Date;
+    }
+    public static ArrayList<Weight> initWeight(List<Double> Weight, List<String> date, List<String> email){
+        ArrayList<Weight> weights = new ArrayList<>();
+        for(int i = 0;i<Weight.size();i++){
+            Weight item = new Weight(Weight.get(i), date.get(i), email.get(i));
+            weights .add(item);
+        }
+        return weights;
     }
 }

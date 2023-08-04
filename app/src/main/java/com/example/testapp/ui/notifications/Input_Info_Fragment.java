@@ -1,5 +1,5 @@
 package com.example.testapp.ui.notifications;
-
+import java.text.DateFormat;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -53,7 +53,7 @@ public class Input_Info_Fragment extends Fragment implements Custom_spinner.OnSp
     adapter_tapluyen adapterTapluyen;
     Custom_spinner spinner_sex,spinner_tapLuyen,spinner_muctieu;
     Button btn_luuBMi;
-    Calendar currentDate = Calendar.getInstance();
+    Calendar calendar = Calendar.getInstance();
     EditText edt_age,edt_height,edt_weight,edt_ten;
     ImageButton imagebtn_back;
     private UserDataSource datasource;
@@ -136,12 +136,10 @@ public class Input_Info_Fragment extends Fragment implements Custom_spinner.OnSp
         int weight = Integer.parseInt(edt_weight.getText().toString());
 
         //
+        String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
         Weight weight1 = new Weight();
-        String dateUp = String.valueOf(currentDate);
-
         weight1.setWeight(weight);
-        weight1.setControlWeight_Date(dateUp);
-        weight1.getEmail();
+        weight1.setControlWeight_Date(currentDate);
 
         userInfo.setBirthDay(age);
         userInfo.setUserHeight(height);
@@ -149,7 +147,7 @@ public class Input_Info_Fragment extends Fragment implements Custom_spinner.OnSp
         userInfo.setGender(getSex);
         userInfo.setExercise(getCheDoTap);
         userInfo.setTarget(getMucTieu);
-        int updateWeight = datasource.createNewWeight(weight1);
+        int updateWeight = datasource.createNewWeight(weight1,Email);
         if(updateWeight == 1){
             Log.e("update wieght", String.valueOf(updateWeight));
         }else {
@@ -228,14 +226,17 @@ public class Input_Info_Fragment extends Fragment implements Custom_spinner.OnSp
             }
         });
     }
-
+    String Email = null;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentInputInfoBinding.inflate(inflater, container, false);
         datasource = new UserDataSource(getContext());
         datasource.open();
-
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
+        if(acct!=null){
+            Email = acct.getEmail();
+        }
         binding.imagebtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

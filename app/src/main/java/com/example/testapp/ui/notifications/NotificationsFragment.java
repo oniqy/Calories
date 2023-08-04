@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.testapp.ControlWeightFragment;
 import com.example.testapp.ImageLoadTask;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -82,6 +84,12 @@ public class NotificationsFragment extends Fragment {
             public void onClick(View v) {
                 loadFragment(new BMR_page_Fragment());
 
+            }
+        });
+        binding.linearLayoutColories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new ControlWeightFragment());
             }
         });
         View root = binding.getRoot();

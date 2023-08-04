@@ -46,7 +46,7 @@ public class SQLHelper extends SQLiteOpenHelper{
     public static final String COLUMN_CaloDaily_NameFoodOfday = "foodDaily";
     public static final String COLUMN_CaloDaily_NameExerciseOfDay = "NameExercise";
     public static final String COLUMN_CaloDaily_TimeofDay = "TimeType";
-
+    public static final String COLUMN_ControlWeight_id = "idControlWeight";
     public static final String COLUMN_ControlWeight_Date = "dayUp";
     public static final String COLUMN_ControlWeight_NewWeight = "newWeight";
     public static final String COLUMN_ControlWeight_EMAIL = "ControlWeightEMAIL";
@@ -77,7 +77,8 @@ public class SQLHelper extends SQLiteOpenHelper{
                 + " text primary key , " + COLUMN_NAME_USER
                 + " text not null);";
         String tbUpWeight = "create table "
-                + TABLE_ControlWeight + "( " + COLUMN_ControlWeight_Date
+                + TABLE_ControlWeight + "( " + COLUMN_ControlWeight_id
+                + " integer primary key autoincrement, " + COLUMN_ControlWeight_Date
                 + " text  , " + COLUMN_ControlWeight_NewWeight
                 + " interger,"+COLUMN_ControlWeight_EMAIL+" text);";
         String tbfood = "create table "

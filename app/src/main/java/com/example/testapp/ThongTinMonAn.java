@@ -101,10 +101,12 @@ public class ThongTinMonAn extends AppCompatActivity  implements View.OnClickLis
                 daulyFood.setIdFood(Integer.parseInt(intent.getStringExtra("idFood")));
                 daulyFood.setNameFoodOfday(namFoodofDay);
                 String email = null;
+                //GGEmail
                 GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
                 if(acct!=null){
                      email = acct.getEmail();
                 }
+                //
                 //insert
                 int insert = datasource.createDailyFood(daulyFood,email);
                 if(insert == 1){
