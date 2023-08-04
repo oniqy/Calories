@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -44,7 +45,7 @@ TextView tv_dangKy;
         setContentView(R.layout.activity_dang_nhap_page);
         datasource = new UserDataSource(this);
         datasource.open();
-        signIn = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        signIn = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken("237423378678-ajagq0kuaj94t6sokofnhc0poa80tqrq.apps.googleusercontent.com").requestEmail().build();
         signInClient = GoogleSignIn.getClient(this,signIn);
 
         addControl();
@@ -74,8 +75,10 @@ TextView tv_dangKy;
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == -1){
+
+        if(requestCode == 1000){
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+
             try {
                 task.getResult(ApiException.class);
                 GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(DangNhapPage.this);
@@ -86,6 +89,7 @@ TextView tv_dangKy;
                     userAcc.setUsername(personEmail);
                     userAcc.setPassWord(personid);
                     int check = datasource.checkUserAcc(personEmail);
+
                     if(check == 1) {
                         int k = datasource.createUserACc(userAcc);
                         if (k == 1) {
@@ -104,6 +108,7 @@ TextView tv_dangKy;
 
             } catch (ApiException e) {
                 Toast.makeText(getApplicationContext(),"Co gi do sai sai",Toast.LENGTH_LONG).show();
+                Log.v("AKi LOGIN EXCEPTION", e.getMessage().toString());
             }
         }
     }
