@@ -1,4 +1,4 @@
-package com.example.testapp;
+package com.example.testapp.ui.notifications;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -22,25 +22,19 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Calendar;
-import java.util.stream.Collectors;
 
 import com.example.testapp.DAO.UserDataSource;
-import com.example.testapp.DTO.DaulyFood;
 import com.example.testapp.DTO.Weight;
-import com.example.testapp.adapter.adapter_dailyFood;
+import com.example.testapp.R;
 import com.example.testapp.adapter.adapter_lichsu;
-import com.example.testapp.ui.notifications.NotificationsFragment;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -287,9 +281,11 @@ public class ControlWeightFragment extends Fragment {
     }
     public void loadFragment(Fragment fragment) {
 // create a FragmentManager
-        FragmentManager fm = getFragmentManager();
-// create a FragmentTransaction to begin the transaction and replace the Fragment
+        FragmentManager fm = requireActivity().getSupportFragmentManager();
+
+        // Create a FragmentTransaction to begin the transaction and replace the Fragment
         FragmentTransaction ft = fm.beginTransaction();
+        ft.setCustomAnimations(androidx.transition.R.anim.fragment_open_exit, androidx.transition.R.anim.fragment_close_exit);
 // replace the FrameLayout with new Fragment
         ft.replace(R.id.frg_control, fragment);
         ft.commit(); // save the changes

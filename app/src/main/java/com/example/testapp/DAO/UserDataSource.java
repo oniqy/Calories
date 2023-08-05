@@ -57,7 +57,31 @@ public class UserDataSource {
         cursor.close();
         return people;
     }
+    public ArrayList<Double> getDataCaloInMonth(Calendar time) {
+        ArrayList<DaulyFood> dataList = new ArrayList<>();
+        ArrayList<Double> allData = new ArrayList<>();
+        Calendar finTime = time;
+        finTime.set(Calendar.DAY_OF_YEAR,2);
+        for (int i = 0; i <= 12; i++) {
+            dataList.clear();
+            Calendar calendarStart = (Calendar) finTime.clone();
+            calendarStart.set(Calendar.DAY_OF_MONTH, 1);
+            calendarStart.set(Calendar.HOUR, 0);
+            calendarStart.set(Calendar.MINUTE, 0);
+            calendarStart.set(Calendar.SECOND, 0);
+            Date jan1 = new Date(calendarStart.getTimeInMillis());
+            Calendar calendarEnd = (Calendar) calendarStart.clone();
+            calendarEnd.set(Calendar.DAY_OF_MONTH, calendarEnd.getActualMaximum(Calendar.DAY_OF_MONTH));
+            calendarEnd.set(Calendar.HOUR_OF_DAY, 23);
+            calendarEnd.set(Calendar.MINUTE, 59);
+            calendarEnd.set(Calendar.SECOND, 59);
+            Date jan2 = new Date(calendarEnd.getTimeInMillis());
+            Log.v("getDataOutComeInMonth", "BETWEEN!! " + String.valueOf(jan1 + " " + jan2));
 
+
+        }
+            return allData;
+    }
 
     public void close() {
         dbHelper.close();
@@ -471,6 +495,40 @@ public class UserDataSource {
            DaulyFood daulyFood = new DaulyFood();
             daulyFood.setId(cursor.getInt(0));
            daulyFood.setIdDate(cursor.getString(1));
+            daulyFood.setNameFoodOfday(cursor.getString(4));
+            daulyFood.setIdFood(cursor.getInt(2));
+            daulyFood.setTimeofDay(cursor.getString(5));
+            IdDayly.add(daulyFood.getId());
+            IdDate.add(daulyFood.getIdDate());
+            NameFoodOfday.add(daulyFood.getNameFoodOfday());
+            IdFood.add(daulyFood.getIdFood());
+            TimeofDay.add(daulyFood.getTimeofDay());
+
+            Log.v("getFood", "" + foods);
+            cursor.moveToNext();
+        }
+        foods = DaulyFood.initfood(IdDayly,IdDate,NameFoodOfday,IdFood,TimeofDay);
+        // Nhớ đóng con trỏ lại nhé.
+        cursor.close();
+        Log.v("readData", ""+foods);
+        return foods;
+    }
+    public ArrayList<DaulyFood> getFoodShowhistoRydata(String email,String date){
+        ArrayList<DaulyFood> foods = new ArrayList<>();
+        List<Integer> IdDayly = new ArrayList<>();
+        List<String> IdDate = new ArrayList<>();
+        List<String> NameFoodOfday = new ArrayList<>();
+        List<Integer> IdFood = new ArrayList<>();
+        List<String> TimeofDay = new ArrayList<>();
+        Cursor cursor = database.rawQuery("Select * from " + SQLHelper.TABLE_CaloDaily + " Where "
+                +SQLHelper.COLUMN_CaloDaily_idEmail+
+                " = '" + email  + "' and "+SQLHelper.COLUMN_CaloDaily_IdDate+
+                " = '" + date + "'", null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            DaulyFood daulyFood = new DaulyFood();
+            daulyFood.setId(cursor.getInt(0));
+            daulyFood.setIdDate(cursor.getString(1));
             daulyFood.setNameFoodOfday(cursor.getString(4));
             daulyFood.setIdFood(cursor.getInt(2));
             daulyFood.setTimeofDay(cursor.getString(5));
