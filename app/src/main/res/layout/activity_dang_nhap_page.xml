@@ -15,37 +15,39 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="412dp"
-        android:layout_height="286dp"
+        android:layout_width="240dp"
+        android:layout_height="192dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/artboard"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/calories"
         tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textView26"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hãy đăng nhập vào CaloApp"
-        android:textColor="#0BC585"
+        android:text="Đăng nhập"
         android:textSize="30dp"
+        android:textStyle="bold"
+        android:textColor="#0BC585"
         app:layout_constraintBottom_toTopOf="@+id/imgBtn_signupGG"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <ImageButton
         android:id="@+id/imgBtn_signupGG"
         android:layout_width="84dp"
         android:layout_height="66dp"
+        android:layout_marginTop="100dp"
         android:background="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:srcCompat="@drawable/googl"
         tools:ignore="SpeakableTextPresentCheck" />
 

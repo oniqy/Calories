@@ -66,6 +66,7 @@ public class ControlWeightFragment extends Fragment {
     Button btnDatePicker,button;
     ImageView btnPlusTY,btnMinusTY;
     ImageButton imagebtn_back2;
+    SwipeRefreshLayout swipeRefresh;
     TextView edt_UpdateWeight;
     View view;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -133,6 +134,7 @@ public class ControlWeightFragment extends Fragment {
         btnDatePicker = view.findViewById(R.id.btnDatePicker);
         button = view.findViewById(R.id.button);
         imagebtn_back2 = view.findViewById(R.id.imagebtn_back2);
+        swipeRefresh = view.findViewById(R.id.swipe_refresh);
         //event
         Event();
         Weight weight = new Weight();
@@ -141,6 +143,10 @@ public class ControlWeightFragment extends Fragment {
         weights = ipW;
         edt_UpdateWeight.setText(String.valueOf(ipW));
         //Chart
+        Chart();
+        return view;
+    }
+    public void Chart(){
         lineChart.getAxisRight().setDrawLabels(false);
         values = datasource.getAllDateWeightToDrawChart(Email);
         XAxis xAxis = lineChart.getXAxis();
@@ -151,7 +157,7 @@ public class ControlWeightFragment extends Fragment {
 
         YAxis yAxis = lineChart.getAxisLeft();
         yAxis.setAxisMinimum(0f);
-        yAxis.setAxisMaximum(100f);
+        yAxis.setAxisMaximum(200f);
         yAxis.setAxisLineWidth(2f);
         yAxis.setAxisLineColor(Color.BLACK);
         yAxis.setLabelCount(10);
@@ -164,15 +170,13 @@ public class ControlWeightFragment extends Fragment {
 
         LineDataSet dataSet2 =new LineDataSet(entries,"");
         dataSet2.setColor(Color.GREEN);
-        dataSet2.setValueTextSize(12f);
+        dataSet2.setLineWidth(5f); // Increase the line width to make it appear bigger
+        dataSet2.setValueTextSize(16f);
         LineData lineData = new LineData(dataSet2);
         lineChart.setData(lineData);
         lineChart.invalidate();
-        return view;
     }
     void UpdateWeight(String calendar){
-
-
         Weight weight = new Weight();
         weight.setControlWeight_Date(calendar);
         weight.setWeight(weightIp);
@@ -213,6 +217,19 @@ public class ControlWeightFragment extends Fragment {
                 edt_UpdateWeight.setText(String.valueOf(roundedWeight)+"kg");
             }
         });
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Chart();
+                weights2 = datasource.getAllWeightUp(Email);
+                adapter_lichsus =new adapter_lichsu(weights2);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+                recyc.setLayoutManager(layoutManager);
+                recyc.setAdapter(adapter_lichsus);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
 
         btnPlusTY.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -273,11 +290,7 @@ public class ControlWeightFragment extends Fragment {
                 datePickerDialog.show();
             }
         });
-        weights2 = datasource.getAllWeightUp(Email);
-        adapter_lichsus =new adapter_lichsu(weights2);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        recyc.setLayoutManager(layoutManager);
-        recyc.setAdapter(adapter_lichsus);
+
     }
     public void loadFragment(Fragment fragment) {
 // create a FragmentManager

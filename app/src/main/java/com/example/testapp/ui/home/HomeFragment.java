@@ -106,7 +106,7 @@ public class HomeFragment extends Fragment {
         currentDate();
         showCalories(getType);
         Calendar calendar = Calendar.getInstance();
-        List<String> myList = Arrays.asList("Nên ăn phối hợp nhiều loại thực phẩm trong ngày để cơ thể đủ chất dinh dưỡng và khỏe mạnh. Trong đó có 4 nhóm dinh dưỡng chính cần phải được bổ sung đầy đủ", "Theo Boldsky, cơ thể của bạn cần khoảng thời gian nhất định để tiêu hóa thức ăn và hấp thụ tốt các chất dinh dưỡng", "Một cây súp lơ chứa hơn 100% nhu cầu vitamin K và gần 200% nhu cầu vitamin C hàng ngày cho cơ thể. Đây là 2 chất dinh dưỡng cần thiết cho sự phát triển của xương.", " Một trái bơ chứa khoảng 50% nhu cầu chất xơ và 40% nhu cầu Folate hàng ngày của cơ thể, có thể giảm nguy cơ mắc bệnh tim");
+        List<String> myList = Arrays.asList("Uống một cốc nước trước bữa trưa và bữa tối sẽ giúp hạn chế nạp nhiều thức ăn và giảm lượng calo tiêu thụ trong bữa ăn", " Cung cấp đủ nước vừa giúp duy trì cơ thể ở mức tốt nhất, gia tăng hiệu suất luyện tập, sinh hoạt hàng ngày lại ngăn ngừa việc tăng cân trở lại trong thời gian dài.", "Trong chế độ ăn healthy, bạn cần hạn chế lượng muối tiêu thi và dung nạp vào cơ thể. Điều này được đánh giá là tốt cho sức khỏe với việc giảm các nguy cơ bệnh lý về thận, tim, dạ dày, huyết áp và đột quỵ.", "Việc ăn chậm, nhai kỹ để thức ăn được nghiền nát và khi vào dạ dày được tiêu hóa tốt hơn rất có lợi. Việc nhai nhanh sẽ dễ khiến bạn bị đau dạ dày, khó tiêu.");
         Random r = new Random();
         int randomitem = r.nextInt(myList.size());
         String randomElement = myList.get(randomitem);
@@ -477,8 +477,6 @@ public class HomeFragment extends Fragment {
 
     }
     public void showAlertDialog(final Context context,String idDay , String email,int position)  {
-        final Drawable positiveIcon = context.getResources().getDrawable(R.drawable.baseline_check_24);
-        final Drawable negativeIcon = context.getResources().getDrawable(R.drawable.baseline_close_24);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
@@ -487,7 +485,7 @@ public class HomeFragment extends Fragment {
 
         //
         builder.setCancelable(true);
-        builder.setIcon(R.drawable.baseline_lunch_dining_24);
+        builder.setIcon(R.drawable.ic_launcher);
 
         // Create "Yes" button with OnClickListener.
         builder.setPositiveButton("Xóa món ăn", new DialogInterface.OnClickListener() {
@@ -495,21 +493,21 @@ public class HomeFragment extends Fragment {
                 int delete = datasource.deleteFood(String.valueOf(idDay),email);
                 if (delete == 0){
                     daulyFoods.remove(position);
+                    Toast.makeText(context,"Xóa món ăn thành công",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        builder.setPositiveButtonIcon(positiveIcon);
 
         // Create "No" button with OnClickListener.
         builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                Toast.makeText(context,"You choose No button",
+                Toast.makeText(context,"Đã hủy",
                         Toast.LENGTH_SHORT).show();
                 //  Cancel
                 dialog.cancel();
             }
         });
-        builder.setNegativeButtonIcon(negativeIcon);
 
         // Create AlertDialog:
         AlertDialog alert = builder.create();

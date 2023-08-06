@@ -18,7 +18,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.testapp.DangNhapPage;
-import com.example.testapp.QLtheoNam_fragment;
 import com.example.testapp.R;
 import com.example.testapp.databinding.FragmentNotificationsBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;

@@ -150,12 +150,12 @@ public class UserDataSource {
 
     public int createFood() {
         int[] id = {1, 2, 3, 4};
-        String[] namefood = {"Phở bò tái", "Phở bò viên", "Cơm trắng", "Cá lóc kho"};
-        double[] Calo = {431, 431, 200, 131};
-        double[] Proteins = {18, 16, 4.6, 15.7};
-        double[] Fats = {12, 14, 0.6, 3.8};
-        double[] Carbs = {59, 59, 44.2, 8.7};
-        String[] sl = {"1 tô", "1 tô", "1 chén", "1 lát"};
+        String[] namefood = {"Phở bò tái", "Phở bò viên", "Cơm trắng", "Cá lóc kho","Thịt kho trứng","Thịt kho tiêu","Bún thịt nướng","Cơm chiên dương châu","Cơm tấm chả"};
+        double[] Calo = {431, 431, 200, 131,315,200,451,530,592};
+        double[] Proteins = {18, 16, 4.6, 15.7,19.8,21.2,14.7,14.9,17};
+        double[] Fats = {12, 14, 0.6, 3.8,22.9,7.6,13.7,11.3,18.1};
+        double[] Carbs = {59, 59, 44.2, 8.7,7.5,11.5,67.3,92.7,90.7};
+        String[] sl = {"1 tô", "1 tô", "1 chén", "1 lát","1 trứng + 2 miếng thịt","1 đĩa","1 tô","1 đĩa","1 đĩa cơm phần"};
 
         ContentValues values = new ContentValues();
         for (int i = 0; i <= id.length - 1; i++) {

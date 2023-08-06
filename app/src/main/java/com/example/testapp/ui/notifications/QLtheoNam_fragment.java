@@ -1,4 +1,4 @@
-package com.example.testapp;
+package com.example.testapp.ui.notifications;
 
 import android.app.DatePickerDialog;
 import android.graphics.Color;
@@ -19,13 +19,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
-
+import android.widget.Toast;
+import java.text.DecimalFormat;
 import com.example.testapp.DAO.UserDataSource;
 import com.example.testapp.DTO.DaulyFood;
+import com.example.testapp.DTO.UserInfo;
+import com.example.testapp.R;
 import com.example.testapp.adapter.adapter_lichSuCalo;
-import com.example.testapp.adapter.adapter_lichsu;
-import com.example.testapp.ui.notifications.NotificationsFragment;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -37,8 +39,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.example.testapp.ui.home.ChartCurrencyFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.TimeZone;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -175,7 +176,74 @@ public class QLtheoNam_fragment extends Fragment {
         ft.replace(R.id.frg_bcct, fragment);
         ft.commit(); // save the changes
     }
+    public double tinhTarget(){
+        UserInfo userInfo = datasource.Bmr(email);
+        String exercise = userInfo.getTarget();
+        double R = 0;
+        if(exercise.equals("Giảm cân")){
+            R = -500;
+        } else if (exercise.equals("Giữ nguyên cân nặng")) {
+            R = 0;
+        }
+        else if (exercise.equals("Tăng cân")) {
+            R = 500;
+        }
+        return R;
+    }
+    public double tinhTDEE(){
+        UserInfo userInfo = datasource.Bmr(email);
+        String exercise = userInfo.getExercise();
+        double R = 0;
+        if(exercise.equals("Không tập")){
+            R = 1.2;
+        } else if (exercise.equals("Nhẹ nhàng")) {
+            R = 1.375;
+        }
+        else if (exercise.equals("Vừa phải")) {
+            R = 1.55;
+        }
+        else if (exercise.equals("Nặng")) {
+            R = 1.725;
+        }
+        return R;
+    }
+    public double tinhBMR(){
+        UserInfo userInfo = datasource.Bmr(email);
+
+        String sex = userInfo.getGender();
+        if(sex == null){
+            return -1;
+        }
+        int chieuCao = userInfo.getUserHeight();
+        int canNang = userInfo.getUserWeight();
+        int age = userInfo.getBirthDay();
+        double BMR ;
+        if(sex == "Nam"){
+            double BMR1 = 88.362+(13.397*canNang)+(4.799*chieuCao);
+            BMR = BMR1 - (5.677 * age);
+
+        }else {
+            double BMR1 = 447.593 +(9.247 *canNang)+(3.098 *chieuCao);
+            BMR = BMR1 - (4.33  * age);
+        }
+        return BMR;
+    }
     public void GroupBarChart(String geType){
+        double tdee = 0;
+        double bmr = tinhBMR();
+        if(bmr == -1){
+            Toast.makeText(getContext(),"Vui lòng thiết lập chỉ số BMR",Toast.LENGTH_LONG).show();
+        }else {
+            double r = tinhTDEE();
+            tdee = bmr * r;
+            double target = tinhTarget();
+
+            tdee = tdee + target;
+            if(tdee < bmr){
+                tdee =bmr+65;
+            }
+        }
+        DecimalFormat df = new DecimalFormat("#");
         mChart = (BarChart) view.findViewById(R.id.mChart);
         mChart.setDrawBarShadow(false);
         mChart.getDescription().setEnabled(false);
@@ -202,8 +270,11 @@ public class QLtheoNam_fragment extends Fragment {
         leftAxis.setDrawGridLines(true);
         leftAxis.setGranularity(2);
         leftAxis.setLabelCount(8, true);
-        leftAxis.setMaxWidth(50000);
+
+        leftAxis.setAxisMinimum(0f);  // Set the minimum value
+        leftAxis.setGranularity(1f);  // Set the interval between axis values
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        leftAxis.setAxisMaximum(Float.parseFloat(df.format(tdee)));
 
         mChart.getAxisRight().setEnabled(false);
         mChart.getLegend().setEnabled(false);
@@ -250,7 +321,15 @@ public class QLtheoNam_fragment extends Fragment {
         xAxis.setAxisMaximum(labels.length - 1.1f);
         data.setValueTextColor(Color.parseColor("#FFFFFFFF"));
         data.setValueTextSize(10);
+        LimitLine limitLine = new LimitLine((float) tdee, ""+Float.parseFloat(df.format(tdee)));
+        limitLine.setLineColor(Color.GREEN);
+        limitLine.setLineWidth(5f);
+        limitLine.setTextColor(Color.BLACK);
+        limitLine.setTextSize(12f);
 
+        leftAxis.addLimitLine(limitLine);
+
+        leftAxis.setAxisMaximum((float) tdee + 414f);
         for (int i = 0; i< leftAxis.mEntries.length; i++){
             leftAxis.mEntries[i] = Math.round(leftAxis.mEntries[i]);
         }
