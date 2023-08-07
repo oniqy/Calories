@@ -29,6 +29,7 @@ import com.example.testapp.DAO.UserDataSource;
 import com.example.testapp.DTO.DailyCalories;
 import com.example.testapp.DTO.DaulyFood;
 import com.example.testapp.DTO.UserInfo;
+import com.example.testapp.DTO.Weight;
 import com.example.testapp.ImageLoadTask;
 import com.example.testapp.R;
 import androidx.annotation.NonNull;
@@ -74,17 +75,18 @@ public class HomeFragment extends Fragment {
     adapter_dailyFood adapter_dailyFoods;
     ImageView userImg;
     List<String> list = new ArrayList<>();
-    TextView userHello,chiSoCalo,userDate,tv_goiy,numb_caloIn,tv_processFat,tv_processProtein,tv_processCarb,tv_showCarbInday,tv_showFatInday,tv_showproteinInday;
+    TextView userHello,tv_hienlitNuoc,chiSoCalo,userDate,tv_goiy,numb_caloIn,tv_processFat,tv_processProtein,tv_processCarb,tv_showCarbInday,tv_showFatInday,tv_showproteinInday;
     BMR_page_Fragment bmr_page_fragment;
     private FragmentHomeBinding binding;
     DailyCalories dailyCalories ;
     String getType ;
     SwipeRefreshLayout swipeRefreshLayout;
-    ProgressBar progressBarCalo,progressBar_beo,progressBar_dam,progressBar_car;
-    Button btnDatePicker;
+    ProgressBar progressBarCalo,progressBar_beo,progressBar_dam,progressBar_car,progressBar;
+    Button btnDatePicker,btn_uongNuoc;
     private int mYear, mMonth, mDay;
     Calendar currentDate = Calendar.getInstance();
     String email= null;
+    double kq=0;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
@@ -104,7 +106,9 @@ public class HomeFragment extends Fragment {
         singUpGG();
         initPreferences();
         currentDate();
+
         showCalories(getType);
+        tinhLuongNuoc(getType);
         Calendar calendar = Calendar.getInstance();
         List<String> myList = Arrays.asList("Uống một cốc nước trước bữa trưa và bữa tối sẽ giúp hạn chế nạp nhiều thức ăn và giảm lượng calo tiêu thụ trong bữa ăn", " Cung cấp đủ nước vừa giúp duy trì cơ thể ở mức tốt nhất, gia tăng hiệu suất luyện tập, sinh hoạt hàng ngày lại ngăn ngừa việc tăng cân trở lại trong thời gian dài.", "Trong chế độ ăn healthy, bạn cần hạn chế lượng muối tiêu thi và dung nạp vào cơ thể. Điều này được đánh giá là tốt cho sức khỏe với việc giảm các nguy cơ bệnh lý về thận, tim, dạ dày, huyết áp và đột quỵ.", "Việc ăn chậm, nhai kỹ để thức ăn được nghiền nát và khi vào dạ dày được tiêu hóa tốt hơn rất có lợi. Việc nhai nhanh sẽ dễ khiến bạn bị đau dạ dày, khó tiêu.");
         Random r = new Random();
@@ -247,11 +251,14 @@ public class HomeFragment extends Fragment {
         progressBar_beo = binding.progressBarBeo.findViewById(R.id.progressBar_beo);
         progressBar_dam = binding.progressBarDam.findViewById(R.id.progressBar_dam);
         progressBar_car = binding.progressBarCar.findViewById(R.id.progressBar_car);
+        progressBar = binding.progressBar.findViewById(R.id.progressBar);
         tv_processFat = binding.tvProcessFat.findViewById(R.id.tv_processFat);
         tv_goiy = binding.tvGoiy.findViewById(R.id.tv_goiy);
         tv_processProtein = binding.tvProcessProtein.findViewById(R.id.tv_processProtein);
         tv_processCarb = binding.tvProcessCarb.findViewById(R.id.tv_processCarb);
+        tv_hienlitNuoc = binding.tvHienlitNuoc.findViewById(R.id.tv_hienlitNuoc);
         tv_showCarbInday = binding.tvShowCarbInday.findViewById(R.id.tv_showCarbInday);
+        btn_uongNuoc = binding.btnUongNuoc.findViewById(R.id.btn_uongNuoc);
         tv_showFatInday = binding.tvShowFatInday.findViewById(R.id.tv_showFatInday);
         tv_showproteinInday = binding.tvShowproteinInday.findViewById(R.id.tv_showproteinInday);
         numb_caloIn = binding.numbCaloIn.findViewById(R.id.numb_caloIn);
@@ -410,6 +417,43 @@ public class HomeFragment extends Fragment {
 
 
                 datePickerDialog.show();
+            }
+        });
+    }
+
+
+    public void tinhLuongNuoc(String type) {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        editor = sharedPreferences.edit();
+
+        // Retrieve the saved progress value
+        int savedProgress = sharedPreferences.getInt("litNuoc", 0);
+        kq = savedProgress;
+
+        // Reset the progress at midnight
+        int checkDate = currentDate.get(Calendar.HOUR_OF_DAY);
+        if (checkDate == 0) {
+            progressBar.setProgress(0);
+            kq = 0;
+        }
+
+        DecimalFormat df = new DecimalFormat("#.#");
+        Weight weight1 = new Weight();
+        weight1 = datasource.checkUpWeight(email);
+        double weip = weight1.getWeight();
+        double tinhWater = weip * 0.03;
+
+        tv_hienlitNuoc.setText(df.format(tinhWater) + "lít");
+        progressBar.setMax((int) (tinhWater * 10)); // Multiply by 10 to account for decimal increments
+
+        btn_uongNuoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                kq += 0.3;
+                progressBar.setProgress((int) (kq * 10)); // Multiply by 10 to account for decimal increments
+                editor.putInt("litNuoc", (int) kq);
+                editor.apply(); // Save the changes to SharedPreferences
+                Toast.makeText(getContext(),"Lưu ý lượng nước mỗi lần ấn nút sẽ cộng thêm 0.3lit tương đương với 1 ly nước tầm trung",Toast.LENGTH_LONG).show();
             }
         });
     }

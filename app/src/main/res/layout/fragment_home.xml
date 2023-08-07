@@ -24,8 +24,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
 
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".MainActivity">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -144,7 +145,6 @@
                     android:textStyle="bold" />
 
 
-
                 <TextView
                     android:id="@+id/user_caloOut"
                     android:layout_width="wrap_content"
@@ -221,11 +221,11 @@
                         android:id="@+id/progressBar_dam"
                         style="@style/CustomProgressBar"
                         android:layout_width="match_parent"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
                         android:layout_height="25dp"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentEnd="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:max="100"
                         android:minWidth="100dp"
                         android:minHeight="20dp"
@@ -286,11 +286,11 @@
                         android:id="@+id/progressBar_beo"
                         style="@style/CustomProgressBar"
                         android:layout_width="match_parent"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
                         android:layout_height="25dp"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentEnd="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:max="100"
                         android:minWidth="100dp"
                         android:minHeight="20dp"
@@ -349,11 +349,11 @@
                         android:id="@+id/progressBar_car"
                         style="@style/CustomProgressBar"
                         android:layout_width="match_parent"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
                         android:layout_height="25dp"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentEnd="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:max="100"
                         android:minWidth="100dp"
                         android:minHeight="20dp"
@@ -391,9 +391,11 @@
 
             </RelativeLayout>
 
-            v<androidx.constraintlayout.widget.ConstraintLayout
+            v
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="1085dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="50dp">
 
                 <TextView
@@ -430,210 +432,211 @@
                     app:srcCompat="@drawable/baseline_border_color_24"
                     tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/btnV_edtDailyFoob"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="20dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_todaymeals"
-                tools:ignore="MissingConstraints">
-
                 <LinearLayout
-                    android:id="@+id/layoutbuoiSang"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="@drawable/bk_button"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="1"
-                        android:text="Bữa sáng"
-
-                        android:textColor="@color/black"
-                        android:textSize="25dp" />
-
-                    <ImageButton
-                        android:id="@+id/imgbtn_bs"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="30dp"
-                        android:background="@color/white"
-                        app:srcCompat="@drawable/baseline_add_24"
-                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/lsv_sang"
+                    android:id="@+id/linearLayout4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/btnV_edtDailyFoob"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="20dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_todaymeals"
+                    tools:ignore="MissingConstraints">
 
-                    android:paddingLeft="20dp" />
-            </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/layoutbuoiSang"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@drawable/bk_button"
+                        android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/linearLayout5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="20dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="1"
+                            android:text="Bữa sáng"
 
-                <LinearLayout
-                    android:id="@+id/layout_buoitrua"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="@drawable/bk_button"
-                    android:orientation="horizontal">
+                            android:textColor="@color/black"
+                            android:textSize="25dp" />
 
-                    <TextView
-                        android:id="@+id/textView3"
-                        android:layout_width="wrap_content"
+                        <ImageButton
+                            android:id="@+id/imgbtn_bs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="30dp"
+                            android:background="@color/white"
+                            app:srcCompat="@drawable/baseline_add_24"
+                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/lsv_sang"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="1"
-                        android:text="Bữa trưa"
 
-                        android:textColor="@color/black"
-                        android:textSize="25dp" />
-
-                    <ImageButton
-                        android:id="@+id/imgbtn_bt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="30dp"
-                        android:background="@color/white"
-                        app:srcCompat="@drawable/baseline_add_24"
-                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                        android:paddingLeft="20dp" />
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/lsv_trua"
+                <LinearLayout
+                    android:id="@+id/linearLayout5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:paddingLeft="20dp" />
-            </LinearLayout>
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="20dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
-            <LinearLayout
-                android:id="@+id/linearLayout6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="20dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+                    <LinearLayout
+                        android:id="@+id/layout_buoitrua"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@drawable/bk_button"
+                        android:orientation="horizontal">
 
-                <LinearLayout
-                    android:id="@+id/layoutBuoiToi"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="@drawable/bk_button"
-                    android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/textView3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="1"
+                            android:text="Bữa trưa"
 
-                    <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="25dp" />
+
+                        <ImageButton
+                            android:id="@+id/imgbtn_bt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="30dp"
+                            android:background="@color/white"
+                            app:srcCompat="@drawable/baseline_add_24"
+                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/lsv_trua"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="1"
-                        android:text="Bữa tối"
-
-                        android:textColor="@color/black"
-                        android:textSize="25dp" />
-
-                    <ImageButton
-                        android:id="@+id/imgbtn_btoi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="30dp"
-                        android:background="@color/white"
-                        app:srcCompat="@drawable/baseline_add_24"
-                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                        android:layout_marginTop="5dp"
+                        android:paddingLeft="20dp" />
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/lsv_toi"
+                <LinearLayout
+                    android:id="@+id/linearLayout6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:paddingLeft="20dp" />
-            </LinearLayout>
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="20dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
 
-            <LinearLayout
-                android:id="@+id/linearLayout7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="20dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
+                    <LinearLayout
+                        android:id="@+id/layoutBuoiToi"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@drawable/bk_button"
+                        android:orientation="horizontal">
 
-                <LinearLayout
-                    android:id="@+id/layoutTapLuyen"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="@drawable/bk_button"
-                    android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="1"
+                            android:text="Bữa tối"
 
-                    <TextView
-                        android:id="@+id/textView5"
-                        android:layout_width="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="25dp" />
+
+                        <ImageButton
+                            android:id="@+id/imgbtn_btoi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="30dp"
+                            android:background="@color/white"
+                            app:srcCompat="@drawable/baseline_add_24"
+                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/lsv_toi"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="1"
-                        android:text="Tập luyện"
-
-                        android:textColor="@color/black"
-                        android:textSize="25dp" />
-
-                    <ImageButton
-                        android:id="@+id/imgbtn_tapluyen"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="30dp"
-                        android:background="@color/white"
-                        app:srcCompat="@drawable/baseline_add_24"
-                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                        android:layout_marginTop="5dp"
+                        android:paddingLeft="20dp" />
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/lsv_tapluyen"
+                <LinearLayout
+                    android:id="@+id/linearLayout7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:paddingLeft="20dp" />
-            </LinearLayout>
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="20dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
+
+                    <LinearLayout
+                        android:id="@+id/layoutTapLuyen"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@drawable/bk_button"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="1"
+                            android:text="Tập luyện"
+
+                            android:textColor="@color/black"
+                            android:textSize="25dp" />
+
+                        <ImageButton
+                            android:id="@+id/imgbtn_tapluyen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="30dp"
+                            android:background="@color/white"
+                            app:srcCompat="@drawable/baseline_add_24"
+                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/lsv_tapluyen"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:paddingLeft="20dp" />
+                </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearLayout10"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:layout_marginStart="15dp"
@@ -667,14 +670,72 @@
                         android:id="@+id/tv_goiy"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textAlignment="center"
-                        android:textColor="@color/black"
-                        android:layout_marginRight="5dp"
                         android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:text="TextView"
+                        android:textAlignment="center"
 
-                        android:textSize="20dp"
-                        android:text="TextView" />
+                        android:textColor="@color/black"
+                        android:textSize="20dp" />
                 </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/textView28"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Lượng nước cần nạp trong một ngày"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/progressBar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout10" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="@style/CustomProgressBar2"
+                    android:layout_width="201dp"
+                    android:layout_height="238dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginBottom="20dp"
+
+                    android:max="100"
+                    android:progress="0"
+                    android:rotation="-90"
+                    app:layout_constraintBottom_toTopOf="@+id/btn_uongNuoc"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout10" />
+
+                <TextView
+                    android:id="@+id/tv_hienlitNuoc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="100dp"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/progressBar"
+                    app:layout_constraintEnd_toEndOf="@+id/progressBar"
+                    app:layout_constraintStart_toStartOf="@+id/progressBar"
+                    app:layout_constraintTop_toTopOf="@+id/progressBar"
+                    app:layout_constraintVertical_bias="0.432" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_uongNuoc"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="80dp"
+                    android:background="@drawable/button_login"
+                    android:text="Uống nước"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
