@@ -2,27 +2,23 @@ package com.example.testapp.DAO;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.database.SQLException;
 
-import com.example.testapp.DTO.DailyCalories;
 import com.example.testapp.DTO.DaulyFood;
 import com.example.testapp.DTO.FoodMenu;
 import com.example.testapp.DTO.UserInfo;
 import com.example.testapp.DTO.Weight;
 import com.example.testapp.SQL.SQLHelper;
 import com.example.testapp.DTO.UserAcc;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import android.content.SharedPreferences;
+
 public class UserDataSource {
     private SQLiteDatabase database;
     private SQLHelper dbHelper;
@@ -149,16 +145,21 @@ public class UserDataSource {
     }
 
     public int createFood() {
-        int[] id = {1, 2, 3, 4};
-        String[] namefood = {"Phở bò tái", "Phở bò viên", "Cơm trắng", "Cá lóc kho","Thịt kho trứng","Thịt kho tiêu","Bún thịt nướng","Cơm chiên dương châu","Cơm tấm chả"};
-        double[] Calo = {431, 431, 200, 131,315,200,451,530,592};
-        double[] Proteins = {18, 16, 4.6, 15.7,19.8,21.2,14.7,14.9,17};
-        double[] Fats = {12, 14, 0.6, 3.8,22.9,7.6,13.7,11.3,18.1};
-        double[] Carbs = {59, 59, 44.2, 8.7,7.5,11.5,67.3,92.7,90.7};
-        String[] sl = {"1 tô", "1 tô", "1 chén", "1 lát","1 trứng + 2 miếng thịt","1 đĩa","1 tô","1 đĩa","1 đĩa cơm phần"};
+        String[] namefood = {"Phở bò tái", "Phở bò viên", "Cơm trắng", "Cá lóc kho",
+                "Thịt kho trứng","Thịt kho tiêu","Bún thịt nướng","Cơm chiên dương châu"};
+        double[] Calo = {431, 431, 200, 131,315,200,451,530};
+        double[] Proteins = {18, 16, 4.6, 15.7,19.8,21.2,14.7,14.9};
+        double[] Fats = {12, 14, 0.6, 3.8,22.9,7.6,13.7,11.3};
+        double[] Carbs = {59, 59, 44.2, 8.7,7.5,11.5,67.3,92.7};
+        String[] sl = {"1 tô", "1 tô", "1 chén", "1 lát","1 trứng + 2 miếng thịt","1 đĩa","1 tô","1 đĩa"};
+        int[] id = new int[namefood.length];
 
-        ContentValues values = new ContentValues();
-        for (int i = 0; i <= id.length - 1; i++) {
+        for (int i = 0; i < namefood.length; i++) {
+            id[i] = i + 1;
+        }
+
+        for (int i = 0; i < namefood.length; i++) {
+            ContentValues values = new ContentValues();
             values.put(SQLHelper.COLUMN_FoodMenu_idFood, id[i]);
             values.put(SQLHelper.COLUMN_FoodMenu_name, namefood[i]);
             values.put(SQLHelper.COLUMN_FoodMenu_Calories, Calo[i]);
@@ -166,17 +167,20 @@ public class UserDataSource {
             values.put(SQLHelper.COLUMN_FoodMenu_Fats, Fats[i]);
             values.put(SQLHelper.COLUMN_FoodMenu_soLuong, sl[i]);
             values.put(SQLHelper.COLUMN_FoodMenu_Proteins, Proteins[i]);
-            Cursor resultSet = database.rawQuery("Select * from " + SQLHelper.TABLE_FoodMenu + " Where "
-                    + SQLHelper.COLUMN_FoodMenu_idFood
-                    + " = '" + id[i] + "'", null);
+
+            Cursor resultSet = database.rawQuery("SELECT * FROM " + SQLHelper.TABLE_FoodMenu + " WHERE "
+                    + SQLHelper.COLUMN_FoodMenu_idFood + " = '" + id[i] + "'", null);
+
             if (resultSet.getCount() == 0) {
-                long insertId1 = database.insert(SQLHelper.TABLE_FoodMenu, null,
-                        values);
+                long insertId1 = database.insert(SQLHelper.TABLE_FoodMenu, null, values);
                 if (insertId1 <= 0) {
                     return -1;
                 }
             }
+
+            resultSet.close();
         }
+
         return 1;
     }
 

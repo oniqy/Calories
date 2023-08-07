@@ -25,14 +25,14 @@ public class Intro extends AppIntro {
         addSlide(AppIntroFragment.createInstance(
                 "Meats",
                 "Quản lý mọi bữa ăn của bạn theo ngày ",
-                R.drawable.linechart,
-                R.color.white
+                R.drawable.saly42,
+                R.color.carrot
         ));
         addSlide(AppIntroFragment.createInstance(
                 "Chart",
                 "Các biểu đồ về giúp bạn theo dõi cân nặng và lượng calo cho nạp vào cho 1 ngày",
-                R.drawable.saly42,
-                R.color.carrot
+                R.drawable.linechart,
+                R.color.purple_500
         ));
 
 
