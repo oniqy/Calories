@@ -2,6 +2,9 @@ package com.example.testapp.ui.notifications;
 
 import android.app.DatePickerDialog;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.Shader;
 import android.icu.text.DateFormat;
 import android.os.Bundle;
 
@@ -345,6 +348,14 @@ public class QLtheoNam_fragment extends Fragment {
         mChart.getLegend().setEnabled(false);
         mChart.setHighlightPerTapEnabled(true);
         mChart.setTouchEnabled(true);
+        int startColor = Color.parseColor("#FFD700"); // Define the start color
+        int endColor = Color.parseColor("#FFA500"); // Define the end color
+        Paint paint = mChart.getRenderer().getPaintRender();
+        LinearGradient backgroundGradient = new LinearGradient(
+                0, 0, 0, mChart.getHeight(),
+                startColor, endColor, Shader.TileMode.CLAMP);
+        paint.setShader(backgroundGradient);
+        mChart.setDrawGridBackground(false); // Disable drawing the grid background
 
         mChart.invalidate();
         mChart.animateY(1000); // Vertical animation

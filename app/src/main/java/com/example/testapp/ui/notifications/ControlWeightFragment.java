@@ -4,6 +4,9 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.Shader;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -146,7 +149,7 @@ public class ControlWeightFragment extends Fragment {
         Chart();
         return view;
     }
-    public void Chart(){
+    public void Chart() {
         lineChart.getAxisRight().setDrawLabels(false);
         values = datasource.getAllDateWeightToDrawChart(Email);
         XAxis xAxis = lineChart.getXAxis();
@@ -168,12 +171,23 @@ public class ControlWeightFragment extends Fragment {
             entries.add(new Entry(i, Float.parseFloat(canN.get(i))));
         }
 
-        LineDataSet dataSet2 =new LineDataSet(entries,"");
+        LineDataSet dataSet2 = new LineDataSet(entries, "");
         dataSet2.setColor(Color.GREEN);
-        dataSet2.setLineWidth(5f); // Increase the line width to make it appear bigger
+        dataSet2.setLineWidth(5f);
         dataSet2.setValueTextSize(16f);
         LineData lineData = new LineData(dataSet2);
         lineChart.setData(lineData);
+
+        // Customizing the chart background
+        int startColor = Color.parseColor("#FFD700"); // Define the start color
+        int endColor = Color.parseColor("#FFA500"); // Define the end color
+        Paint paint = lineChart.getRenderer().getPaintRender();
+        LinearGradient backgroundGradient = new LinearGradient(
+                0, 0, 0, lineChart.getHeight(),
+                startColor, endColor, Shader.TileMode.CLAMP);
+        paint.setShader(backgroundGradient);
+        lineChart.setDrawGridBackground(false); // Disable drawing the grid background
+
         lineChart.invalidate();
     }
     void UpdateWeight(String calendar){
