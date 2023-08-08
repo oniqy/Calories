@@ -18,6 +18,12 @@
         android:theme="@style/Theme.TestApp"
         tools:targetApi="31">
         <activity
+            android:name=".chitietbaitap"
+            android:exported="false" />
+        <activity
+            android:name=".tonghopbaitap"
+            android:exported="false" />
+        <activity
             android:name=".DangKyPage"
             android:exported="false" />
         <activity

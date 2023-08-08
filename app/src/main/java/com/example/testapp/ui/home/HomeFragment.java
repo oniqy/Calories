@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -45,6 +46,7 @@ import com.example.testapp.ThongTinMonAn;
 import com.example.testapp.TimMonAn;
 import com.example.testapp.adapter.adapter_dailyFood;
 import com.example.testapp.databinding.FragmentHomeBinding;
+import com.example.testapp.tonghopbaitap;
 import com.example.testapp.ui.notifications.BMR_page_Fragment;
 import com.example.testapp.ui.notifications.Input_Info_Fragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -86,6 +88,8 @@ public class HomeFragment extends Fragment {
     private int mYear, mMonth, mDay;
     Calendar currentDate = Calendar.getInstance();
     String email= null;
+
+    ImageButton imgbtn_tapluyen;
     double kq=0;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -266,8 +270,19 @@ public class HomeFragment extends Fragment {
         userHello = binding.userHello.findViewById(R.id.userHello);
         btnDatePicker = binding.btnDatePicker.findViewById(R.id.btnDatePicker);
         swipeRefreshLayout = binding.swipeRefresh.findViewById(R.id.swipe_refresh);
+        imgbtn_tapluyen = binding.imgbtnTapluyen.findViewById(R.id.imgbtn_tapluyen);
     }
     private void addEnvent(){
+
+        binding.imgbtnTapluyen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), tonghopbaitap.class);
+                startActivity(intent);
+            }
+        });
+
+
         binding.btnVEdtDailyFoob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
