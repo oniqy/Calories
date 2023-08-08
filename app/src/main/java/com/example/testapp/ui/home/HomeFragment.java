@@ -2,6 +2,7 @@ package com.example.testapp.ui.home;
 import java.util.*;
 import java.util.Random.*;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -28,6 +29,7 @@ import com.example.testapp.DAO.UserDataSource;
 import com.example.testapp.DTO.DailyCalories;
 import com.example.testapp.DTO.DaulyFood;
 import com.example.testapp.DTO.UserInfo;
+import com.example.testapp.DTO.Weight;
 import com.example.testapp.ImageLoadTask;
 import com.example.testapp.R;
 import androidx.annotation.NonNull;
@@ -73,17 +75,18 @@ public class HomeFragment extends Fragment {
     adapter_dailyFood adapter_dailyFoods;
     ImageView userImg;
     List<String> list = new ArrayList<>();
-    TextView userHello,chiSoCalo,userDate,tv_goiy,numb_caloIn,tv_processFat,tv_processProtein,tv_processCarb,tv_showCarbInday,tv_showFatInday,tv_showproteinInday;
+    TextView userHello,tv_hienlitNuoc,chiSoCalo,userDate,tv_goiy,numb_caloIn,tv_processFat,tv_processProtein,tv_processCarb,tv_showCarbInday,tv_showFatInday,tv_showproteinInday;
     BMR_page_Fragment bmr_page_fragment;
     private FragmentHomeBinding binding;
     DailyCalories dailyCalories ;
     String getType ;
     SwipeRefreshLayout swipeRefreshLayout;
-    ProgressBar progressBarCalo,progressBar_beo,progressBar_dam,progressBar_car;
-    Button btnDatePicker;
+    ProgressBar progressBarCalo,progressBar_beo,progressBar_dam,progressBar_car,progressBar;
+    Button btnDatePicker,btn_uongNuoc;
     private int mYear, mMonth, mDay;
     Calendar currentDate = Calendar.getInstance();
     String email= null;
+    double kq=0;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
@@ -103,9 +106,11 @@ public class HomeFragment extends Fragment {
         singUpGG();
         initPreferences();
         currentDate();
+
         showCalories(getType);
+        tinhLuongNuoc(getType);
         Calendar calendar = Calendar.getInstance();
-        List<String> myList = Arrays.asList("Nên ăn phối hợp nhiều loại thực phẩm trong ngày để cơ thể đủ chất dinh dưỡng và khỏe mạnh. Trong đó có 4 nhóm dinh dưỡng chính cần phải được bổ sung đầy đủ", "Theo Boldsky, cơ thể của bạn cần khoảng thời gian nhất định để tiêu hóa thức ăn và hấp thụ tốt các chất dinh dưỡng", "Một cây súp lơ chứa hơn 100% nhu cầu vitamin K và gần 200% nhu cầu vitamin C hàng ngày cho cơ thể. Đây là 2 chất dinh dưỡng cần thiết cho sự phát triển của xương.", " Một trái bơ chứa khoảng 50% nhu cầu chất xơ và 40% nhu cầu Folate hàng ngày của cơ thể, có thể giảm nguy cơ mắc bệnh tim");
+        List<String> myList = Arrays.asList("Uống một cốc nước trước bữa trưa và bữa tối sẽ giúp hạn chế nạp nhiều thức ăn và giảm lượng calo tiêu thụ trong bữa ăn", " Cung cấp đủ nước vừa giúp duy trì cơ thể ở mức tốt nhất, gia tăng hiệu suất luyện tập, sinh hoạt hàng ngày lại ngăn ngừa việc tăng cân trở lại trong thời gian dài.", "Trong chế độ ăn healthy, bạn cần hạn chế lượng muối tiêu thi và dung nạp vào cơ thể. Điều này được đánh giá là tốt cho sức khỏe với việc giảm các nguy cơ bệnh lý về thận, tim, dạ dày, huyết áp và đột quỵ.", "Việc ăn chậm, nhai kỹ để thức ăn được nghiền nát và khi vào dạ dày được tiêu hóa tốt hơn rất có lợi. Việc nhai nhanh sẽ dễ khiến bạn bị đau dạ dày, khó tiêu.");
         Random r = new Random();
         int randomitem = r.nextInt(myList.size());
         String randomElement = myList.get(randomitem);
@@ -119,6 +124,7 @@ public class HomeFragment extends Fragment {
         Calendar calendarcheck = Calendar.getInstance();
         return calendarcheck.getTime();
     }
+    @SuppressLint("ObjectAnimatorBinding")
     private void showCalories(String type){
 
         int checkDate = currentDate.get(Calendar.HOUR_OF_DAY);
@@ -157,6 +163,13 @@ public class HomeFragment extends Fragment {
             progressBarCalo.setMax((int) tdee);
             numb_caloIn.setText(Integer.toString(caloriesIn));
             progressBarCalo.setProgress((int) caloriesIn);
+            ObjectAnimator progressAnimator = ObjectAnimator.ofInt(progressBarCalo,
+                    "progress", 0, caloriesIn);
+            progressAnimator.setDuration(2000);
+            progressAnimator.start();
+            if(caloriesIn >= tdee){
+                Toast.makeText(getContext(),"Mục tiêu Calories trong ngày hoàn thành",Toast.LENGTH_LONG).show();
+            }
         }
         double proteins = tdee*0.35/4;
         int proteinIn = datasource.TinhProtein(email,type);
@@ -169,6 +182,13 @@ public class HomeFragment extends Fragment {
             tv_showproteinInday.setText(String.valueOf(proteinIn)+"g");
             tv_processProtein.setText(df.format(proteins)+"g");
             progressBar_dam.setProgress((int) proteinIn);
+            ObjectAnimator progressAnimator = ObjectAnimator.ofInt(progressBar_dam,
+                    "progress", 0,  proteinIn);
+            progressAnimator.setDuration(2000);
+            progressAnimator.start();
+            if(proteinIn >= proteins){
+                Toast.makeText(getContext(),"Mục tiêu Protein trong ngày hoàn thành",Toast.LENGTH_LONG).show();
+            }
         }
         double fats = tdee*0.3/9;
         int fatsIn = datasource.TinhFat(email,type);
@@ -181,6 +201,13 @@ public class HomeFragment extends Fragment {
             tv_showFatInday.setText(String.valueOf(fatsIn)+"g");
             tv_processFat.setText(df.format(fats)+"g");
             progressBar_beo.setProgress((int) fatsIn);
+            ObjectAnimator progressAnimator = ObjectAnimator.ofInt(progressBar_beo,
+                    "progress", 0, fatsIn);
+            progressAnimator.setDuration(2000);
+            progressAnimator.start();
+            if(fatsIn >= fats){
+                Toast.makeText(getContext(),"Mục tiêu chất béo trong ngày hoàn thành",Toast.LENGTH_LONG).show();
+            }
         }
         double carb = tdee*0.35/4;
         int carbIn = datasource.TinhCarb(email,type);
@@ -192,8 +219,14 @@ public class HomeFragment extends Fragment {
             progressBar_car.setMax((int) carb);
             tv_showCarbInday.setText(String.valueOf(carbIn)+"g");
             tv_processCarb.setText(df.format(carb)+"g");
-
             progressBar_car.setProgress((int) carbIn);
+            ObjectAnimator progressAnimator = ObjectAnimator.ofInt(progressBar_car,
+                    "progress", 0,  carbIn);
+            progressAnimator.setDuration(2000);
+            progressAnimator.start();
+            if(carbIn >= carb){
+                Toast.makeText(getContext(),"Mục tiêu Tinh bột trong ngày hoàn thành",Toast.LENGTH_LONG).show();
+            }
         }
     }
     private void singUpGG(){
@@ -218,11 +251,14 @@ public class HomeFragment extends Fragment {
         progressBar_beo = binding.progressBarBeo.findViewById(R.id.progressBar_beo);
         progressBar_dam = binding.progressBarDam.findViewById(R.id.progressBar_dam);
         progressBar_car = binding.progressBarCar.findViewById(R.id.progressBar_car);
+        progressBar = binding.progressBar.findViewById(R.id.progressBar);
         tv_processFat = binding.tvProcessFat.findViewById(R.id.tv_processFat);
         tv_goiy = binding.tvGoiy.findViewById(R.id.tv_goiy);
         tv_processProtein = binding.tvProcessProtein.findViewById(R.id.tv_processProtein);
         tv_processCarb = binding.tvProcessCarb.findViewById(R.id.tv_processCarb);
+        tv_hienlitNuoc = binding.tvHienlitNuoc.findViewById(R.id.tv_hienlitNuoc);
         tv_showCarbInday = binding.tvShowCarbInday.findViewById(R.id.tv_showCarbInday);
+        btn_uongNuoc = binding.btnUongNuoc.findViewById(R.id.btn_uongNuoc);
         tv_showFatInday = binding.tvShowFatInday.findViewById(R.id.tv_showFatInday);
         tv_showproteinInday = binding.tvShowproteinInday.findViewById(R.id.tv_showproteinInday);
         numb_caloIn = binding.numbCaloIn.findViewById(R.id.numb_caloIn);
@@ -384,6 +420,43 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
+
+    public void tinhLuongNuoc(String type) {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        editor = sharedPreferences.edit();
+
+        // Retrieve the saved progress value
+        int savedProgress = sharedPreferences.getInt("litNuoc", 0);
+        kq = savedProgress;
+
+        // Reset the progress at midnight
+        int checkDate = currentDate.get(Calendar.HOUR_OF_DAY);
+        if (checkDate == 0) {
+            progressBar.setProgress(0);
+            kq = 0;
+        }
+
+        DecimalFormat df = new DecimalFormat("#.#");
+        Weight weight1 = new Weight();
+        weight1 = datasource.checkUpWeight(email);
+        double weip = weight1.getWeight();
+        double tinhWater = weip * 0.03;
+
+        tv_hienlitNuoc.setText(df.format(tinhWater) + "lít");
+        progressBar.setMax((int) (tinhWater * 10)); // Multiply by 10 to account for decimal increments
+
+        btn_uongNuoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                kq += 0.3;
+                progressBar.setProgress((int) (kq * 10)); // Multiply by 10 to account for decimal increments
+                editor.putInt("litNuoc", (int) kq);
+                editor.apply(); // Save the changes to SharedPreferences
+                Toast.makeText(getContext(),"Lưu ý lượng nước mỗi lần ấn nút sẽ cộng thêm 0.3lit tương đương với 1 ly nước tầm trung",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
     public double tinhBMR(){
         UserInfo userInfo = datasource.Bmr(email);
 
@@ -448,8 +521,6 @@ public class HomeFragment extends Fragment {
 
     }
     public void showAlertDialog(final Context context,String idDay , String email,int position)  {
-        final Drawable positiveIcon = context.getResources().getDrawable(R.drawable.baseline_check_24);
-        final Drawable negativeIcon = context.getResources().getDrawable(R.drawable.baseline_close_24);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
@@ -458,7 +529,7 @@ public class HomeFragment extends Fragment {
 
         //
         builder.setCancelable(true);
-        builder.setIcon(R.drawable.baseline_lunch_dining_24);
+        builder.setIcon(R.drawable.ic_launcher);
 
         // Create "Yes" button with OnClickListener.
         builder.setPositiveButton("Xóa món ăn", new DialogInterface.OnClickListener() {
@@ -466,21 +537,21 @@ public class HomeFragment extends Fragment {
                 int delete = datasource.deleteFood(String.valueOf(idDay),email);
                 if (delete == 0){
                     daulyFoods.remove(position);
+                    Toast.makeText(context,"Xóa món ăn thành công",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        builder.setPositiveButtonIcon(positiveIcon);
 
         // Create "No" button with OnClickListener.
         builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                Toast.makeText(context,"You choose No button",
+                Toast.makeText(context,"Đã hủy",
                         Toast.LENGTH_SHORT).show();
                 //  Cancel
                 dialog.cancel();
             }
         });
-        builder.setNegativeButtonIcon(negativeIcon);
 
         // Create AlertDialog:
         AlertDialog alert = builder.create();
@@ -490,9 +561,11 @@ public class HomeFragment extends Fragment {
 
     public void loadFragment(Fragment fragment) {
 // create a FragmentManager
-        FragmentManager fm = getFragmentManager();
-// create a FragmentTransaction to begin the transaction and replace the Fragment
+        FragmentManager fm = requireActivity().getSupportFragmentManager();
+
+        // Create a FragmentTransaction to begin the transaction and replace the Fragment
         FragmentTransaction ft = fm.beginTransaction();
+        ft.setCustomAnimations(androidx.transition.R.anim.fragment_open_exit, androidx.transition.R.anim.fragment_close_exit);
 // replace the FrameLayout with new Fragment
         ft.replace(R.id.fmg_homme, fragment);
         ft.commit(); // save the changes

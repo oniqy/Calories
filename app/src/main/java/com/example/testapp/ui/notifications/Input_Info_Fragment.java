@@ -261,9 +261,11 @@ public class Input_Info_Fragment extends Fragment implements Custom_spinner.OnSp
     }
     public void loadFragment(Fragment fragment) {
 // create a FragmentManager
-        FragmentManager fm = getFragmentManager();
-// create a FragmentTransaction to begin the transaction and replace the Fragment
+        FragmentManager fm = requireActivity().getSupportFragmentManager();
+
+        // Create a FragmentTransaction to begin the transaction and replace the Fragment
         FragmentTransaction ft = fm.beginTransaction();
+        ft.setCustomAnimations(androidx.transition.R.anim.fragment_open_exit, androidx.transition.R.anim.fragment_close_exit);
 // replace the FrameLayout with new Fragment
         ft.replace(R.id.Info_fragment, fragment);
         ft.commit(); // save the changes

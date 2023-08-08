@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -27,12 +28,14 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.testapp.DAO.UserDataSource;
 import com.example.testapp.DTO.DailyCalories;
 import com.example.testapp.DTO.DaulyFood;
+import com.example.testapp.DTO.UserInfo;
 import com.example.testapp.ui.home.HomeFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -44,10 +47,11 @@ import androidx.appcompat.app.AlertDialog;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.text.DecimalFormat;
 public class ThongTinMonAn extends AppCompatActivity  implements View.OnClickListener{
     private UserDataSource datasource;
     SharedPreferences sharedPreferences;
-
+    ProgressBar progressBar5,progressBar6,progressBar7;
     SharedPreferences.Editor editor;
     private AlertDialogSingleChoiceExample alertDialogSingleChoiceExample;
     String namFoodofDay ;
@@ -58,6 +62,7 @@ public class ThongTinMonAn extends AppCompatActivity  implements View.OnClickLis
     Calendar calendar = Calendar.getInstance();
     DailyCalories dailyCalories = new DailyCalories();
     DaulyFood daulyFood = new DaulyFood();
+    String email= null;
     @Override
     @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +73,19 @@ public class ThongTinMonAn extends AppCompatActivity  implements View.OnClickLis
         datasource = new UserDataSource(this);
         datasource.open();
         showAlertDialog(ThongTinMonAn.this);
-
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+        if(acct!=null){
+            email = acct.getEmail();
+        };
         TextView tv_nameFood = (TextView)findViewById(R.id.tv_nameFood);
         TextView tv_chatProtein = (TextView)findViewById(R.id.tv_chatProtein);
         TextView tv_chatbeo = (TextView)findViewById(R.id.tv_chatbeo);
         ImageButton imagebtn_back2 =(ImageButton)findViewById(R.id.imagebtn_back2);
         TextView tv_carbs = (TextView)findViewById(R.id.tv_carbs);
+        progressBar5 = (ProgressBar)findViewById(R.id.progressBar5);
+        progressBar6 = (ProgressBar)findViewById(R.id.progressBar6);
+        progressBar7 = (ProgressBar)findViewById(R.id.progressBar7);
+
         btn_addFood = (Button) findViewById(R.id.btn_addFood);
         btn_addFood.setOnClickListener(this);
         btnDatePickerIndetailFood = findViewById(R.id.btnDatePickerIndetailFood);
@@ -84,7 +96,39 @@ public class ThongTinMonAn extends AppCompatActivity  implements View.OnClickLis
         tv_chatProtein.setText(intent.getStringExtra("Proteins")+"g");
         tv_chatbeo.setText(intent.getStringExtra("fats")+"g");
         tv_carbs.setText(intent.getStringExtra("Carbs")+"g");
+        DecimalFormat df = new DecimalFormat("#");
+        double tdee = 0;
+        double bmr = tinhBMR();
+        if(bmr == -1){
+            Toast.makeText(getApplicationContext(),"Vui lòng thiết lập chỉ số BMR",Toast.LENGTH_LONG).show();
+        }else {
+            double r = tinhTDEE();
+            tdee = bmr * r;
+            double target = tinhTarget();
 
+            tdee = tdee + target;
+            if(tdee < bmr){
+                tdee =bmr+65;
+            }
+        }
+        double proteins = tdee*0.35/4;
+        double fats = tdee*0.3/9;
+        double carb = tdee*0.35/4;
+        progressBar5.setMax((int) proteins);
+        progressBar6.setMax((int) fats);
+        progressBar7.setMax((int) carb);
+        ObjectAnimator progressAnimator = ObjectAnimator.ofInt(progressBar5,
+                "progress", 0, Integer.parseInt(intent.getStringExtra("Proteins")));
+        progressAnimator.setDuration(2000);
+        progressAnimator.start();
+        ObjectAnimator progressAnimator2 = ObjectAnimator.ofInt(progressBar6,
+                "progress", 0, Integer.parseInt(intent.getStringExtra("fats")));
+        progressAnimator2.setDuration(2000);
+        progressAnimator2.start();
+        ObjectAnimator progressAnimator3 = ObjectAnimator.ofInt(progressBar7,
+                "progress", 0, Integer.parseInt(intent.getStringExtra("Carbs")));
+        progressAnimator3.setDuration(2000);
+        progressAnimator3.start();
         imagebtn_back2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,6 +189,58 @@ public class ThongTinMonAn extends AppCompatActivity  implements View.OnClickLis
                 datePickerDialog.show();
             }
         });
+    }
+    public double tinhBMR(){
+        UserInfo userInfo = datasource.Bmr(email);
+
+        String sex = userInfo.getGender();
+        if(sex == null){
+            return -1;
+        }
+        int chieuCao = userInfo.getUserHeight();
+        int canNang = userInfo.getUserWeight();
+        int age = userInfo.getBirthDay();
+        double BMR ;
+        if(sex == "Nam"){
+            double BMR1 = 88.362+(13.397*canNang)+(4.799*chieuCao);
+            BMR = BMR1 - (5.677 * age);
+
+        }else {
+            double BMR1 = 447.593 +(9.247 *canNang)+(3.098 *chieuCao);
+            BMR = BMR1 - (4.33  * age);
+        }
+        return BMR;
+    }
+    public double tinhTDEE(){
+        UserInfo userInfo = datasource.Bmr(email);
+        String exercise = userInfo.getExercise();
+        double R = 0;
+        if(exercise.equals("Không tập")){
+            R = 1.2;
+        } else if (exercise.equals("Nhẹ nhàng")) {
+            R = 1.375;
+        }
+        else if (exercise.equals("Vừa phải")) {
+            R = 1.55;
+        }
+        else if (exercise.equals("Nặng")) {
+            R = 1.725;
+        }
+        return R;
+    }
+    public double tinhTarget(){
+        UserInfo userInfo = datasource.Bmr(email);
+        String exercise = userInfo.getTarget();
+        double R = 0;
+        if(exercise.equals("Giảm cân")){
+            R = -500;
+        } else if (exercise.equals("Giữ nguyên cân nặng")) {
+            R = 0;
+        }
+        else if (exercise.equals("Tăng cân")) {
+            R = 500;
+        }
+        return R;
     }
     public void loadFragment(Fragment fragment) {
 // create a FragmentManager

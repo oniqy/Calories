@@ -1,9 +1,12 @@
-package com.example.testapp;
+package com.example.testapp.ui.notifications;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.Shader;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -22,24 +25,19 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Calendar;
 
 import com.example.testapp.DAO.UserDataSource;
-import com.example.testapp.DTO.DaulyFood;
 import com.example.testapp.DTO.Weight;
-import com.example.testapp.adapter.adapter_dailyFood;
+import com.example.testapp.R;
 import com.example.testapp.adapter.adapter_lichsu;
-import com.example.testapp.ui.notifications.NotificationsFragment;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -62,6 +60,7 @@ public class ControlWeightFragment extends Fragment {
     private UserDataSource datasource;
     private LineChart lineChart;
     private List<String> values;
+    private List<String> canN;
     RecyclerView recyc;
     ArrayList<Weight> weights2 = new ArrayList<>();
     adapter_lichsu adapter_lichsus;
@@ -70,6 +69,7 @@ public class ControlWeightFragment extends Fragment {
     Button btnDatePicker,button;
     ImageView btnPlusTY,btnMinusTY;
     ImageButton imagebtn_back2;
+    SwipeRefreshLayout swipeRefresh;
     TextView edt_UpdateWeight;
     View view;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -137,6 +137,7 @@ public class ControlWeightFragment extends Fragment {
         btnDatePicker = view.findViewById(R.id.btnDatePicker);
         button = view.findViewById(R.id.button);
         imagebtn_back2 = view.findViewById(R.id.imagebtn_back2);
+        swipeRefresh = view.findViewById(R.id.swipe_refresh);
         //event
         Event();
         Weight weight = new Weight();
@@ -144,14 +145,13 @@ public class ControlWeightFragment extends Fragment {
         double ipW = weight.getWeight();
         weights = ipW;
         edt_UpdateWeight.setText(String.valueOf(ipW));
-        //
-        Description description = new Description();
-        description.setText("Quản lý cân nặng");
-        description.setPosition(200f,15f);
-        lineChart.setDescription(description);
+        //Chart
+        Chart();
+        return view;
+    }
+    public void Chart() {
         lineChart.getAxisRight().setDrawLabels(false);
-        values= Arrays.asList("T1","T2","T3","T4","T5","T6","T7","T8","T9","T10","T11","T12");
-
+        values = datasource.getAllDateWeightToDrawChart(Email);
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(values));
@@ -160,38 +160,37 @@ public class ControlWeightFragment extends Fragment {
 
         YAxis yAxis = lineChart.getAxisLeft();
         yAxis.setAxisMinimum(0f);
-        yAxis.setAxisMaximum(100f);
+        yAxis.setAxisMaximum(200f);
         yAxis.setAxisLineWidth(2f);
         yAxis.setAxisLineColor(Color.BLACK);
         yAxis.setLabelCount(10);
-
-
+        canN = datasource.getAllWeightToDrawChart(Email);
         List<Entry> entries = new ArrayList<>();
-        entries.add(new Entry(0,40f));
-        entries.add(new Entry(1,40f));
-        entries.add(new Entry(2,40f));
-        entries.add(new Entry(3,40f));
-        entries.add(new Entry(4,40f));
-        entries.add(new Entry(5,40f));
-        entries.add(new Entry(6,40f));
-        entries.add(new Entry(7,40f));
-        entries.add(new Entry(8,40f));
-        entries.add(new Entry(9,40f));
-        entries.add(new Entry(10,40f));
-        entries.add(new Entry(11,40f));
 
+        for (int i = 0; i < canN.size(); i++) {
+            entries.add(new Entry(i, Float.parseFloat(canN.get(i))));
+        }
 
-        LineDataSet dataSet2 =new LineDataSet(entries,"Maths");
+        LineDataSet dataSet2 = new LineDataSet(entries, "");
         dataSet2.setColor(Color.GREEN);
-
+        dataSet2.setLineWidth(5f);
+        dataSet2.setValueTextSize(16f);
         LineData lineData = new LineData(dataSet2);
         lineChart.setData(lineData);
+
+        // Customizing the chart background
+        int startColor = Color.parseColor("#FFD700"); // Define the start color
+        int endColor = Color.parseColor("#FFA500"); // Define the end color
+        Paint paint = lineChart.getRenderer().getPaintRender();
+        LinearGradient backgroundGradient = new LinearGradient(
+                0, 0, 0, lineChart.getHeight(),
+                startColor, endColor, Shader.TileMode.CLAMP);
+        paint.setShader(backgroundGradient);
+        lineChart.setDrawGridBackground(false); // Disable drawing the grid background
+
         lineChart.invalidate();
-        return view;
     }
     void UpdateWeight(String calendar){
-
-
         Weight weight = new Weight();
         weight.setControlWeight_Date(calendar);
         weight.setWeight(weightIp);
@@ -208,7 +207,7 @@ public class ControlWeightFragment extends Fragment {
         super.onResume();
         SharedPreferences sharedPreferences = getContext().getSharedPreferences(ttluu, Context.MODE_PRIVATE);
         int i = sharedPreferences.getInt("weight", (int) weights);
-        edt_UpdateWeight.setText(String.valueOf(i)+"kg");
+        edt_UpdateWeight.setText(String.valueOf(weights)+"kg");
     }
 
 
@@ -232,6 +231,20 @@ public class ControlWeightFragment extends Fragment {
                 edt_UpdateWeight.setText(String.valueOf(roundedWeight)+"kg");
             }
         });
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Chart();
+                weights2 = datasource.getAllWeightUp(Email);
+                adapter_lichsus =new adapter_lichsu(weights2);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+                recyc.setLayoutManager(layoutManager);
+                recyc.setAdapter(adapter_lichsus);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+
         btnPlusTY.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -291,17 +304,15 @@ public class ControlWeightFragment extends Fragment {
                 datePickerDialog.show();
             }
         });
-        weights2 = datasource.getAllWeightUp();
-        adapter_lichsus =new adapter_lichsu(weights2);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        recyc.setLayoutManager(layoutManager);
-        recyc.setAdapter(adapter_lichsus);
+
     }
     public void loadFragment(Fragment fragment) {
 // create a FragmentManager
-        FragmentManager fm = getFragmentManager();
-// create a FragmentTransaction to begin the transaction and replace the Fragment
+        FragmentManager fm = requireActivity().getSupportFragmentManager();
+
+        // Create a FragmentTransaction to begin the transaction and replace the Fragment
         FragmentTransaction ft = fm.beginTransaction();
+        ft.setCustomAnimations(androidx.transition.R.anim.fragment_open_exit, androidx.transition.R.anim.fragment_close_exit);
 // replace the FrameLayout with new Fragment
         ft.replace(R.id.frg_control, fragment);
         ft.commit(); // save the changes

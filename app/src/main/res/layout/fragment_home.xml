@@ -24,8 +24,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
 
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".MainActivity">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -133,14 +134,15 @@
                     android:id="@+id/user_caloIn"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
+                    android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
+                    android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
                     android:text="Calo đã nạp: "
                     android:textColor="@color/black"
                     android:textSize="8pt"
                     android:textStyle="bold" />
-
 
 
                 <TextView
@@ -218,10 +220,12 @@
                     <ProgressBar
                         android:id="@+id/progressBar_dam"
                         style="@style/CustomProgressBar"
-                        android:layout_width="250dp"
+                        android:layout_width="match_parent"
                         android:layout_height="25dp"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentEnd="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:max="100"
                         android:minWidth="100dp"
                         android:minHeight="20dp"
@@ -281,10 +285,12 @@
                     <ProgressBar
                         android:id="@+id/progressBar_beo"
                         style="@style/CustomProgressBar"
-                        android:layout_width="250dp"
+                        android:layout_width="match_parent"
                         android:layout_height="25dp"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentEnd="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:max="100"
                         android:minWidth="100dp"
                         android:minHeight="20dp"
@@ -331,7 +337,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
-                        android:text="Carbs"
+                        android:text="Tinh bột"
                         android:textColor="@color/black"
                         android:textSize="10pt"
                         android:textStyle="bold"
@@ -342,10 +348,12 @@
                     <ProgressBar
                         android:id="@+id/progressBar_car"
                         style="@style/CustomProgressBar"
-                        android:layout_width="250dp"
+                        android:layout_width="match_parent"
                         android:layout_height="25dp"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentEnd="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:max="100"
                         android:minWidth="100dp"
                         android:minHeight="20dp"
@@ -383,9 +391,11 @@
 
             </RelativeLayout>
 
-            v<androidx.constraintlayout.widget.ConstraintLayout
+            v
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="1085dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="50dp">
 
                 <TextView
@@ -427,9 +437,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/btnV_edtDailyFoob"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="15dp"
-                    android:layout_marginEnd="15dp"
+                    android:layout_marginEnd="20dp"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -479,9 +489,9 @@
                     android:id="@+id/linearLayout5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="15dp"
-                    android:layout_marginEnd="15dp"
+                    android:layout_marginEnd="20dp"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -529,9 +539,9 @@
                     android:id="@+id/linearLayout6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="15dp"
-                    android:layout_marginEnd="15dp"
+                    android:layout_marginEnd="20dp"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -579,9 +589,9 @@
                     android:id="@+id/linearLayout7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="15dp"
-                    android:layout_marginEnd="15dp"
+                    android:layout_marginEnd="20dp"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -626,6 +636,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearLayout10"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:layout_marginStart="15dp"
@@ -659,11 +670,72 @@
                         android:id="@+id/tv_goiy"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:text="TextView"
                         android:textAlignment="center"
+
                         android:textColor="@color/black"
-                        android:textSize="20dp"
-                        android:text="TextView" />
+                        android:textSize="20dp" />
                 </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/textView28"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Lượng nước cần nạp trong một ngày"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/progressBar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout10" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="@style/CustomProgressBar2"
+                    android:layout_width="201dp"
+                    android:layout_height="238dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginBottom="20dp"
+
+                    android:max="100"
+                    android:progress="0"
+                    android:rotation="-90"
+                    app:layout_constraintBottom_toTopOf="@+id/btn_uongNuoc"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout10" />
+
+                <TextView
+                    android:id="@+id/tv_hienlitNuoc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="100dp"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/progressBar"
+                    app:layout_constraintEnd_toEndOf="@+id/progressBar"
+                    app:layout_constraintStart_toStartOf="@+id/progressBar"
+                    app:layout_constraintTop_toTopOf="@+id/progressBar"
+                    app:layout_constraintVertical_bias="0.432" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_uongNuoc"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="80dp"
+                    android:background="@drawable/button_login"
+                    android:text="Uống nước"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

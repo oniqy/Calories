@@ -42,6 +42,7 @@ public class adapter_dailyFood extends RecyclerView.Adapter<adapter_dailyFood.My
         DaulyFood item = foodMenus.get(position);
         holder.textView_FoodName.setText(String.valueOf(item.getNameFoodOfday()));
         idDate = item.getIdDate();
+
     }
 
 

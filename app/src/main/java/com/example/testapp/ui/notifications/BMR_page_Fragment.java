@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.testapp.DAO.UserDataSource;
@@ -30,6 +31,7 @@ import java.util.Locale;
 public class BMR_page_Fragment extends Fragment {
 
     private UserDataSource datasource;
+    TextView tv_goiy;
     View view;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -82,6 +84,7 @@ public class BMR_page_Fragment extends Fragment {
         if(acct!=null){
             email = acct.getEmail();
         };
+
         binding.btnTinhBMR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -199,9 +202,11 @@ public class BMR_page_Fragment extends Fragment {
     }
     public void loadFragment(Fragment fragment) {
 // create a FragmentManager
-        FragmentManager fm = getFragmentManager();
-// create a FragmentTransaction to begin the transaction and replace the Fragment
+        FragmentManager fm = requireActivity().getSupportFragmentManager();
+
+        // Create a FragmentTransaction to begin the transaction and replace the Fragment
         FragmentTransaction ft = fm.beginTransaction();
+        ft.setCustomAnimations(androidx.transition.R.anim.fragment_open_exit, androidx.transition.R.anim.fragment_close_exit);
 // replace the FrameLayout with new Fragment
         ft.replace(R.id.fragment_BMR, fragment);
         ft.commit(); // save the changes

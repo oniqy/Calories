@@ -2,27 +2,23 @@ package com.example.testapp.DAO;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.database.SQLException;
 
-import com.example.testapp.DTO.DailyCalories;
 import com.example.testapp.DTO.DaulyFood;
 import com.example.testapp.DTO.FoodMenu;
 import com.example.testapp.DTO.UserInfo;
 import com.example.testapp.DTO.Weight;
 import com.example.testapp.SQL.SQLHelper;
 import com.example.testapp.DTO.UserAcc;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import android.content.SharedPreferences;
+
 public class UserDataSource {
     private SQLiteDatabase database;
     private SQLHelper dbHelper;
@@ -57,7 +53,31 @@ public class UserDataSource {
         cursor.close();
         return people;
     }
+    public ArrayList<Double> getDataCaloInMonth(Calendar time) {
+        ArrayList<DaulyFood> dataList = new ArrayList<>();
+        ArrayList<Double> allData = new ArrayList<>();
+        Calendar finTime = time;
+        finTime.set(Calendar.DAY_OF_YEAR,2);
+        for (int i = 0; i <= 12; i++) {
+            dataList.clear();
+            Calendar calendarStart = (Calendar) finTime.clone();
+            calendarStart.set(Calendar.DAY_OF_MONTH, 1);
+            calendarStart.set(Calendar.HOUR, 0);
+            calendarStart.set(Calendar.MINUTE, 0);
+            calendarStart.set(Calendar.SECOND, 0);
+            Date jan1 = new Date(calendarStart.getTimeInMillis());
+            Calendar calendarEnd = (Calendar) calendarStart.clone();
+            calendarEnd.set(Calendar.DAY_OF_MONTH, calendarEnd.getActualMaximum(Calendar.DAY_OF_MONTH));
+            calendarEnd.set(Calendar.HOUR_OF_DAY, 23);
+            calendarEnd.set(Calendar.MINUTE, 59);
+            calendarEnd.set(Calendar.SECOND, 59);
+            Date jan2 = new Date(calendarEnd.getTimeInMillis());
+            Log.v("getDataOutComeInMonth", "BETWEEN!! " + String.valueOf(jan1 + " " + jan2));
 
+
+        }
+            return allData;
+    }
 
     public void close() {
         dbHelper.close();
@@ -125,16 +145,21 @@ public class UserDataSource {
     }
 
     public int createFood() {
-        int[] id = {1, 2, 3, 4};
-        String[] namefood = {"Phở bò tái", "Phở bò viên", "Cơm trắng", "Cá lóc kho"};
-        double[] Calo = {431, 431, 200, 131};
-        double[] Proteins = {18, 16, 4.6, 15.7};
-        double[] Fats = {12, 14, 0.6, 3.8};
-        double[] Carbs = {59, 59, 44.2, 8.7};
-        String[] sl = {"1 tô", "1 tô", "1 chén", "1 lát"};
+        String[] namefood = {"Phở bò tái", "Phở bò viên", "Cơm trắng", "Cá lóc kho",
+                "Thịt kho trứng","Thịt kho tiêu","Bún thịt nướng","Cơm chiên dương châu"};
+        double[] Calo = {431, 431, 200, 131,315,200,451,530};
+        double[] Proteins = {18, 16, 4.6, 15.7,19.8,21.2,14.7,14.9};
+        double[] Fats = {12, 14, 0.6, 3.8,22.9,7.6,13.7,11.3};
+        double[] Carbs = {59, 59, 44.2, 8.7,7.5,11.5,67.3,92.7};
+        String[] sl = {"1 tô", "1 tô", "1 chén", "1 lát","1 trứng + 2 miếng thịt","1 đĩa","1 tô","1 đĩa"};
+        int[] id = new int[namefood.length];
 
-        ContentValues values = new ContentValues();
-        for (int i = 0; i <= id.length - 1; i++) {
+        for (int i = 0; i < namefood.length; i++) {
+            id[i] = i + 1;
+        }
+
+        for (int i = 0; i < namefood.length; i++) {
+            ContentValues values = new ContentValues();
             values.put(SQLHelper.COLUMN_FoodMenu_idFood, id[i]);
             values.put(SQLHelper.COLUMN_FoodMenu_name, namefood[i]);
             values.put(SQLHelper.COLUMN_FoodMenu_Calories, Calo[i]);
@@ -142,17 +167,20 @@ public class UserDataSource {
             values.put(SQLHelper.COLUMN_FoodMenu_Fats, Fats[i]);
             values.put(SQLHelper.COLUMN_FoodMenu_soLuong, sl[i]);
             values.put(SQLHelper.COLUMN_FoodMenu_Proteins, Proteins[i]);
-            Cursor resultSet = database.rawQuery("Select * from " + SQLHelper.TABLE_FoodMenu + " Where "
-                    + SQLHelper.COLUMN_FoodMenu_idFood
-                    + " = '" + id[i] + "'", null);
+
+            Cursor resultSet = database.rawQuery("SELECT * FROM " + SQLHelper.TABLE_FoodMenu + " WHERE "
+                    + SQLHelper.COLUMN_FoodMenu_idFood + " = '" + id[i] + "'", null);
+
             if (resultSet.getCount() == 0) {
-                long insertId1 = database.insert(SQLHelper.TABLE_FoodMenu, null,
-                        values);
+                long insertId1 = database.insert(SQLHelper.TABLE_FoodMenu, null, values);
                 if (insertId1 <= 0) {
                     return -1;
                 }
             }
+
+            resultSet.close();
         }
+
         return 1;
     }
 
@@ -182,7 +210,8 @@ public class UserDataSource {
         Cursor resultSet = database.rawQuery("SELECT * FROM " + SQLHelper.TABLE_ControlWeight + " WHERE " +
                 SQLHelper.COLUMN_ControlWeight_EMAIL + " = '" + email + "' AND " +
                 SQLHelper.COLUMN_ControlWeight_id + " = (SELECT MAX(" + SQLHelper.COLUMN_ControlWeight_id + ") FROM " +
-                SQLHelper.TABLE_ControlWeight + " WHERE " + SQLHelper.COLUMN_ControlWeight_EMAIL + " = '" + email + "')", null);       if (resultSet.getCount() == 0) {
+                SQLHelper.TABLE_ControlWeight + " WHERE " + SQLHelper.COLUMN_ControlWeight_EMAIL + " = '" + email + "')", null);
+        if (resultSet.getCount() == 0) {
             Log.e("LOI ROI", "No data found");
             resultSet.close();
             return null; // Return null or handle the case when no data is found
@@ -382,12 +411,14 @@ public class UserDataSource {
         cursor.close();
         return people;
     }
-    public ArrayList<Weight> getAllWeightUp(){
+    public ArrayList<Weight> getAllWeightUp(String email2){
         ArrayList<Weight> weights = new ArrayList<>();
         List<Double> newwei = new ArrayList<>();
         List<String> IdDate = new ArrayList<>();
         List<String> email = new ArrayList<>();
-        Cursor cursor = database.rawQuery("select * from "+SQLHelper.TABLE_ControlWeight, null);
+        Cursor cursor = database.rawQuery("Select * from " + SQLHelper.TABLE_ControlWeight + " Where "
+                + SQLHelper.COLUMN_ControlWeight_EMAIL
+                + " = '" + email2 + "'", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Weight weight = new Weight();
@@ -402,6 +433,54 @@ public class UserDataSource {
         // Nhớ đóng con trỏ lại nhé.
         cursor.close();
         return weights;
+    }
+    public List<String> getAllWeightToDrawChart(String email2){
+        ArrayList<Weight> weights = new ArrayList<>();
+        List<Double> newwei = new ArrayList<>();
+        List<String> IdDate = new ArrayList<>();
+        List<String> cannag = new ArrayList<>();
+        List<String> email = new ArrayList<>();
+        Cursor cursor = database.rawQuery("Select * from " + SQLHelper.TABLE_ControlWeight + " Where "
+                + SQLHelper.COLUMN_ControlWeight_EMAIL
+                + " = '" + email2 + "'", null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Weight weight = new Weight();
+            weight.setControlWeight_Date(cursor.getString(1));
+            weight.setWeight(cursor.getDouble(2));
+            newwei.add(weight.getWeight());
+            email.add(weight.getEmail());
+            cannag.add(String.valueOf(weight.getWeight()));
+            IdDate.add(weight.getControlWeight_Date());
+            cursor.moveToNext();
+        }
+        weights = Weight.initWeight(newwei,IdDate,email);
+        // Nhớ đóng con trỏ lại nhé.
+        cursor.close();
+        return cannag;
+    }
+    public List<String> getAllDateWeightToDrawChart(String email2){
+        ArrayList<Weight> weights = new ArrayList<>();
+        List<Double> newwei = new ArrayList<>();
+        List<String> IdDate = new ArrayList<>();
+        List<String> email = new ArrayList<>();
+        Cursor cursor = database.rawQuery("Select * from " + SQLHelper.TABLE_ControlWeight + " Where "
+                + SQLHelper.COLUMN_ControlWeight_EMAIL
+                + " = '" + email2 + "'", null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Weight weight = new Weight();
+            weight.setControlWeight_Date(cursor.getString(1));
+            weight.setWeight(cursor.getDouble(2));
+            newwei.add(weight.getWeight());
+            email.add(weight.getEmail());
+            IdDate.add(weight.getControlWeight_Date());
+            cursor.moveToNext();
+        }
+        weights = Weight.initWeight(newwei,IdDate,email);
+        // Nhớ đóng con trỏ lại nhé.
+        cursor.close();
+        return IdDate;
     }
     String ttluu = "tkmkLog";
     public ArrayList<DaulyFood> getFood(String timeOfDay,String email,String date){
@@ -420,6 +499,40 @@ public class UserDataSource {
            DaulyFood daulyFood = new DaulyFood();
             daulyFood.setId(cursor.getInt(0));
            daulyFood.setIdDate(cursor.getString(1));
+            daulyFood.setNameFoodOfday(cursor.getString(4));
+            daulyFood.setIdFood(cursor.getInt(2));
+            daulyFood.setTimeofDay(cursor.getString(5));
+            IdDayly.add(daulyFood.getId());
+            IdDate.add(daulyFood.getIdDate());
+            NameFoodOfday.add(daulyFood.getNameFoodOfday());
+            IdFood.add(daulyFood.getIdFood());
+            TimeofDay.add(daulyFood.getTimeofDay());
+
+            Log.v("getFood", "" + foods);
+            cursor.moveToNext();
+        }
+        foods = DaulyFood.initfood(IdDayly,IdDate,NameFoodOfday,IdFood,TimeofDay);
+        // Nhớ đóng con trỏ lại nhé.
+        cursor.close();
+        Log.v("readData", ""+foods);
+        return foods;
+    }
+    public ArrayList<DaulyFood> getFoodShowhistoRydata(String email,String date){
+        ArrayList<DaulyFood> foods = new ArrayList<>();
+        List<Integer> IdDayly = new ArrayList<>();
+        List<String> IdDate = new ArrayList<>();
+        List<String> NameFoodOfday = new ArrayList<>();
+        List<Integer> IdFood = new ArrayList<>();
+        List<String> TimeofDay = new ArrayList<>();
+        Cursor cursor = database.rawQuery("Select * from " + SQLHelper.TABLE_CaloDaily + " Where "
+                +SQLHelper.COLUMN_CaloDaily_idEmail+
+                " = '" + email  + "' and "+SQLHelper.COLUMN_CaloDaily_IdDate+
+                " = '" + date + "'", null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            DaulyFood daulyFood = new DaulyFood();
+            daulyFood.setId(cursor.getInt(0));
+            daulyFood.setIdDate(cursor.getString(1));
             daulyFood.setNameFoodOfday(cursor.getString(4));
             daulyFood.setIdFood(cursor.getInt(2));
             daulyFood.setTimeofDay(cursor.getString(5));

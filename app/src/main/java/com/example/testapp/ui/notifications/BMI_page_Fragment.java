@@ -18,6 +18,10 @@ import com.example.testapp.R;
 import com.example.testapp.databinding.FragmentBMIPageBinding;
 import com.example.testapp.databinding.FragmentNotificationsBinding;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link BMI_page_Fragment#newInstance} factory method to
@@ -29,7 +33,7 @@ public class BMI_page_Fragment extends Fragment {
     ImageButton imagebtn_back2;
     EditText edt_BMI_cc,edt_BMI_cn;
     Button btn_luu;
-    TextView tv_kqBMI,tetV_kq1,tv_nx;
+    TextView tv_kqBMI,tetV_kq1,tv_nx,tv_goiy;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -77,10 +81,16 @@ public class BMI_page_Fragment extends Fragment {
         tv_kqBMI =(TextView) view.findViewById(R.id.tv_kqBMI);
         tetV_kq1 =(TextView) view.findViewById(R.id.tetV_kq1);
         tv_nx =(TextView) view.findViewById(R.id.tv_nx);
+        tv_goiy =(TextView) view.findViewById(R.id.tv_goiy);
         imagebtn_back2 = (ImageButton) view.findViewById(R.id.imagebtn_back2);
         btn_luu = (Button) view.findViewById(R.id.btn_luu);
         edt_BMI_cc = (EditText) view.findViewById(R.id.edt_BMI_cc);
         edt_BMI_cn = (EditText) view.findViewById(R.id.edt_BMI_cn);
+        List<String> myList = Arrays.asList("Uống một cốc nước trước bữa trưa và bữa tối sẽ giúp hạn chế nạp nhiều thức ăn và giảm lượng calo tiêu thụ trong bữa ăn", " Cung cấp đủ nước vừa giúp duy trì cơ thể ở mức tốt nhất, gia tăng hiệu suất luyện tập, sinh hoạt hàng ngày lại ngăn ngừa việc tăng cân trở lại trong thời gian dài.", "Trong chế độ ăn healthy, bạn cần hạn chế lượng muối tiêu thi và dung nạp vào cơ thể. Điều này được đánh giá là tốt cho sức khỏe với việc giảm các nguy cơ bệnh lý về thận, tim, dạ dày, huyết áp và đột quỵ.", "Việc ăn chậm, nhai kỹ để thức ăn được nghiền nát và khi vào dạ dày được tiêu hóa tốt hơn rất có lợi. Việc nhai nhanh sẽ dễ khiến bạn bị đau dạ dày, khó tiêu.");
+        Random r = new Random();
+        int randomitem = r.nextInt(myList.size());
+        String randomElement = myList.get(randomitem);
+        tv_goiy.setText(randomElement);
         imagebtn_back2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,9 +140,11 @@ public class BMI_page_Fragment extends Fragment {
     }
     public void loadFragment(Fragment fragment) {
 // create a FragmentManager
-        FragmentManager fm = getFragmentManager();
-// create a FragmentTransaction to begin the transaction and replace the Fragment
+        FragmentManager fm = requireActivity().getSupportFragmentManager();
+
+        // Create a FragmentTransaction to begin the transaction and replace the Fragment
         FragmentTransaction ft = fm.beginTransaction();
+        ft.setCustomAnimations(androidx.transition.R.anim.fragment_open_exit, androidx.transition.R.anim.fragment_close_exit);
 // replace the FrameLayout with new Fragment
         ft.replace(R.id.fragment_BMI, fragment);
         ft.commit(); // save the changes
