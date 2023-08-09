@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.testapp.DAO.UserDataSource;
 import com.example.testapp.DTO.FoodMenu;
+import com.example.testapp.DTO.LuuCaloTieuHao;
 import com.example.testapp.DTO.TapLuyen;
 import com.example.testapp.DTO.UserInfo;
 import com.example.testapp.ui.home.HomeFragment;
@@ -31,7 +33,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.text.DecimalFormat;
 public class tonghopbaitap extends AppCompatActivity implements SensorEventListener {
     TextView stepcounter, caloStep, totalCalo;
     SensorManager sensorManager;
@@ -50,7 +52,7 @@ public class tonghopbaitap extends AppCompatActivity implements SensorEventListe
     SharedPreferences.Editor editor;
 
     String email = null;
-
+    float tongcalo;
     //GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
 
     int stepCount = 0;
@@ -102,6 +104,10 @@ public class tonghopbaitap extends AppCompatActivity implements SensorEventListe
         if(sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER) != null){
             sensorManager.registerListener(this, msensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
+        Context context = getApplicationContext();
+        sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        tongcalo = sharedPreferences.getFloat("tongcalo",-1);
+        totalCalo.setText(String.valueOf(tongcalo));
     }
 
     @Override
@@ -153,10 +159,8 @@ public class tonghopbaitap extends AppCompatActivity implements SensorEventListe
 
         });
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        float tongcalo = sharedPreferences.getFloat("tongcalo",-1);
 
-        totalCalo.setText(String.valueOf(tongcalo));
+
 
         //?????????????????????
 //        if(acct!=null){

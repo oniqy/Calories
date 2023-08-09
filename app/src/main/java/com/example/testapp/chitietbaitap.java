@@ -3,6 +3,7 @@ package com.example.testapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,7 +16,7 @@ import android.widget.TextView;
 import com.example.testapp.DTO.LuuCaloTieuHao;
 
 import java.util.Locale;
-
+import java.text.DecimalFormat;
 public class chitietbaitap extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -41,7 +42,8 @@ public class chitietbaitap extends AppCompatActivity {
         tv_NameTapluyen.setText(intent.getStringExtra("name"));
         tv_showCalo.setText(String.valueOf(soCalo));
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Context context = getApplicationContext();
+        sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
         //====================================
@@ -114,12 +116,10 @@ public class chitietbaitap extends AppCompatActivity {
     // when the Stop button is clicked.
     public void onClickStop(View view) {
         running = false;
+        DecimalFormat df = new DecimalFormat("#.#");
         double tongCalo = soCalo * seconds;
-        tv_tongcalo.setText(String.valueOf(tongCalo));
-        LuuCaloTieuHao caloTieuHao = new LuuCaloTieuHao();
-        //caloTieuHao.setCaloTong(tongCalo);
-
-        editor.putFloat("tongcalo", (float) tongCalo);
+        tv_tongcalo.setText(String.valueOf(df.format(tongCalo)));
+        editor.putFloat("tongcalo", Float.parseFloat(df.format(tongCalo)));
         editor.apply();
     }
 

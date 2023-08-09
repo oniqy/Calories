@@ -532,8 +532,8 @@ public class HomeFragment extends Fragment {
         return R;
     }
     private void initPreferences() {
-
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        Context context = getActivity();
+        sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }
 
