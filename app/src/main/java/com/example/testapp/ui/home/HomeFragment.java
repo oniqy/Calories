@@ -277,8 +277,15 @@ public class HomeFragment extends Fragment {
         binding.imgbtnTapluyen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), tonghopbaitap.class);
-                startActivity(intent);
+                int  i = datasource.createExcersice();
+                if(i == -1){
+                    Toast.makeText(getContext(),"loi",Toast.LENGTH_LONG).show();
+                }else {
+                    Intent intent = new Intent(getContext(), tonghopbaitap.class);
+                    startActivity(intent);
+                }
+
+
             }
         });
 

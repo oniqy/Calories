@@ -9,6 +9,7 @@ import android.database.SQLException;
 
 import com.example.testapp.DTO.DaulyFood;
 import com.example.testapp.DTO.FoodMenu;
+import com.example.testapp.DTO.TapLuyen;
 import com.example.testapp.DTO.UserInfo;
 import com.example.testapp.DTO.Weight;
 import com.example.testapp.SQL.SQLHelper;
@@ -173,6 +174,39 @@ public class UserDataSource {
 
             if (resultSet.getCount() == 0) {
                 long insertId1 = database.insert(SQLHelper.TABLE_FoodMenu, null, values);
+                if (insertId1 <= 0) {
+                    return -1;
+                }
+            }
+
+            resultSet.close();
+        }
+
+        return 1;
+    }
+    public int createExcersice() {
+        String[] nameExcersie = {"Nâng tạ", "Nhảy dây", "Bơi lội"};
+
+        double[] caloExcersice = {1.7, 0.15, 0.3};
+
+
+        int[] id = new int[nameExcersie.length];
+
+        for (int i = 0; i < nameExcersie.length; i++) {
+            id[i] = i + 1;
+        }
+
+        for (int i = 0; i < nameExcersie.length; i++) {
+            ContentValues values = new ContentValues();
+            values.put(SQLHelper.COLUMN_ExerciseMenu_idExercise, id[i]);
+            values.put(SQLHelper.COLUMNE_ExerciseMenu_name, nameExcersie[i]);
+            values.put(SQLHelper.COLUMN_ExerciseMenu_Reps, caloExcersice[i]);
+
+            Cursor resultSet = database.rawQuery("SELECT * FROM " + SQLHelper.TABLE_ExerciseMenu + " WHERE "
+                    + SQLHelper.COLUMN_ExerciseMenu_idExercise + " = '" + id[i] + "'", null);
+
+            if (resultSet.getCount() == 0) {
+                long insertId1 = database.insert(SQLHelper.TABLE_ExerciseMenu, null, values);
                 if (insertId1 <= 0) {
                     return -1;
                 }
@@ -394,6 +428,24 @@ public class UserDataSource {
             resultSet.close();
         return foodMenu;
     }
+    public TapLuyen detail_Excersise(long idFood){
+        Cursor resultSet = database.rawQuery("Select * from " + SQLHelper.TABLE_ExerciseMenu + " Where "
+                + SQLHelper.COLUMN_ExerciseMenu_idExercise
+                + " = '" + idFood + "'", null);
+        resultSet.moveToFirst();
+        TapLuyen tapLuyen = new TapLuyen();
+        if(resultSet.getCount() == 0 ){
+            return tapLuyen;
+        }
+        int id= resultSet.getInt(0);
+        String name = resultSet.getString(1);
+        double calo= resultSet.getDouble(2);
+        tapLuyen.setExerciseMenu_name(name);
+        tapLuyen.setExcercise_calo(calo);
+        resultSet.close();
+        return tapLuyen;
+    }
+
     public List<String> getAllfood(){
         List<String> people = new ArrayList<>();
 
@@ -408,8 +460,29 @@ public class UserDataSource {
             cursor.moveToNext();
         }
         // Nhớ đóng con trỏ lại nhé.
+        // ok
         cursor.close();
         return people;
+    }
+    public List<String> getAllExcersise(){
+        List<String> exc = new ArrayList<>();
+
+        Cursor cursor = database.rawQuery("select * from "+SQLHelper.TABLE_ExerciseMenu, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            TapLuyen tapLuyen = new TapLuyen();
+            double calo= cursor.getDouble(2);
+
+            tapLuyen.setExerciseMenu_name(cursor.getString(1));
+            tapLuyen.setExcercise_calo(calo);
+            String chuoi = tapLuyen.getExerciseMenu_name()+" - "+tapLuyen.getExcercise_calo();
+            exc.add(chuoi);
+            cursor.moveToNext();
+        }
+        // Nhớ đóng con trỏ lại nhé.
+        // ok
+        cursor.close();
+        return exc;
     }
     public ArrayList<Weight> getAllWeightUp(String email2){
         ArrayList<Weight> weights = new ArrayList<>();

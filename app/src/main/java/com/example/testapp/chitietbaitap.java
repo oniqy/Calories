@@ -2,23 +2,56 @@ package com.example.testapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.example.testapp.DTO.LuuCaloTieuHao;
 
 import java.util.Locale;
 
 public class chitietbaitap extends AppCompatActivity {
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
     private int seconds = 0;
+    ImageButton imgBtn_chitietbaitap_back;
     private boolean running;
     private boolean wasRunning;
-
+    TextView tv_showCalo,tv_NameTapluyen,tv_tongcalo;
+    double soCalo = 0;
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chitietbaitap);
         getSupportActionBar().hide();
+        tv_showCalo = (TextView) findViewById(R.id.tv_showCalo);
+        tv_NameTapluyen = (TextView) findViewById(R.id.tv_NameTapluyen);
+        tv_tongcalo = (TextView) findViewById(R.id.tv_tongcalo);
+        imgBtn_chitietbaitap_back = (ImageButton) findViewById(R.id.imgBtn_chitietbaitap_back);
+
+        Intent intent = getIntent();
+        soCalo = intent.getDoubleExtra("calo",0);
+        tv_NameTapluyen.setText(intent.getStringExtra("name"));
+        tv_showCalo.setText(String.valueOf(soCalo));
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        editor = sharedPreferences.edit();
+
+        //====================================
+        imgBtn_chitietbaitap_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
 
         //====================================
         if (savedInstanceState != null) {
@@ -81,12 +114,16 @@ public class chitietbaitap extends AppCompatActivity {
     // when the Stop button is clicked.
     public void onClickStop(View view) {
         running = false;
+        double tongCalo = soCalo * seconds;
+        tv_tongcalo.setText(String.valueOf(tongCalo));
+        LuuCaloTieuHao caloTieuHao = new LuuCaloTieuHao();
+        //caloTieuHao.setCaloTong(tongCalo);
+
+        editor.putFloat("tongcalo", (float) tongCalo);
+        editor.apply();
     }
 
-    // Reset the stopwatch when
-    // the Reset button is clicked.
-    // Below method gets called
-    // when the Reset button is clicked.
+
     public void onClickReset(View view) {
         running = false;
         seconds = 0;

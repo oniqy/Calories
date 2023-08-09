@@ -92,9 +92,8 @@ public class SQLHelper extends SQLiteOpenHelper{
 
         String tbExerciseMenu = "create table "
                 + TABLE_ExerciseMenu + "( " + COLUMN_ExerciseMenu_idExercise
-                + " integer primary key autoincrement, " + COLUMNE_ExerciseMenu_name
-                + " text ,"+COLUMN_ExerciseMenu_Reps+" integer ,"
-                +COLUMN_ExerciseMenu_Mins+" integer);";
+                + " integer primary key autoincrement, " + COLUMNE_ExerciseMenu_name+" text ,"
+                +COLUMN_ExerciseMenu_Reps+" integer);";
 
         String tbUserInfo = "create table "
                 + TABLE_UserInfo + "( " + COLUMN_UserInfo_idUser
