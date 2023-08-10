@@ -47,7 +47,6 @@ public class DangNhapPage extends AppCompatActivity implements View.OnClickListe
         datasource.open();
         signIn = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken("237423378678-ajagq0kuaj94t6sokofnhc0poa80tqrq.apps.googleusercontent.com").requestEmail().build();
         signInClient = GoogleSignIn.getClient(this,signIn);
-
         addControl();
         imgBtn_signupGG.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,16 +110,12 @@ public class DangNhapPage extends AppCompatActivity implements View.OnClickListe
         startActivityForResult(signIntent,1000);
     }
     private void addControl(){
-
         imgBtn_signupGG = (ImageButton)findViewById(R.id.imgBtn_signupGG);
-
     }
-
     @Override
     protected void onResume() {
         super.onResume();
     }
-
     private void CheckLogin(){
         String userName = edt_userName.getText().toString();
         String pw = edt_pass.getText().toString();

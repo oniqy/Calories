@@ -73,6 +73,8 @@ public class HomeFragment extends Fragment {
     SharedPreferences.Editor editor;
     GoogleSignInClient gsc;
     RecyclerView recyc;
+
+    TextView numb_caloOut;
     ArrayList<DaulyFood> daulyFoods = new ArrayList<>();
     adapter_dailyFood adapter_dailyFoods;
     ImageView userImg;
@@ -257,6 +259,7 @@ public class HomeFragment extends Fragment {
         progressBar_car = binding.progressBarCar.findViewById(R.id.progressBar_car);
         progressBar = binding.progressBar.findViewById(R.id.progressBar);
         tv_processFat = binding.tvProcessFat.findViewById(R.id.tv_processFat);
+        numb_caloOut = binding.numbCaloOut.findViewById(R.id.numb_caloOut);
         tv_goiy = binding.tvGoiy.findViewById(R.id.tv_goiy);
         tv_processProtein = binding.tvProcessProtein.findViewById(R.id.tv_processProtein);
         tv_processCarb = binding.tvProcessCarb.findViewById(R.id.tv_processCarb);
@@ -536,9 +539,14 @@ public class HomeFragment extends Fragment {
         sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }
-
+    double soCaloTieuhao = 0;
     @Override
     public void onResume() {
+        DecimalFormat df = new DecimalFormat("#.#");
+        Context context = getContext();
+        sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        soCaloTieuhao = sharedPreferences.getFloat("tongcalo",-1);
+        numb_caloOut.setText(String.valueOf(df.format(soCaloTieuhao)));
         super.onResume();
 
     }

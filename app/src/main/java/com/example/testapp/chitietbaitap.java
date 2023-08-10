@@ -48,14 +48,10 @@ public class chitietbaitap extends AppCompatActivity {
 
         //====================================
         imgBtn_chitietbaitap_back.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
-
-        //====================================
         if (savedInstanceState != null) {
 
             // Get the previous state of the stopwatch
@@ -118,8 +114,8 @@ public class chitietbaitap extends AppCompatActivity {
         running = false;
         DecimalFormat df = new DecimalFormat("#.#");
         double tongCalo = soCalo * seconds;
-        tv_tongcalo.setText(String.valueOf(df.format(tongCalo)));
-        editor.putFloat("tongcalo", Float.parseFloat(df.format(tongCalo)));
+        tv_tongcalo.setText(df.format(tongCalo));
+        editor.putFloat("tongcalo", (float) tongCalo);
         editor.apply();
     }
 
