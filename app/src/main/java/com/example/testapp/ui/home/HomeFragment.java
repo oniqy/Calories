@@ -112,7 +112,7 @@ public class HomeFragment extends Fragment {
         singUpGG();
         initPreferences();
         currentDate();
-
+        showTieuHao(getType);
         showCalories(getType);
         tinhLuongNuoc(getType);
         Calendar calendar = Calendar.getInstance();

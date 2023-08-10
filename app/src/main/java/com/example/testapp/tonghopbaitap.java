@@ -90,7 +90,7 @@ public class tonghopbaitap extends AppCompatActivity implements SensorEventListe
     public void onSensorChanged(SensorEvent event) {
         if(event.sensor.getType() == msensor.TYPE_STEP_COUNTER){
             int checkDate = currentDate.get(Calendar.HOUR_OF_DAY);
-            if(checkDate == 0){
+            if(checkDate == 16){
                 myList.clear();
                 stepCount = 0;
                 stepcounter.setText(String.valueOf(stepCount));
