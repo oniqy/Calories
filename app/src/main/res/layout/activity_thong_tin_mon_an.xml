@@ -80,22 +80,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="120dp"
+                    android:layout_marginBottom="100dp"
                     android:text="Phở bò tái"
                     android:textColor="@color/black"
                     android:textSize="15pt"
                     android:textStyle="bold" />
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/imageView10"
-                    android:layout_width="295dp"
-                    android:layout_height="165dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="15dp"
-
-
-                    tools:srcCompat="@drawable/pho_bo" />
             </LinearLayout>
 
             <LinearLayout
