@@ -1,5 +1,5 @@
 package com.example.testapp;
-
+import java.util.Calendar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -30,9 +30,10 @@ import com.example.testapp.DTO.UserInfo;
 import com.example.testapp.ui.home.HomeFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 public class tonghopbaitap extends AppCompatActivity implements SensorEventListener {
     TextView stepcounter, caloStep, totalCalo;
@@ -42,7 +43,7 @@ public class tonghopbaitap extends AppCompatActivity implements SensorEventListe
     Sensor msensor;
     String ttluu = "tkmkLog";
     boolean isCounterSensorPresent; //cái này để check xem máy mình có sensor chuyển động k
-
+    SharedPreferences.Editor editor;
     ListView lv_Baitap;
     ImageButton imgBtn_baitap_back;
 
@@ -50,11 +51,11 @@ public class tonghopbaitap extends AppCompatActivity implements SensorEventListe
 
     SharedPreferences sharedPreferences;
     //SharedPreferences.Editor editor;
-
+    String getType ;
     String email = null;
     float tongcalo;
     //GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
-
+    Calendar currentDate = Calendar.getInstance();
     int stepCount = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,7 @@ public class tonghopbaitap extends AppCompatActivity implements SensorEventListe
         datasource.open();
         addControls();
         addEvents();
+        getType=DateFormat.getDateInstance(DateFormat.FULL).format(currentDate.getTime());
         //
         list.clear();
         list = datasource.getAllExcersise();
@@ -83,20 +85,40 @@ public class tonghopbaitap extends AppCompatActivity implements SensorEventListe
             isCounterSensorPresent = false;
         }
     }
-
+    List<Float> myList = new ArrayList<Float>();
     @Override
     public void onSensorChanged(SensorEvent event) {
         if(event.sensor.getType() == msensor.TYPE_STEP_COUNTER){
-            stepCount = (int) event.values[0];
-            stepcounter.setText(String.valueOf(stepCount));
-
-
-            double stepCalo = 0.3 * stepCount;
-            caloStep.setText(String.valueOf(stepCalo));
-            Context context = getApplicationContext();
-            sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-            tongcalo = sharedPreferences.getFloat("tongcalo",-1) + (float) stepCalo;
-            totalCalo.setText(String.valueOf(tongcalo));
+            int checkDate = currentDate.get(Calendar.HOUR_OF_DAY);
+            if(checkDate == 0){
+                myList.clear();
+                stepCount = 0;
+                stepcounter.setText(String.valueOf(stepCount));
+                DecimalFormat df = new DecimalFormat("#.##");
+                double stepCalo = 0.3 * stepCount;
+                caloStep.setText(df.format(stepCalo));
+            }else {
+                stepCount = (int) event.values[0];
+                stepcounter.setText(String.valueOf(stepCount));
+                DecimalFormat df = new DecimalFormat("#.##");
+                double stepCalo = 0.3 * stepCount;
+                caloStep.setText(df.format(stepCalo));
+                Context context = getApplicationContext();
+                sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+                tongcalo = sharedPreferences.getFloat("tongcalo", -1);
+                myList.add(tongcalo);
+                float tongCaloCaiBaitap =0;
+                for(int i = 0;i<myList.size();i++){
+                    float currentValue = myList.get(i);
+                    tongCaloCaiBaitap += currentValue;
+                }
+                float tongAll = (float) (tongCaloCaiBaitap+stepCalo);
+                totalCalo.setText(df.format(tongAll));
+                sharedPreferences = context.getSharedPreferences(getType, Context.MODE_PRIVATE);
+                editor = sharedPreferences.edit();
+                editor.putFloat(getType, (float) tongAll);
+                editor.apply();
+            }
         }
     }
 

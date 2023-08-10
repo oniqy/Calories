@@ -1,6 +1,8 @@
 package com.example.testapp.ui.notifications;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
@@ -13,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.Calendar;
 
@@ -29,6 +32,7 @@ import com.example.testapp.DTO.DaulyFood;
 import com.example.testapp.DTO.UserInfo;
 import com.example.testapp.R;
 import com.example.testapp.adapter.adapter_lichSuCalo;
+import com.example.testapp.adapter.adapter_lichsu;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
@@ -51,6 +55,7 @@ import java.util.Locale;
  */
 public class QLtheoNam_fragment extends Fragment {
     BarChart mChart;
+    SharedPreferences sharedPreferences;
     private UserDataSource datasource;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -68,7 +73,7 @@ public class QLtheoNam_fragment extends Fragment {
     Button btnDatePikerWeek;
     adapter_lichSuCalo adapter_lichSuCalos;
     ArrayList<DaulyFood> daulyFood = new ArrayList<DaulyFood>();
-
+    SwipeRefreshLayout swipeRefreshLayout;
     private int mYear, mMonth, mDay,selection=0;
     Calendar currentDate = Calendar.getInstance();
     public QLtheoNam_fragment() {
@@ -112,18 +117,30 @@ public class QLtheoNam_fragment extends Fragment {
         btnDatePikerWeek = view.findViewById(R.id.btnDatePikerWeek);
         recyc = view.findViewById(R.id.lsv_lichsu);
         imagebtn_back2 = view.findViewById(R.id.imagebtn_back2);
-
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
         if(acct!=null){
             email = acct.getEmail();
         };
         getType=DateFormat.getDateInstance(DateFormat.FULL).format(currentDate.getTime());
         showHistory(email,getType);
+        showTieuHao(getType);
         GroupBarChart(getType);
         imagebtn_back2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadFragment(new NotificationsFragment());
+            }
+        });
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                GroupBarChart(getType);
+                adapter_lichSuCalos =new adapter_lichSuCalo(daulyFood);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+                recyc.setLayoutManager(layoutManager);
+                recyc.setAdapter(adapter_lichSuCalos);
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
         btnDatePikerWeek.setOnClickListener(new View.OnClickListener() {
@@ -150,6 +167,7 @@ public class QLtheoNam_fragment extends Fragment {
                                 getType=DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
                                 GroupBarChart(getType);
                                 showHistory(email,getType);
+                                showTieuHao(getType);
                             }
 
                         }, mYear, mMonth, mDay);
@@ -160,6 +178,13 @@ public class QLtheoNam_fragment extends Fragment {
         });
 
         return view;
+    }
+    double soCaloTieuhao = 0;
+    public void showTieuHao(String type){
+        DecimalFormat df = new DecimalFormat("#.#");
+        Context context = getContext();
+        sharedPreferences = context.getSharedPreferences(type, Context.MODE_PRIVATE);
+        soCaloTieuhao = sharedPreferences.getFloat(type,0);
     }
     public void showHistory(String em , String type){
         daulyFood = datasource.getFoodShowhistoRydata(email,getType);
@@ -231,6 +256,13 @@ public class QLtheoNam_fragment extends Fragment {
         }
         return BMR;
     }
+
+    @Override
+    public void onResume() {
+        showTieuHao(getType);
+        super.onResume();
+    }
+
     public void GroupBarChart(String geType){
         double tdee = 0;
         double bmr = tinhBMR();
@@ -284,14 +316,14 @@ public class QLtheoNam_fragment extends Fragment {
         int caloriesIn = datasource.Tinhcalo(email,geType);
 
         float[] valCaloin = {caloriesIn};
-        float[] valTwo = {caloriesIn};
+        float[] valCaloOut = {(float) soCaloTieuhao};
 
         ArrayList<BarEntry> barOne = new ArrayList<>();
         ArrayList<BarEntry> barTwo = new ArrayList<>();
         ;
         for (int i = 0; i < valCaloin.length; i++) {
             barOne.add(new BarEntry(i, valCaloin[i]));
-            barTwo.add(new BarEntry(i, valTwo[i]));
+            barTwo.add(new BarEntry(i, valCaloOut[i]));
 
         }
 

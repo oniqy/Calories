@@ -101,7 +101,7 @@ public class chitietbaitap extends AppCompatActivity {
 
     public void onClickStop(View view) {
         running = false;
-        DecimalFormat df = new DecimalFormat("#.#");
+        DecimalFormat df = new DecimalFormat("#.##");
         double tongCalo = soCalo * seconds;
         tv_tongcalo.setText(df.format(tongCalo));
         editor.putFloat("tongcalo", (float) tongCalo);

@@ -143,6 +143,7 @@ public class HomeFragment extends Fragment {
             tv_processFat.setText(Integer.toString(0));
             progressBar_car.setProgress(0);
             tv_processCarb.setText(Integer.toString(0));
+            soCaloTieuhao = 0;
         }
         DecimalFormat df = new DecimalFormat("#");
 
@@ -168,9 +169,10 @@ public class HomeFragment extends Fragment {
         }else {
             progressBarCalo.setMax((int) tdee);
             numb_caloIn.setText(Integer.toString(caloriesIn));
-            progressBarCalo.setProgress((int) caloriesIn);
+            double tinhcalotrongngya = caloriesIn - soCaloTieuhao;
+            progressBarCalo.setProgress((int)tinhcalotrongngya);
             ObjectAnimator progressAnimator = ObjectAnimator.ofInt(progressBarCalo,
-                    "progress", 0, caloriesIn);
+                    "progress", 0, (int) tinhcalotrongngya);
             progressAnimator.setDuration(2000);
             progressAnimator.start();
             if(caloriesIn >= tdee){
@@ -436,6 +438,7 @@ public class HomeFragment extends Fragment {
                                 btnDatePicker.setText(currentDate);
                                 getType=DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
                                 showCalories(getType);
+                                showTieuHao(getType);
                             }
 
                         }, mYear, mMonth, mDay);
@@ -542,13 +545,16 @@ public class HomeFragment extends Fragment {
     double soCaloTieuhao = 0;
     @Override
     public void onResume() {
-        DecimalFormat df = new DecimalFormat("#.#");
-        Context context = getContext();
-        sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-        soCaloTieuhao = sharedPreferences.getFloat("tongcalo",-1);
-        numb_caloOut.setText(String.valueOf(df.format(soCaloTieuhao)));
+        showTieuHao(getType);
         super.onResume();
 
+    }
+    public void showTieuHao(String type){
+        DecimalFormat df = new DecimalFormat("#.#");
+        Context context = getContext();
+        sharedPreferences = context.getSharedPreferences(type, Context.MODE_PRIVATE);
+        soCaloTieuhao = sharedPreferences.getFloat(type,0);
+        numb_caloOut.setText(String.valueOf(df.format(soCaloTieuhao)));
     }
     public void showAlertDialog(final Context context,String idDay , String email,int position)  {
 

@@ -450,7 +450,7 @@
                         android:id="@+id/layoutbuoiSang"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:background="@drawable/bk_button"
+                        android:background="@drawable/button_setting"
                         android:orientation="horizontal">
 
                         <TextView
@@ -471,7 +471,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginRight="30dp"
-                            android:background="@color/white"
+                            android:background="#C9F1D1"
                             app:srcCompat="@drawable/baseline_add_24"
                             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
@@ -501,7 +501,7 @@
                         android:id="@+id/layout_buoitrua"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:background="@drawable/bk_button"
+                        android:background="@drawable/button_setting"
                         android:orientation="horizontal">
 
                         <TextView
@@ -522,7 +522,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginRight="30dp"
-                            android:background="@color/white"
+                            android:background="#C9F1D1"
                             app:srcCompat="@drawable/baseline_add_24"
                             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
                     </LinearLayout>
@@ -551,7 +551,7 @@
                         android:id="@+id/layoutBuoiToi"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:background="@drawable/bk_button"
+                        android:background="@drawable/button_setting"
                         android:orientation="horizontal">
 
                         <TextView
@@ -572,7 +572,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginRight="30dp"
-                            android:background="@color/white"
+                            android:background="#C9F1D1"
                             app:srcCompat="@drawable/baseline_add_24"
                             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
                     </LinearLayout>
@@ -601,7 +601,7 @@
                         android:id="@+id/layoutTapLuyen"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:background="@drawable/bk_button"
+                        android:background="@drawable/button_setting"
                         android:orientation="horizontal">
 
                         <TextView
@@ -622,7 +622,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginRight="30dp"
-                            android:background="@color/white"
+                            android:background="#C9F1D1"
                             app:srcCompat="@drawable/baseline_add_24"
                             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
                     </LinearLayout>
