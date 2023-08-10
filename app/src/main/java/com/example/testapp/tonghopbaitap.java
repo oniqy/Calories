@@ -49,7 +49,7 @@ public class tonghopbaitap extends AppCompatActivity implements SensorEventListe
     private UserDataSource datasource;
 
     SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+    //SharedPreferences.Editor editor;
 
     String email = null;
     float tongcalo;
@@ -82,8 +82,6 @@ public class tonghopbaitap extends AppCompatActivity implements SensorEventListe
             stepcounter.setText("-10000");
             isCounterSensorPresent = false;
         }
-
-
     }
 
     @Override
@@ -91,12 +89,19 @@ public class tonghopbaitap extends AppCompatActivity implements SensorEventListe
         if(event.sensor.getType() == msensor.TYPE_STEP_COUNTER){
             stepCount = (int) event.values[0];
             stepcounter.setText(String.valueOf(stepCount));
+
+
+            double stepCalo = 0.3 * stepCount;
+            caloStep.setText(String.valueOf(stepCalo));
+            Context context = getApplicationContext();
+            sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+            tongcalo = sharedPreferences.getFloat("tongcalo",-1) + (float) stepCalo;
+            totalCalo.setText(String.valueOf(tongcalo));
         }
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
     }
     @Override
     protected void onResume() {
@@ -104,10 +109,10 @@ public class tonghopbaitap extends AppCompatActivity implements SensorEventListe
         if(sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER) != null){
             sensorManager.registerListener(this, msensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
-        Context context = getApplicationContext();
-        sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-        tongcalo = sharedPreferences.getFloat("tongcalo",-1);
-        totalCalo.setText(String.valueOf(tongcalo));
+//        Context context = getApplicationContext();
+//        sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+//        tongcalo = sharedPreferences.getFloat("tongcalo",-1);
+//        totalCalo.setText(String.valueOf(tongcalo));
     }
 
     @Override
@@ -158,21 +163,6 @@ public class tonghopbaitap extends AppCompatActivity implements SensorEventListe
             }
 
         });
-
-
-
-
-        //?????????????????????
-//        if(acct!=null){
-//            email = acct.getEmail();
-//        };
-//
-//        UserInfo userInfo = datasource.Bmr(email);
-//        int kg = userInfo.getUserWeight();
-//        double stepcalo = (kg * 1.09) * Integer.parseInt(stepcounter.getText().toString());
-//
-//        caloStep.setText(String.valueOf(stepcalo));
-
     }
 
 
